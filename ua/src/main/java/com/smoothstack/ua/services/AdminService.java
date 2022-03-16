@@ -63,6 +63,7 @@ public class AdminService {
     }
     public void saveAirplane(Airplane airplane) { airplaneRepository.save(airplane); }
     public void deleteAirplanes(List<Airplane> airplanes) { airplaneRepository.deleteAll(airplanes); }
+    public void deleteAirplane(Airplane airplane) { airplaneRepository.delete(airplane); }
     public void deleteAirplaneById(Integer airplaneId) { airplaneRepository.deleteById(airplaneId); }
 
     public List<AirplaneType> getALLAirplaneTypes() {
