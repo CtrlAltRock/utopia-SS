@@ -10,11 +10,11 @@ public class Flight {
     @Id
     Integer id = 0;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "route_id", insertable = true, updatable = true)
     Route route = new Route();
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "airplane_id", insertable = true, updatable = true)
     Airplane airplane = new Airplane();
 

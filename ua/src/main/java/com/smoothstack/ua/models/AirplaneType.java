@@ -13,6 +13,9 @@ public class AirplaneType {
     @Column(name = "max_capacity")
     Integer max_capacity = 0;
 
+    public AirplaneType() {
+    }
+
     public Integer getId() {
         return id;
     }

@@ -10,7 +10,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id = 0;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "role_id", insertable = true, updatable = true)
     UserRole userRole = new UserRole();
 
@@ -54,7 +54,13 @@ public class User {
         this.id = id;
     }
 
+    public UserRole getUserRole() {
+        return userRole;
+    }
 
+    public void setUserRole(UserRole userRole) {
+        this.userRole = userRole;
+    }
 
     public String getGiven_name() {
         return given_name;

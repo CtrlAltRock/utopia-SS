@@ -27,6 +27,14 @@ public class BookingPayment implements Serializable {
         this.refunded = refunded;
     }
 
+    public BookingPaymentId getBookingPaymentId() {
+        return bookingPaymentId;
+    }
+
+    public void setBookingPaymentId(BookingPaymentId bookingPaymentId) {
+        this.bookingPaymentId = bookingPaymentId;
+    }
+
     public String getStripe_id() {
         return stripe_id;
     }

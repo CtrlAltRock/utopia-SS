@@ -10,7 +10,7 @@ public class Passenger {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "booking_id", referencedColumnName = "id")
     Booking booking_id;
 
