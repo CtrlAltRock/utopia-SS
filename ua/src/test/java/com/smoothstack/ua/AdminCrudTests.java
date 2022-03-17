@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.event.annotation.BeforeTestMethod;
 
 import java.sql.Date;
@@ -16,7 +17,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
-
+@DirtiesContext
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @SpringBootTest(classes = {UaApplication.class})
 public class AdminCrudTests {
@@ -130,7 +131,7 @@ public class AdminCrudTests {
         flightBookings.setFlightBookingsId(flightBookingsId);
 
         passenger = new Passenger();
-        //passenger.setId(1);
+        passenger.setId(1);
         passenger.setBooking_id(booking);
         passenger.setGiven_name(user.getGiven_name());
         passenger.setFamily_name(user.getFamily_name());
@@ -364,7 +365,7 @@ public class AdminCrudTests {
         Assertions.assertTrue(adminService.getAllBookingGuests().size() == 1);
         BookingGuest new_bookingGuest = adminService.getAllBookingGuests().get(0);
         new_bookingGuest.setContact_email("new.email@smoothstack.com");
-        adminService.deleteBookingGuest(new_bookingGuest);
+        adminService.saveBookingGuest(new_bookingGuest);
         Assertions.assertTrue(adminService.getAllBookingGuests().size() == 1);
         Assertions.assertTrue(adminService.getAllBookingGuests().get(0).getContact_email() == "new.email@smoothstack.com");
     }
@@ -431,7 +432,8 @@ public class AdminCrudTests {
     public void readBookingUser() {
         Assertions.assertTrue(adminService.getAllBookingUsers().size() == 1);
         BookingUser new_bookingUser = adminService.getAllBookingUsers().get(0);
-        Assertions.assertTrue(new_bookingUser.getBookingUserId() == new BookingUserId(1, 2));
+        logger.info(new_bookingUser.toString());
+        Assertions.assertTrue(new_bookingUser.getBookingUserId().equals(new BookingUserId(1, 1)));
     }
 
 
@@ -551,7 +553,8 @@ public class AdminCrudTests {
         Assertions.assertTrue(adminService.getFlightBookings().size() == 1);
         FlightBookings new_flightBookings = adminService.getFlightBookings().get(0);
         FlightBookings old_flightBookings = new_flightBookings;
-        new_flightBookings.getFlightBookingsId().setFlight_id(2);
+        new_flightBookings.getFlightBookingsId().setFlight_id(1);
+        adminService.deleteFlightBooking(old_flightBookings);
         adminService.saveFlightBooking(old_flightBookings);
         Assertions.assertTrue(adminService.getFlightBookings().size() == 1);
         Assertions.assertTrue(adminService.getFlightBookings().get(0).getFlightBookingsId().getBooking_id() == 1);
@@ -563,7 +566,7 @@ public class AdminCrudTests {
     public void deleteFlightBookings() {
         Assertions.assertTrue(adminService.getFlightBookings().size() == 1);
         adminService.deleteFlightBooking(adminService.getFlightBookings().get(0));
-        Assertions.assertTrue(adminService.getFlightBookings().size() == 1);
+        Assertions.assertTrue(adminService.getFlightBookings().size() == 0);
 
 
     }
@@ -572,6 +575,8 @@ public class AdminCrudTests {
     @Order(41)
     public void createPassenger() {
         Assertions.assertTrue(adminService.getPassengers().size() == 0);
+        adminService.saveFlightBooking(flightBookings);
+        adminService.saveFlight(flight);
         adminService.savePassenger(passenger);
         Assertions.assertTrue(adminService.getPassengers().size() == 1);
     }
@@ -623,7 +628,8 @@ public class AdminCrudTests {
     public void readRoute() {
         Assertions.assertTrue(adminService.getRoutes().size() == 1);
         Route new_route = adminService.getRoutes().get(0);
-        Assertions.assertTrue(new_route.getOriginAirport().getIata_id().equals("BAD"));
+        logger.info(new_route.toString());
+        Assertions.assertTrue(new_route.getOriginAirport().getIata_id().equals("GNV"));
     }
 
     @Test

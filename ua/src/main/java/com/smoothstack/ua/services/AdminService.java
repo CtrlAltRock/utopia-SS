@@ -104,7 +104,7 @@ public class AdminService {
 
     public List<BookingGuest> getAllBookingGuests() { return (List<BookingGuest>) bookingGuestRepository.findAll(); }
     public void saveBookingGuests(List<BookingGuest> bookingGuests) { bookingGuestRepository.saveAll(bookingGuests); }
-    public void saveBookingGuest(BookingGuest bookingGuest) { bookingGuestRepository.delete(bookingGuest);}
+    public void saveBookingGuest(BookingGuest bookingGuest) { bookingGuestRepository.save(bookingGuest);}
     public void deleteBookingGuests(List<BookingGuest> bookingGuests) { bookingGuestRepository.deleteAll(bookingGuests); }
     public void deleteBookingGuest(BookingGuest bookingGuest) { bookingGuestRepository.delete(bookingGuest); }
 
@@ -172,7 +172,10 @@ public class AdminService {
     public void saveRoutes(List<Route> routes) { routeRepository.saveAll(routes); }
     public void saveRoute(Route route) { routeRepository.save(route); }
     public void deleteRoutes(List<Route> routes) { routeRepository.deleteAll(routes); }
-    public void deleteRoute(Route route) { routeRepository.delete(route); }
+    public void deleteRoute(Route route) {
+        System.out.println(route.toString());
+        routeRepository.delete(route);
+    }
 
     public List<User> getAllUsers() { return (List<User>) userRepository.findAll(); }
     public void saveUsers(List<User> users) { userRepository.saveAll(users); }

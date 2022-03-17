@@ -2,16 +2,11 @@ package com.smoothstack.ua.controllers;
 
 import com.smoothstack.ua.models.*;
 import com.smoothstack.ua.services.AdminService;
-import com.smoothstack.ua.services.FlightService;
 import io.micrometer.core.annotation.Timed;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-
 @RestController
 public class AdminController {
 

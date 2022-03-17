@@ -10,7 +10,7 @@ import java.util.List;
 public class BookingUser {
 
     @EmbeddedId
-    @Cascade(org.hibernate.annotations.CascadeType.MERGE)
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     BookingUserId bookingUserId;
 
 
