@@ -7,7 +7,7 @@ import javax.persistence.*;
 public class UserRole {
 
     @Id
-    Integer id = 1;
+    Long id = Long.valueOf(1);
 
     @Column(name = "name")
     String name = "user";
@@ -15,16 +15,16 @@ public class UserRole {
     public UserRole() {
     }
 
-    public UserRole(Integer id, String name) {
+    public UserRole(Long id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

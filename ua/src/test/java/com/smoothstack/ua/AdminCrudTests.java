@@ -1,6 +1,5 @@
 package com.smoothstack.ua;
 
-import com.github.javafaker.Faker;
 import com.smoothstack.ua.models.*;
 import com.smoothstack.ua.services.AdminService;
 import lombok.extern.slf4j.Slf4j;
@@ -94,9 +93,9 @@ public class AdminCrudTests {
 
         userRole = new UserRole();
         user = new User();
-        userRole.setId(1);
+        userRole.setId(1L);
         userRole.setName("user");
-        user.setId(1);
+        user.setId(1L);
         user.setUserRole(userRole);
         user.setGiven_name("Sam");
         user.setFamily_name("Sessums");

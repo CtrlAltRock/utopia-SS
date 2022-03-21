@@ -8,7 +8,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer id = 0;
+    Long id = 0L;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "role_id", insertable = true, updatable = true)
@@ -35,7 +35,7 @@ public class User {
     public User() {
     }
 
-    public User(Integer id, UserRole userRole, String given_name, String family_name, String username, String email, String password, String phone) {
+    public User(Long id, UserRole userRole, String given_name, String family_name, String username, String email, String password, String phone) {
         this.id = id;
         this.userRole = userRole;
         this.given_name = given_name;
@@ -46,16 +46,16 @@ public class User {
         this.phone = phone;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public UserRole getUserRole() {
-        return userRole;
+    public String getUserRole() {
+        return userRole.getName();
     }
 
     public void setUserRole(UserRole userRole) {
