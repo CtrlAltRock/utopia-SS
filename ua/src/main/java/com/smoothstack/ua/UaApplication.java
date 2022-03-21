@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Bean;
 import io.swagger.v3.oas.annotations.info.Info;
 
 @SpringBootApplication
-@OpenAPIDefinition(info = @Info(title = "Utopia Airlines API", version = "3.0", description = "Utopia Airlines Information"))
+@OpenAPIDefinition(info = @Info(title = "Utopia Airlines API", version = "1.0", description = "Utopia Airlines Information"))
 public class UaApplication {
 
 	public static void main(String[] args) {
