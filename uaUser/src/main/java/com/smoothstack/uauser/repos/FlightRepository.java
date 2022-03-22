@@ -14,4 +14,10 @@ public interface FlightRepository extends JpaRepository<Flight, Integer> {
 
     @Query(value = "select * from flight where flight.airplane_id = :airplaneId", nativeQuery = true)
     List<Flight> findByAirplaneId(@Param("airplaneId") Integer airplaneId);
+
+    @Query(value = "select * from flight where id in " +
+            "(select flight_id from flight_bookings where booking_id in " +
+            "(select booking_id from booking_user where user_id in ( " +
+            "select id from utopia.user where id = :userId)))", nativeQuery = true)
+    List<Flight> findAllByUserId(@Param("userId") Long userId);
 }

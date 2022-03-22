@@ -2,15 +2,20 @@ package com.smoothstack.uauser.services;
 
 import com.smoothstack.uauser.models.*;
 import com.smoothstack.uauser.repos.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class UserService {
+
+    Logger logger = LoggerFactory.getLogger(UserService.class);
 
     @Autowired
     private AirplaneRepository airplaneRepository;
@@ -84,6 +89,7 @@ public class UserService {
 
         if (flightBooking != null){
             Booking booking = bookingRepository.findById(flightBooking.getFlightBookingsId().getBooking_id()).get();
+            logger.info(booking.toString());
             Passenger passenger = new Passenger();
             passenger.setId(0);
             passenger.setBooking_id(booking);
@@ -92,10 +98,17 @@ public class UserService {
             passenger.setDob(Date.valueOf(LocalDate.now().toString()));
             passenger.setGender("N/A");
             passenger.setAddress("N/A");
-            System.out.println("Heresldkf;lksdf");
+
+            BookingUser bookingUser = new BookingUser();
+            BookingUserId bookingUserId = new BookingUserId();
+            bookingUserId.setUser_id(Math.toIntExact(user.getId()));
+            bookingUserId.setBooking_id(booking.getId());
+            bookingUser.setBookingUserId(bookingUserId);
+//            System.out.println("Heresldkf;lksdf");
             if(flight.getReserved_seats() > 0) {
-                System.out.println("Here");
+//                System.out.println("Here");
                 flight.setReserved_seats(flight.getReserved_seats()-1);
+                bookingUserRepository.save(bookingUser);
                 flightRepository.save(flight);
                 passengerRepository.save(passenger);
             }
@@ -104,7 +117,17 @@ public class UserService {
 
     }
 
+    public List<Flight> getUserFlights() {
+//        List<BookingUser> bookingUsers = bookingUserRepository.findAllByUserId(user.getId());
 
+        List<Flight> flights = flightRepository.findAllByUserId(user.getId());
+
+//        for(BookingUser bu : bookingUsers) {
+//            List<> bu_flights = flightBookingsRepository.findFlightBookingsByBookingId(bu.getBookingUserId().getBooking_id());
+//        }
+
+        return flights;
+    }
 
 
 //    public List<Flight> usersBooked() {

@@ -55,7 +55,7 @@ public class UserController {
         UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
         //System.out.println(authenticationRequest.getUsername());
         user = userService.getUserByUsername(authenticationRequest.getUsername());
-        System.out.println(user);
+//        System.out.println(user);
         userService.setUser(user);
         final String token = jwtTokenUtil.generateToken(userDetails);
 
@@ -78,14 +78,19 @@ public class UserController {
     }
 
 
-    @RequestMapping(path = "/utopia/airlines/user/get/available/flights", method = RequestMethod.GET, produces = {"application/xml", "application/json"})
+    @RequestMapping(path = "/utopia/airlines/flights/", method = RequestMethod.GET, produces = {"application/xml", "application/json"} )
     public List<Flight> getAvailableFlights() {
         return userService.getAllFlights();
     }
 
-    @RequestMapping(path = "/utopia/airlines/user/get/available/tickets/flight/id/{flightId}", method = RequestMethod.POST, consumes = {"application/xml", "application/json"})
+    @RequestMapping(path = "/utopia/airlines/myflights/", method = RequestMethod.GET, produces = {"application/xml", "application/json"} )
+    public List<Flight> getUserFlights() { return userService.getUserFlights(); }
+
+
+    @RequestMapping(path = "/utopia/airlines/flights/{flightId}", method = RequestMethod.POST, consumes = {"application/xml", "application/json"} )
     public String postUserTickets(@PathVariable Integer flightId) {
         Flight flight = userService.getFlightsById(flightId);
+//        System.out.println(flight);
 
         if(flight != null) {
             userService.addUserToFlight(flight);
@@ -93,6 +98,10 @@ public class UserController {
         }
         else return "Flight Not Found";
     }
+
+
+
+
 
 
 
