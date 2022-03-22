@@ -52,6 +52,15 @@ public class AdminService {
     @Autowired
     UserRoleRepository userRoleRepository;
 
+    private User user;
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+
+    public User getUserByUsername(String username) { return userRepository.findUserByUsername(username).get(); }
+
     public List<Airplane> getAllAirplanes() {
         return (List<Airplane>) airplaneRepository.findAll();
     }
