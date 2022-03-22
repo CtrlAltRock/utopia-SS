@@ -11,10 +11,4 @@ class UaApplicationTests {
 	void contextLoads() {
 	}
 
-	@Test
-	void AirplaneLoads() {
-		AirplaneRepository airplaneRepository;
-
-	}
-
 }
