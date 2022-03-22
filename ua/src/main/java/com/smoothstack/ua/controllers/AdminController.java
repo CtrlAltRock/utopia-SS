@@ -39,7 +39,7 @@ public class AdminController {
 
 
     @Timed("authenticate")
-    @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
+    @RequestMapping(value = "/authenticate", method = RequestMethod.POST, consumes = {"application/json", "application/xml"})
     public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
 
         authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
@@ -53,7 +53,7 @@ public class AdminController {
     }
 
     @Timed("register")
-    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    @RequestMapping(value = "/register", method = RequestMethod.POST, consumes = {"application/json", "application/xml"})
     public ResponseEntity<?> saveUser(@RequestBody UserDTO user) throws Exception {
         return ResponseEntity.ok(userDetailsService.save(user));
     }
@@ -70,7 +70,7 @@ public class AdminController {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     @Timed("get.airplanes.dump")
-    @RequestMapping(path = "utopia/airlines/get/airplanes/dump", method = RequestMethod.GET, produces = {"application/xml", "application/json"})
+    @RequestMapping(path = "utopia/airlines/get/airplanes/dump", method = RequestMethod.GET, produces = {"application/json", "application/xml", })
     public List<Airplane> getAirplanes() {
         return adminService.getAllAirplanes();
     }
@@ -339,15 +339,15 @@ public class AdminController {
     public List<Passenger> getPassengers() { return adminService.getPassengers(); }
 
     @Timed("get.passengers.id")
-    @RequestMapping(path = "utopia/airline/get/passengers/id/{passengerId}", method = RequestMethod.GET)
+    @RequestMapping(path = "utopia/airline/get/passengers/id/{passengerId}", method = RequestMethod.GET, produces = {"application/json", "application/xml"})
     public Passenger getPassengerById(@PathVariable Integer passengerId) { return adminService.getPassengerById(passengerId); }
 
     @Timed("get.passengers.booking.id")
-    @RequestMapping(path = "utopia/airline/get/passengers/booking_id/{bookingId}", method = RequestMethod.GET)
+    @RequestMapping(path = "utopia/airline/get/passengers/booking_id/{bookingId}", method = RequestMethod.GET, produces = {"application/json", "application/xml"})
     public List<Passenger> getPassengersByBookingId(@PathVariable Integer bookingId) { return adminService.getPassengersByBookingId(bookingId); }
 
     @Timed("get.passengers.familyName")
-    @RequestMapping(path = "utopia/airline/get/passengers/familyName/{familyName}", method = RequestMethod.GET)
+    @RequestMapping(path = "utopia/airline/get/passengers/familyName/{familyName}", method = RequestMethod.GET, produces = {"application/json", "application/xml"})
     public List<Passenger> getPassengersByFamilyName(@PathVariable String familyName) { return adminService.getPassengersByFamilyName(familyName); }
 
     @Timed("post.passengers")
