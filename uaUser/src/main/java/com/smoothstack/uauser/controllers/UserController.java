@@ -80,20 +80,19 @@ public class UserController {
 
     @RequestMapping(path = "/utopia/airlines/flights/", method = RequestMethod.GET, produces = {"application/xml", "application/json"} )
     public List<Flight> getAvailableFlights() {
-        return userService.getAllFlights();
+        return userService.getAvailableFlights();
     }
 
     @RequestMapping(path = "/utopia/airlines/myflights/", method = RequestMethod.GET, produces = {"application/xml", "application/json"} )
     public List<Flight> getUserFlights() { return userService.getUserFlights(); }
 
 
-    @RequestMapping(path = "/utopia/airlines/flights/{flightId}", method = RequestMethod.POST, consumes = {"application/xml", "application/json"} )
+    @RequestMapping(path = "/utopia/airlines/flights/{flightId}", method = RequestMethod.POST )
     public String postUserTickets(@PathVariable Integer flightId) {
         Flight flight = userService.getFlightsById(flightId);
-//        System.out.println(flight);
-
         if(flight != null) {
             userService.addUserToFlight(flight);
+            flight = userService.getFlightsById(flightId);
             return flight.toString();
         }
         else return "Flight Not Found";

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -129,6 +130,10 @@ public class UserService {
         return flights;
     }
 
+    public List<Flight> getAvailableFlights() {
+        List<Flight> flights = flightRepository.getAvailableFlights(LocalDateTime.now());
+        return flights;
+    }
 
 //    public List<Flight> usersBooked() {
 //

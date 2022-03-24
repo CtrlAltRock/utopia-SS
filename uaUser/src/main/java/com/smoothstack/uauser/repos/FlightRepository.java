@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface FlightRepository extends JpaRepository<Flight, Integer> {
@@ -20,4 +21,7 @@ public interface FlightRepository extends JpaRepository<Flight, Integer> {
             "(select booking_id from booking_user where user_id in ( " +
             "select id from utopia.user where id = :userId)))", nativeQuery = true)
     List<Flight> findAllByUserId(@Param("userId") Long userId);
+
+    @Query(value = "select * from flight where flight.departure_time > :departureTime", nativeQuery = true)
+    List<Flight> getAvailableFlights(@Param("departureTime") LocalDateTime departureTime);
 }

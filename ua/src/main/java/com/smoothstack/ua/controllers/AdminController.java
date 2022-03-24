@@ -11,6 +11,7 @@ import io.micrometer.core.annotation.Timed;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -74,21 +75,21 @@ public class AdminController {
 
     @Timed("get.airplanes.dump")
     @RequestMapping(path = "utopia/airlines/airplanes/", method = RequestMethod.GET, produces = {"application/json", "application/xml", })
-    public List<Airplane> getAirplanes() {
-        return adminService.getAllAirplanes();
+    public ResponseEntity<?> getAirplanes() {
+        return new ResponseEntity<>(adminService.getAllAirplanes(), HttpStatus.OK);
     }
 
     @Timed("get.airplanes.id")
-    @RequestMapping(path = "utopia/airlines/airplanes/{airplaneId}", method = RequestMethod.GET, produces = {"application/xml", "application/json"})
+    @RequestMapping(path = "utopia/airlines/airplanes/{airplaneId}/", method = RequestMethod.GET, produces = {"application/json", "application/xml"})
     public Airplane getAirplaneById(@PathVariable Integer airplaneId) { return adminService.getAirplaneById(airplaneId); }
 
-    @Timed("get.airplanes.airplaneType")
-    @RequestMapping(path = "utopia/airlines/airplanes/{airplane_type}", method = RequestMethod.GET, produces = {"application/xml", "application/json"})
-    public List<Airplane> getAirplanesByAirplaneTypeId(@PathVariable Integer airplane_type) { return adminService.getAirplaneByAirplaneTypeId(airplane_type); }
+//    @Timed("get.airplanes.airplaneType")
+//    @RequestMapping(path = "utopia/airlines/airplanes/{airplane_type}", method = RequestMethod.GET, produces = {"application/json", "application/xml"})
+//    public List<Airplane> getAirplanesByAirplaneTypeId(@PathVariable Integer airplane_type) { return adminService.getAirplaneByAirplaneTypeId(airplane_type); }
 
-    @Timed("get.airplanes.maxCapacity")
-    @RequestMapping(path = "utopia/airlines/airplanes/{max_capacity}", method = RequestMethod.GET, produces = {"application/xml", "application/json"})
-    public List<Airplane> getAirplanesByMaxCapacity(@PathVariable Integer max_capacity) { return adminService.getAirplaneByMaxCapacity(max_capacity); }
+//    @Timed("get.airplanes.maxCapacity")
+//    @RequestMapping(path = "utopia/airlines/airplanes/{max_capacity}", method = RequestMethod.GET, produces = {"application/json", "application/xml"})
+//    public List<Airplane> getAirplanesByMaxCapacity(@PathVariable Integer max_capacity) { return adminService.getAirplaneByMaxCapacity(max_capacity); }
 
     @Timed("post.airplanes")
     @RequestMapping(path = "utopia/airlines/airplanes/", method = RequestMethod.POST, consumes = {"application/json", "application/xml"})
@@ -97,8 +98,8 @@ public class AdminController {
     }
 
     @Timed("post.airplane")
-    @RequestMapping(path = "utopia/airlines/airplanes/", method = RequestMethod.POST, consumes = {"application/json", "application/xml"})
-    public void saveAirplane(@RequestBody Airplane airplane) {
+    @RequestMapping(path = "utopia/airlines/airplane/", method = RequestMethod.PATCH, consumes = {"application/json", "application/xml"})
+    public void patchAirplane(@RequestBody Airplane airplane) {
         adminService.saveAirplane(airplane);
     }
 
@@ -113,7 +114,7 @@ public class AdminController {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     @Timed("get.airplaneTypes.dump")
-    @RequestMapping(path = "utopia/airlines/airplaneTypes/", method = RequestMethod.GET, produces = {"application/xml", "application/json"})
+    @RequestMapping(path = "utopia/airlines/airplaneTypes/", method = RequestMethod.GET, produces = {"application/json", "application/xml"})
     public List<AirplaneType> getAirplaneTypes() {
         return adminService.getALLAirplaneTypes();
     }
@@ -123,23 +124,23 @@ public class AdminController {
     public void saveAirplaneTypes(@RequestBody List<AirplaneType> airplaneTypes) { adminService.saveAirplaneTypes(airplaneTypes); }
 
     @Timed("post.airplaneType")
-    @RequestMapping(path = "utopia/airlines/airplaneTypes/", method = RequestMethod.POST, consumes = {"application/json", "application/xml"})
-    public void saveAirplaneType(@RequestBody AirplaneType airplaneType) { adminService.saveAirplaneType(airplaneType);}
+    @RequestMapping(path = "utopia/airlines/airplaneTypes/", method = RequestMethod.PATCH, consumes = {"application/json", "application/xml"})
+    public void patchAirplaneType(@RequestBody AirplaneType airplaneType) { adminService.saveAirplaneType(airplaneType);}
 
-    @Timed("delete.airplaneTypes")
-    @RequestMapping(path = "utopia/airlines/airplaneTypes/", method = RequestMethod.DELETE, consumes = {"application/json", "application/xml"})
-    public void deleteAirplaneTypes(List<AirplaneType> airplaneTypes) { adminService.deleteAirplaneTypes(airplaneTypes); }
+//    @Timed("delete.airplaneTypes")
+//    @RequestMapping(path = "utopia/airlines/airplaneTypes/", method = RequestMethod.DELETE, consumes = {"application/json", "application/xml"})
+//    public void deleteAirplaneTypes(List<AirplaneType> airplaneTypes) { adminService.deleteAirplaneTypes(airplaneTypes); }
 
     @Timed("delete.airplaneType")
-    @RequestMapping(path = "utopia/airlines/airplaneTypes/", method = RequestMethod.DELETE, consumes = {"application/json", "application/xml"})
-    public void deleteAirplaneType(AirplaneType airplaneType) { adminService.deleteAirplaneType(airplaneType); }
+    @RequestMapping(path = "utopia/airlines/airplaneType/{id}", method = RequestMethod.DELETE)
+    public void deleteAirplaneTypeId(@PathVariable Integer id) { adminService.deleteAirplaneTypeById(id); }
 
 
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     @Timed("get.airports.dump")
-    @RequestMapping(path = "utopia/airlines/airports/", method = RequestMethod.GET, produces = {"application/xml", "application/json"})
+    @RequestMapping(path = "utopia/airlines/airports/", method = RequestMethod.GET, produces = {"application/json", "application/xml"})
     public List<Airport> getAirports() {
         return adminService.getAllAirports();
     }
@@ -151,23 +152,23 @@ public class AdminController {
     }
 
     @Timed("post.airport")
-    @RequestMapping(path = "utopia/airlines/airports/", method = RequestMethod.POST, consumes = {"application/json", "application/xml"})
+    @RequestMapping(path = "utopia/airlines/airport/", method = RequestMethod.POST, consumes = {"application/json", "application/xml"})
     public void saveAirport(@RequestBody Airport airport) {
         adminService.saveAirport(airport);
     }
 
-    @Timed("delete.airports")
-    @RequestMapping(path = "utopia/airlines/airports/", method = RequestMethod.DELETE, consumes = {"application/json", "application/xml"} )
-    public void deleteAirports(@RequestBody List<Airport> airports) { adminService.deleteAirports(airports); }
+//    @Timed("delete.airports")
+//    @RequestMapping(path = "utopia/airlines/airports/", method = RequestMethod.DELETE, consumes = {"application/json", "application/xml"} )
+//    public void deleteAirports(@RequestBody List<Airport> airports) { adminService.deleteAirports(airports); }
 
     @Timed("delete.airport")
-    @RequestMapping(path = "utopia/airlines/airports/", method = RequestMethod.DELETE, consumes = {"application/json", "application/xml"} )
+    @RequestMapping(path = "utopia/airlines/airport/", method = RequestMethod.DELETE )
     public void deleteAirport(@RequestBody Airport airport) { adminService.deleteAirport(airport); }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     @Timed("get.bookings.dump")
-    @RequestMapping(path = "utopia/airlines/bookings/", method = RequestMethod.GET, produces = {"application/xml", "application/json"})
+    @RequestMapping(path = "utopia/airlines/bookings/", method = RequestMethod.GET, produces = {"application/json", "application/xml"})
     public List<Booking> getBookings() {
         return adminService.getAllBookings();
     }
@@ -179,7 +180,7 @@ public class AdminController {
     }
 
     @Timed("post.booking")
-    @RequestMapping(path = "utopia/airlines/bookings/", method = RequestMethod.POST, consumes = {"application/json", "application/xml"})
+    @RequestMapping(path = "utopia/airlines/booking/", method = RequestMethod.POST, consumes = {"application/json", "application/xml"})
     public void saveBooking(@RequestBody Booking booking) {
         adminService.saveBooking(booking);
     }
@@ -191,14 +192,14 @@ public class AdminController {
     }
 
     @Timed("delete.booking")
-    @RequestMapping(path = "utopia/airlines/bookings/", method = RequestMethod.DELETE, consumes = {"application/json", "application/xml"})
-    public void deleteBooking(@RequestBody Booking booking) { adminService.deleteBooking(booking); }
+    @RequestMapping(path = "utopia/airlines/bookings/{id}", method = RequestMethod.DELETE)
+    public void deleteBookingById(@PathVariable Integer id) { adminService.deleteBookingById(id); }
 
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     @Timed("get.bookingAgents.dump")
-    @RequestMapping(path = "utopia/airlines/bookingAgents/", method = RequestMethod.GET, produces = {"application/xml", "application/json"})
+    @RequestMapping(path = "utopia/airlines/bookingAgents/", method = RequestMethod.GET, produces = {"application/json", "application/xml"})
     public List<BookingAgent> getBookingAgents() { return adminService.getALlBookingAgents(); }
 
     @Timed("post.bookingAgents")
@@ -206,7 +207,7 @@ public class AdminController {
     public void saveBookingAgents(@RequestBody List<BookingAgent> bookingAgents) { adminService.saveBookingAgents(bookingAgents); }
 
     @Timed("post.bookingAgent")
-    @RequestMapping(path = "utopia/airlines/bookingAgents/", method = RequestMethod.POST, consumes = {"application/json", "application/xml"})
+    @RequestMapping(path = "utopia/airlines/bookingAgent/", method = RequestMethod.POST, consumes = {"application/json", "application/xml"})
     public void saveBookingAgent(@RequestBody BookingAgent bookingAgent) { adminService.saveBookingAgent(bookingAgent); }
 
     @Timed("delete.bookingAgents")
@@ -214,13 +215,13 @@ public class AdminController {
     public void deleteBookingAgents(@RequestBody List<BookingAgent> bookingAgents) { adminService.deleteBookingAgents(bookingAgents); }
 
     @Timed("delete.bookingAgents")
-    @RequestMapping(path = "utopia/airlines/bookingAgents/", method = RequestMethod.DELETE, consumes = {"application/json", "application/xml"})
+    @RequestMapping(path = "utopia/airlines/bookingAgent/", method = RequestMethod.DELETE, consumes = {"application/json", "application/xml"})
     public void deleteBookingAgent(@RequestBody BookingAgent bookingAgent) { adminService.deleteBookingAgent(bookingAgent); }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     @Timed("get.bookingGuests.dump")
-    @RequestMapping(path = "utopia/airlines/bookingGuests/", method = RequestMethod.GET, produces = {"application/xml", "application/json"})
+    @RequestMapping(path = "utopia/airlines/bookingGuests/", method = RequestMethod.GET, produces = {"application/json", "application/xml"})
     public List<BookingGuest> getBookingGuests() { return adminService.getAllBookingGuests(); }
 
     @Timed("post.bookingGuests")
@@ -228,7 +229,7 @@ public class AdminController {
     public void saveBookingGuests(@RequestBody List<BookingGuest> bookingGuests) { adminService.saveBookingGuests(bookingGuests); }
 
     @Timed("post.bookingGuest")
-    @RequestMapping(path = "utopia/airlines/bookingGuests/", method = RequestMethod.POST, consumes = {"application/json", "application/xml"})
+    @RequestMapping(path = "utopia/airlines/bookingGuest/", method = RequestMethod.POST, consumes = {"application/json", "application/xml"})
     public void saveBookingGuest(@RequestBody BookingGuest bookingGuest) { adminService.saveBookingGuest(bookingGuest); }
 
     @Timed("delete.bookingGuests")
@@ -236,13 +237,13 @@ public class AdminController {
     public void deleteBookingGuests(@RequestBody List<BookingGuest> bookingGuests) { adminService.deleteBookingGuests(bookingGuests); }
 
     @Timed("delete.bookingGuest")
-    @RequestMapping(path = "utopia/airlines/bookingGuests/", method = RequestMethod.DELETE, consumes = {"application/json", "application/xml"})
+    @RequestMapping(path = "utopia/airlines/bookingGuest/", method = RequestMethod.DELETE, consumes = {"application/json", "application/xml"})
     public void deleteBookingGuest(@RequestBody BookingGuest bookingGuest) { adminService.deleteBookingGuest(bookingGuest); }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     @Timed("get.bookingPayments.dump")
-    @RequestMapping(path = "utopia/airlines/bookingPayments/", method = RequestMethod.GET, produces = {"application/xml", "application/json"})
+    @RequestMapping(path = "utopia/airlines/bookingPayments/", method = RequestMethod.GET, produces = {"application/json", "application/xml"})
     public List<BookingPayment> getBookingPayments() { return adminService.getAllBookingPayments(); }
 
     @Timed("post.bookingPayments")
@@ -250,7 +251,7 @@ public class AdminController {
     public void saveBookingPayments(@RequestBody List<BookingPayment> bookingPayments) { adminService.saveBookingPayments(bookingPayments); }
 
     @Timed("post.bookingPayment")
-    @RequestMapping(path = "utopia/airlines/bookingPayments/", method = RequestMethod.POST, consumes = {"application/json", "application/xml"})
+    @RequestMapping(path = "utopia/airlines/bookingPayment/", method = RequestMethod.POST, consumes = {"application/json", "application/xml"})
     public void saveBookingPayment(@RequestBody BookingPayment bookingPayment) { adminService.saveBookingPayment(bookingPayment); }
 
     @Timed("delete.bookingPayments")
@@ -258,13 +259,13 @@ public class AdminController {
     public void deleteBookingPayments(@RequestBody List<BookingPayment> bookingPayments) { adminService.deleteBookingPayments(bookingPayments); }
 
     @Timed("delete.bookingPayment")
-    @RequestMapping(path = "utopia/airlines/bookingPayments/", method = RequestMethod.DELETE, consumes = {"application/json", "application/xml"})
+    @RequestMapping(path = "utopia/airlines/bookingPayment/", method = RequestMethod.DELETE, consumes = {"application/json", "application/xml"})
     public void deleteBookingPayment(@RequestBody BookingPayment bookingPayment) { adminService.deleteBookingPayment(bookingPayment); }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     @Timed("get.bookingUsers.dump")
-    @RequestMapping(path = "utopia/airlines/bookingUsers/", method = RequestMethod.GET, produces = {"application/xml", "application/json"})
+    @RequestMapping(path = "utopia/airlines/bookingUsers/", method = RequestMethod.GET, produces = {"application/json", "application/xml"})
     public List<BookingUser> getBookingUsers() { return adminService.getAllBookingUsers(); }
 
     @Timed("post.bookingUsers")
@@ -272,7 +273,7 @@ public class AdminController {
     public void saveBookingUsers(@RequestBody List<BookingUser> bookingUsers) { adminService.saveBookingUsers(bookingUsers); }
 
     @Timed("post.bookingUser")
-    @RequestMapping(path = "utopia/airlines/bookingUsers/", method = RequestMethod.POST, consumes = {"application/json", "application/xml"})
+    @RequestMapping(path = "utopia/airlines/bookingUser/", method = RequestMethod.POST, consumes = {"application/json", "application/xml"})
     public void saveBookingUser(@RequestBody BookingUser bookingUser) { adminService.saveBookingUser(bookingUser); }
 
     @Timed("delete.bookingUsers")
@@ -280,21 +281,21 @@ public class AdminController {
     public void deleteBookingUsers(@RequestBody List<BookingUser> bookingUsers) { adminService.deleteBookingUsers(bookingUsers); }
 
     @Timed("delete.bookingUser")
-    @RequestMapping(path = "utopia/airlines/bookingUsers/", method = RequestMethod.DELETE, consumes = {"application/json", "application/xml"})
+    @RequestMapping(path = "utopia/airlines/bookingUser/", method = RequestMethod.DELETE, consumes = {"application/json", "application/xml"})
     public void deleteBookingUser(@RequestBody BookingUser bookingUser) { adminService.deleteBookingUser(bookingUser); }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     @Timed("get.flights.dump")
-    @RequestMapping(path = "utopia/airlines/flights/", method = RequestMethod.GET, produces = {"application/xml", "application/json"})
+    @RequestMapping(path = "utopia/airlines/flights/", method = RequestMethod.GET, produces = {"application/json", "application/xml"})
     public List<Flight> getFlights() { return adminService.getFlights(); }
 
     @Timed("get.flights.route.id")
-    @RequestMapping(path = "utopia/airlines/flights/{routeId}", method = RequestMethod.GET, produces = {"application/xml", "application/json"})
+    @RequestMapping(path = "utopia/airlines/flights/{routeId}", method = RequestMethod.GET, produces = {"application/json", "application/xml"})
     public List<Flight> getFlightsByRouteId(@PathVariable Integer routeId) { return adminService.getFlightsByRouteId(routeId); }
 
     @Timed("get.flights.airplane.id")
-    @RequestMapping(path = "utopia/airlines/flights/{airplaneId}", method = RequestMethod.GET, produces = {"application/xml", "application/json"})
+    @RequestMapping(path = "utopia/airlines/flights/{airplaneId}/", method = RequestMethod.GET, produces = {"application/json", "application/xml"})
     public List<Flight> getFlightsByAirplaneId(@PathVariable Integer airplaneId) { return adminService.getFlightsByAirplaneId(airplaneId); }
 
     @Timed("post.flights")
@@ -302,7 +303,7 @@ public class AdminController {
     public void saveFlights(@RequestBody List<Flight> flights) { adminService.saveFlights(flights); }
 
     @Timed("post.flight")
-    @RequestMapping(path = "utopia/airlines/flights/", method = RequestMethod.POST, consumes = {"application/json", "application/xml"})
+    @RequestMapping(path = "utopia/airlines/flight/", method = RequestMethod.POST, consumes = {"application/json", "application/xml"})
     public void saveFlight(@RequestBody Flight flight) { adminService.saveFlight(flight); }
 
     @Timed("delete.flights")
@@ -310,13 +311,13 @@ public class AdminController {
     public void deleteFlights(@RequestBody List<Flight> flights) { adminService.deleteFlights(flights); }
 
     @Timed("delete.flight")
-    @RequestMapping(path = "utopia/airlines/flights/", method = RequestMethod.DELETE, consumes = {"application/json", "application/xml"})
-    public void deleteFlight(@RequestBody Flight flight) { adminService.deleteFlight(flight); }
+    @RequestMapping(path = "utopia/airlines/flight/{id}", method = RequestMethod.DELETE)
+    public void deleteFlightById(@PathVariable Integer id) { adminService.deleteFlightById(id); }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     @Timed("get.flightBookings.dump")
-    @RequestMapping(path = "utopia/airlines/flightBookings/", method = RequestMethod.GET, produces = {"application/xml", "application/json"})
+    @RequestMapping(path = "utopia/airlines/flightBookings/", method = RequestMethod.GET, produces = {"application/json", "application/xml"})
     public List<FlightBookings> getFlightBookings() { return adminService.getFlightBookings(); }
 
     @Timed("post.flightBookings")
@@ -324,7 +325,7 @@ public class AdminController {
     public void saveFlightBookings(@RequestBody List<FlightBookings> flightBookings) { adminService.saveFlightBookings(flightBookings); }
 
     @Timed("post.flightBooking")
-    @RequestMapping(path = "utopia/airlines/flightBookings/", method = RequestMethod.POST, consumes = {"application/json", "application/xml"})
+    @RequestMapping(path = "utopia/airlines/flightBooking/", method = RequestMethod.POST, consumes = {"application/json", "application/xml"})
     public void saveFlightBooking(@RequestBody FlightBookings flightBooking) { adminService.saveFlightBooking(flightBooking); }
 
     @Timed("delete.flightBookings")
@@ -332,25 +333,25 @@ public class AdminController {
     public void deleteFlightBookings(@RequestBody List<FlightBookings> flightBookings) { adminService.deleteFlightBookings(flightBookings); }
 
     @Timed("delete.flightBooking")
-    @RequestMapping(path = "utopia/airlines/flightBookings/", method = RequestMethod.DELETE, consumes = {"application/json", "application/xml"})
+    @RequestMapping(path = "utopia/airlines/flightBooking/", method = RequestMethod.DELETE, consumes = {"application/json", "application/xml"})
     public void deleteFlightBooking(@RequestBody FlightBookings flightBooking) { adminService.deleteFlightBooking(flightBooking); }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     @Timed("get.passengers.dump")
-    @RequestMapping(path = "utopia/airlines/passengers/", method = RequestMethod.GET, produces = {"application/xml", "application/json"})
+    @RequestMapping(path = "utopia/airlines/passengers/", method = RequestMethod.GET, produces = {"application/json", "application/xml"})
     public List<Passenger> getPassengers() { return adminService.getPassengers(); }
 
     @Timed("get.passengers.id")
     @RequestMapping(path = "utopia/airline/passengers/{passengerId}", method = RequestMethod.GET, produces = {"application/json", "application/xml"})
     public Passenger getPassengerById(@PathVariable Integer passengerId) { return adminService.getPassengerById(passengerId); }
 
-    @Timed("get.passengers.booking.id")
-    @RequestMapping(path = "utopia/airline/passengers/{bookingId}", method = RequestMethod.GET, produces = {"application/json", "application/xml"})
-    public List<Passenger> getPassengersByBookingId(@PathVariable Integer bookingId) { return adminService.getPassengersByBookingId(bookingId); }
+//    @Timed("get.passengers.booking.id")
+//    @RequestMapping(path = "utopia/airline/passengers/{bookingId}", method = RequestMethod.GET, produces = {"application/json", "application/xml"})
+//    public List<Passenger> getPassengersByBookingId(@PathVariable Integer bookingId) { return adminService.getPassengersByBookingId(bookingId); }
 
     @Timed("get.passengers.familyName")
-    @RequestMapping(path = "utopia/airline/passengers/{familyName}", method = RequestMethod.GET, produces = {"application/json", "application/xml"})
+    @RequestMapping(path = "utopia/airline/passengers/{familyName}/", method = RequestMethod.GET, produces = {"application/json", "application/xml"})
     public List<Passenger> getPassengersByFamilyName(@PathVariable String familyName) { return adminService.getPassengersByFamilyName(familyName); }
 
     @Timed("post.passengers")
@@ -358,7 +359,7 @@ public class AdminController {
     public void savePassengers(@RequestBody List<Passenger> passengers) { adminService.savePassengers(passengers); }
 
     @Timed("post.passenger")
-    @RequestMapping(path = "utopia/airlines/passengers/", method = RequestMethod.POST, consumes = {"application/json", "application/xml"})
+    @RequestMapping(path = "utopia/airlines/passenger/", method = RequestMethod.POST, consumes = {"application/json", "application/xml"})
     public void savePassengers(@RequestBody Passenger passenger) { adminService.savePassenger(passenger); }
 
     @Timed("delete.passengers")
@@ -366,13 +367,13 @@ public class AdminController {
     public void deletePassengers(@RequestBody List<Passenger> passengers) { adminService.deletePassengers(passengers); }
 
     @Timed("delete.passenger")
-    @RequestMapping(path = "utopia/airlines/passengers/", method = RequestMethod.DELETE, consumes = {"application/json", "application/xml"})
-    public void deletePassenger(@RequestBody Passenger passenger) { adminService.deletePassenger(passenger); }
+    @RequestMapping(path = "utopia/airlines/passengers/{id}", method = RequestMethod.DELETE)
+    public void deletePassengerById(@PathVariable Integer id) { adminService.deletePassengerById(id); }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     @Timed("get.routes.dump")
-    @RequestMapping(path = "utopia/airlines/routes/", method = RequestMethod.GET, produces = {"application/xml", "application/json"})
+    @RequestMapping(path = "utopia/airlines/routes/", method = RequestMethod.GET, produces = {"application/json", "application/xml"})
     public List<Route> getRoutes() { return adminService.getRoutes(); }
 
     @Timed("post.routes")
@@ -380,7 +381,7 @@ public class AdminController {
     public void saveRoutes(@RequestBody List<Route> routes) { adminService.saveRoutes(routes); }
 
     @Timed("post.route")
-    @RequestMapping(path = "utopia/airlines/routes/", method = RequestMethod.POST, consumes = {"application/json", "application/xml"})
+    @RequestMapping(path = "utopia/airlines/route/", method = RequestMethod.POST, consumes = {"application/json", "application/xml"})
     public void saveRoute(@RequestBody Route route) { adminService.saveRoute(route); }
 
     @Timed("delete.routes")
@@ -388,8 +389,8 @@ public class AdminController {
     public void deleteRoutes(@RequestBody List<Route> routes) { adminService.deleteRoutes(routes); }
 
     @Timed("delete.route")
-    @RequestMapping(path = "utopia/airlines/routes/", method = RequestMethod.DELETE, consumes = {"application/json", "application/xml"})
-    public void deleteRoute(@RequestBody Route route) { adminService.deleteRoute(route); }
+    @RequestMapping(path = "utopia/airlines/route/{id}", method = RequestMethod.DELETE)
+    public void deleteRouteById(@PathVariable Integer id) { adminService.deleteRouteById(id); }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -402,7 +403,7 @@ public class AdminController {
     public void postUsers(@RequestBody List<User> users) { adminService.saveUsers(users); }
 
     @Timed("post.user")
-    @RequestMapping(path = "utopia/airlines/users/", method = RequestMethod.POST, consumes = {"application/json", "application/xml"})
+    @RequestMapping(path = "utopia/airlines/user/", method = RequestMethod.POST, consumes = {"application/json", "application/xml"})
     public void postUser(@RequestBody User user) { adminService.saveUser(user); }
 
     @Timed("delete.users")
@@ -410,13 +411,13 @@ public class AdminController {
     public void deleteUsers(@RequestBody List<User> users) { adminService.deleteUsers(users); }
 
     @Timed("delete.user")
-    @RequestMapping(path = "utopia/airlines/users/", method = RequestMethod.DELETE, consumes = {"application/json", "application/xml"})
-    public void deleteUser(@RequestBody User user) { adminService.deleteUser(user); }
+    @RequestMapping(path = "utopia/airlines/users/{id}", method = RequestMethod.DELETE)
+    public void deleteUser(@PathVariable Integer id) { adminService.deleteUserById(Long.valueOf(id.toString())); }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     @Timed("get.userRoles.dump")
-    @RequestMapping(path = "utopia/airlines/userRoles/", method = RequestMethod.GET, produces = {"application/xml", "application/json"})
+    @RequestMapping(path = "utopia/airlines/userRoles/", method = RequestMethod.GET, produces = {"application/json", "application/xml"})
     public List<UserRole> getUserRoles() { return adminService.getAllUserRoles(); }
 
     @Timed("post.userRoles")
@@ -424,7 +425,7 @@ public class AdminController {
     public void postUserRoles(@RequestBody List<UserRole> userRoles) { adminService.saveUserRoles(userRoles); }
 
     @Timed("post.userRole")
-    @RequestMapping(path = "utopia/airlines/userRoles/", method = RequestMethod.POST, consumes = {"application/json", "application/xml"})
+    @RequestMapping(path = "utopia/airlines/userRole/", method = RequestMethod.POST, consumes = {"application/json", "application/xml"})
     public void postUserRole(@RequestBody UserRole userRole) { adminService.saveUserRole(userRole); }
 
     @Timed("delete.userRoles")
@@ -432,8 +433,8 @@ public class AdminController {
     public void deleteUserRoles(@RequestBody List<UserRole> userRoles) { adminService.deleteUserRoles(userRoles); }
 
     @Timed("delete.userRole")
-    @RequestMapping(path = "utopia/airlines/userRoles/", method = RequestMethod.DELETE, consumes = {"application/json", "application/xml"})
-    public void deleteUserRole(@RequestBody UserRole userRole) { adminService.deleteUserRole(userRole); }
+    @RequestMapping(path = "utopia/airlines/userRoles/{id}", method = RequestMethod.DELETE)
+    public void deleteUserRole(@PathVariable Integer id) { adminService.deleteUserRoleById(Long.valueOf(id.toString())); }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

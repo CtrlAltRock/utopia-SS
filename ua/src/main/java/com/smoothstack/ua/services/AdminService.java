@@ -3,6 +3,7 @@ package com.smoothstack.ua.services;
 import com.smoothstack.ua.models.*;
 import com.smoothstack.ua.repos.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -83,7 +84,7 @@ public class AdminService {
     }
     public void saveAirplaneType(AirplaneType airplaneType) { airplaneTypeRepository.save(airplaneType); }
     public void deleteAirplaneTypes(List<AirplaneType> airplaneTypes) { airplaneTypeRepository.deleteAll(airplaneTypes);}
-    public void deleteAirplaneType(AirplaneType airplaneType) { airplaneTypeRepository.delete(airplaneType); }
+    public void deleteAirplaneTypeById(Integer id) { airplaneTypeRepository.deleteById(id); }
 
     public List<Airport> getAllAirports() {
         return (List<Airport>) airportRepository.findAll();
@@ -93,7 +94,10 @@ public class AdminService {
     }
     public void saveAirport(Airport airport) { airportRepository.save(airport); }
     public void deleteAirports(List<Airport> airports) { airportRepository.deleteAll(airports); }
-    public void deleteAirport(Airport airport) { airportRepository.delete(airport); }
+    public void deleteAirportById(Integer id) { airportRepository.deleteById(id); }
+    public void deleteAirport(Airport airport) {
+        airportRepository.delete(airport);
+    }
 
     public List<Booking> getAllBookings() {
         return (List<Booking>) bookingRepository.findAll();
@@ -103,7 +107,7 @@ public class AdminService {
     }
     public void saveBooking(Booking booking) { bookingRepository.save(booking);   }
     public void deleteBookings(List<Booking> bookings) { bookingRepository.deleteAll(bookings); }
-    public void deleteBooking(Booking booking) { bookingRepository.delete(booking); }
+    public void deleteBookingById(Integer id) { bookingRepository.deleteById(id); }
 
     public List<BookingAgent> getALlBookingAgents() { return (List<BookingAgent>) bookingAgentRepository.findAll(); }
     public void saveBookingAgents(List<BookingAgent> bookingAgents) { bookingAgentRepository.saveAll(bookingAgents); }
@@ -148,7 +152,7 @@ public class AdminService {
     public void saveFlights(List<Flight> flights) { flightRepository.saveAll(flights); }
     public void saveFlight(Flight flight) { flightRepository.saveAndFlush(flight); }
     public void deleteFlights(List<Flight> flights) { flightRepository.deleteAll(flights); }
-    public void deleteFlight(Flight flight) { flightRepository.delete(flight);}
+    public void deleteFlightById(Integer id) { flightRepository.deleteById(id);}
 
     public List<Passenger> getPassengers() {
         return (List<Passenger>) passengerRepository.findAll();
@@ -175,28 +179,43 @@ public class AdminService {
         else throw new IllegalArgumentException("No flights for passenger's booking id");
     }
     public void deletePassengers(List<Passenger> passengers) { passengerRepository.deleteAll(passengers); }
-    public void deletePassenger(Passenger passenger) { passengerRepository.delete(passenger); }
+    public void deletePassengerById(Integer id) {
+        Flight flight = flightRepository.findFlightByPassenger(id);
+        if(flight.getReserved_seats() + 1 <= flight.getAirplane().getAirplaneType().getMax_capacity()){
+            flight.setReserved_seats(flight.getReserved_seats() + 1);
+            flightRepository.save(flight);
+        }
+        passengerRepository.deleteById(id);
+    }
 
     public List<Route> getRoutes() { return (List<Route>) routeRepository.findAll(); }
     public void saveRoutes(List<Route> routes) { routeRepository.saveAll(routes); }
     public void saveRoute(Route route) { routeRepository.save(route); }
     public void deleteRoutes(List<Route> routes) { routeRepository.deleteAll(routes); }
-    public void deleteRoute(Route route) {
-        System.out.println(route.toString());
-        routeRepository.delete(route);
+    public void deleteRouteById(Integer id) {
+        routeRepository.deleteById(id);
     }
 
     public List<User> getAllUsers() { return (List<User>) userRepository.findAll(); }
-    public void saveUsers(List<User> users) { userRepository.saveAll(users); }
-    public void saveUser(User user) { userRepository.save(user); }
+    public void saveUsers(List<User> users) {
+        for (User user: users) {
+            user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
+        }
+        userRepository.saveAll(users);
+    }
+
+    public void saveUser(User user) {
+        user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
+        userRepository.save(user);
+    }
     public void deleteUsers(List<User> users) { userRepository.deleteAll(users); }
-    public void deleteUser(User user) { userRepository.delete(user); }
+    public void deleteUserById(Long id) { userRepository.deleteById(id); }
 
     public List<UserRole> getAllUserRoles() { return (List<UserRole>) userRoleRepository.findAll(); }
     public void saveUserRoles(List<UserRole> userRoles) { userRoleRepository.saveAll(userRoles); }
     public void saveUserRole(UserRole userRole) { userRoleRepository.save(userRole); }
     public void deleteUserRoles(List<UserRole> userRoles) { userRoleRepository.deleteAll(userRoles); }
-    public void deleteUserRole(UserRole userRole) { userRoleRepository.delete(userRole); }
+    public void deleteUserRoleById(Long id) { userRoleRepository.deleteById(id); }
 
 
 

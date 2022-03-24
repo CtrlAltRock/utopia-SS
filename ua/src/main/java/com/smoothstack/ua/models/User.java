@@ -10,9 +10,9 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id = 0L;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "role_id", insertable = true, updatable = true)
-    UserRole userRole = new UserRole();
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH })
+    @JoinColumn(name = "role_id")
+    UserRole userRole;
 
     @Column(name = "given_name")
     String given_name = "Joaquin";
