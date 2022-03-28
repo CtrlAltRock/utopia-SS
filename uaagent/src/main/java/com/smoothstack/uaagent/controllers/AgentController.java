@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -176,6 +177,13 @@ public class AgentController {
         agentService.deletePassenger(id);
     }
 
-
+    @Timed("thing")
+    @RequestMapping(path = "utopia/airlines/thing/", method = RequestMethod.PUT)
+    @ResponseBody
+    public void thing(@RequestBody HashMap<String, Object> thing) {
+        logger.info(thing.toString());
+        logger.info(thing.entrySet().toString());
+        userDetailsService.
+    }
 
 }

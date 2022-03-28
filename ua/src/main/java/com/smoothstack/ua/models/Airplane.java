@@ -10,7 +10,7 @@ public class Airplane {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id = 0;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.REMOVE})
     @JoinColumn(name = "type_id", insertable = true, updatable = true)
     AirplaneType airplaneType = new AirplaneType();
 

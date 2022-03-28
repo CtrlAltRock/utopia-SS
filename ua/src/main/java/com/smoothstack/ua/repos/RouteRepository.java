@@ -1,8 +1,13 @@
 package com.smoothstack.ua.repos;
 
-import com.smoothstack.ua.models.Airport;
 import com.smoothstack.ua.models.Route;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
-public interface RouteRepository extends CrudRepository<Route, Integer> {
+import java.util.Optional;
+
+public interface RouteRepository extends JpaRepository<Route, Integer> {
+    @Query(value = "select * from route where origin_id = :originId and destination_id = :destinationId", nativeQuery = true)
+    Optional<Route> findByOriginDestination(@Param("originId") String origin, @Param("destinationId") String destination);
 }
