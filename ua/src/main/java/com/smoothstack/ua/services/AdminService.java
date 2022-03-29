@@ -64,14 +64,15 @@ public class AdminService {
         this.user = user;
     }
 
-
     public User getUserByUsername(String username) { return userRepository.findUserByUsername(username).get(); }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     public List<Airplane> getAllAirplanes() {
         logger.info("getting all airplanes");
         return (List<Airplane>) airplaneRepository.findAll();
     }
+
     public Airplane getAirplaneById(Integer id) {
         Optional<Airplane> airplane = airplaneRepository.findById(id);
         if(airplane.isPresent()) return airplane.get();
@@ -79,37 +80,51 @@ public class AdminService {
     }
 
     public List<Airplane> getAirplaneByAirplaneTypeId(Integer airplane_type_id) { return airplaneRepository.findByTypeId(airplane_type_id); }
+
     public List<Airplane> getAirplaneByMaxCapacity(Integer max_capacity) { return airplaneRepository.findByMaxCapacity(max_capacity); }
+
     public void saveAirplanes(List<Airplane> airplanes) {
         airplaneRepository.saveAll(airplanes);
     }
+
     public Airplane updateAirplane(Airplane airplane) { Airplane updated = airplaneRepository.save(airplane);
         return updated;
     }
+
     public Airplane saveAirplane(Airplane airplane) {
         return airplaneRepository.save(airplane);
     }
+
     public void deleteAirplanes(List<Airplane> airplanes) { airplaneRepository.deleteAll(airplanes); }
+
     public void deleteAirplane(Airplane airplane) { airplaneRepository.delete(airplane); }
+
     public void deleteAirplaneById(Integer airplaneId) { airplaneRepository.deleteById(airplaneId); }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     public List<AirplaneType> getALLAirplaneTypes() {
         return (List<AirplaneType>) airplaneTypeRepository.findAll();
     }
+
     public AirplaneType getAirplaneTypeById(Integer id) {
         Optional<AirplaneType> airplaneType = airplaneTypeRepository.findById(id);
         if(airplaneType.isPresent()) return airplaneType.get();
         return null;
     }
+
     public void saveAirplaneTypes(List<AirplaneType> airplaneTypes) {
         airplaneTypeRepository.saveAll(airplaneTypes);
     }
+
     public AirplaneType saveAirplaneType(AirplaneType airplaneType) { AirplaneType posted = airplaneTypeRepository.save(airplaneType);
         return posted;
     }
+
     public void deleteAirplaneTypes(List<AirplaneType> airplaneTypes) { airplaneTypeRepository.deleteAll(airplaneTypes);}
+
     public void deleteAirplaneTypeById(Integer id) { airplaneTypeRepository.deleteById(id); }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     public List<Airport> getAllAirports() {
@@ -127,6 +142,7 @@ public class AdminService {
     public void saveAirports(List<Airport> airports) {
         airportRepository.saveAll(airports);
     }
+
     public Airport saveAirport(Airport airport) {
         Airport posted = airportRepository.save(airport);
         return posted;
@@ -138,10 +154,13 @@ public class AdminService {
     public void deleteAirport(Airport airport) {
         airportRepository.delete(airport);
     }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     public List<Booking> getAllBookings() {
         return (List<Booking>) bookingRepository.findAll();
     }
+
     public Booking getBookingsById(Integer bookingId) {
         Optional<Booking> booking = bookingRepository.findById(bookingId);
         if(booking.isPresent()) {
@@ -149,17 +168,24 @@ public class AdminService {
         }
         else return null;
     }
+
     public void saveBookings(List<Booking> bookings) {
         bookingRepository.saveAll(bookings);
     }
+
     public Booking saveBooking(Booking booking) {
         Booking posted = bookingRepository.save(booking);
         return posted;
     }
+
     public void deleteBookings(List<Booking> bookings) { bookingRepository.deleteAll(bookings); }
+
     public void deleteBookingById(Integer id) { bookingRepository.deleteById(id); }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     public List<BookingAgent> getALlBookingAgents() { return (List<BookingAgent>) bookingAgentRepository.findAll(); }
+
     public BookingAgent getBookingAgentById(BookingAgentId bookingAgentId) {
         Optional<BookingAgent> bookingAgent = bookingAgentRepository.findById(bookingAgentId);
         if(bookingAgent.isPresent()) {
@@ -167,18 +193,28 @@ public class AdminService {
         }
         else return null;
     }
+
     public void saveBookingAgents(List<BookingAgent> bookingAgents) { bookingAgentRepository.saveAll(bookingAgents); }
+
     public BookingAgent saveBookingAgent(BookingAgent bookingAgent) {
         BookingAgent posted = bookingAgentRepository.save(bookingAgent);
         return posted;
     }
+
     public void deleteBookingAgents(List<BookingAgent> bookingAgents) { bookingAgentRepository.deleteAll(bookingAgents); }
+
     public void deleteBookingAgent(BookingAgent bookingAgent) { bookingAgentRepository.delete(bookingAgent); }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     public List<BookingGuest> getAllBookingGuests() { return (List<BookingGuest>) bookingGuestRepository.findAll(); }
+
     public void saveBookingGuests(List<BookingGuest> bookingGuests) { bookingGuestRepository.saveAll(bookingGuests); }
+
     public void saveBookingGuest(BookingGuest bookingGuest) { bookingGuestRepository.save(bookingGuest);}
+
     public void deleteBookingGuests(List<BookingGuest> bookingGuests) { bookingGuestRepository.deleteAll(bookingGuests); }
+
     public void deleteBookingGuest(BookingGuest bookingGuest) { bookingGuestRepository.delete(bookingGuest); }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -357,7 +393,9 @@ public class AdminService {
     public void deleteRouteById(Integer id) {
         routeRepository.deleteById(id);
     }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     public List<User> getAllUsers() { return (List<User>) userRepository.findAll(); }
 
     public User getUserById(Integer userId) {
@@ -375,23 +413,50 @@ public class AdminService {
         userRepository.saveAll(users);
     }
 
-    public void saveUser(User user) {
+    public User saveUser(User user) {
         user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
-        userRepository.save(user);
+        User posted = userRepository.save(user);
+        return posted;
     }
 
     public void deleteUsers(List<User> users) { userRepository.deleteAll(users); }
 
+    public void deleteUser(User user) {
+        userRepository.delete(user);
+    }
+
     public void deleteUserById(Long id) { userRepository.deleteById(id); }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     public List<UserRole> getAllUserRoles() { return (List<UserRole>) userRoleRepository.findAll(); }
+
+    public UserRole getUserRoleById(Long userRoleId) {
+        Optional<UserRole> userRole = userRoleRepository.findById(userRoleId);
+        if(userRole.isPresent()) {
+            return userRole.get();
+        }
+        else return null;
+    }
+
+    public UserRole getUserRoleByName(String name) {
+        Optional<UserRole> userRole = userRoleRepository.findByName(name);
+        if(userRole.isPresent()) {
+            return userRole.get();
+        }
+        else return null;
+    }
+
     public void saveUserRoles(List<UserRole> userRoles) { userRoleRepository.saveAll(userRoles); }
-    public void saveUserRole(UserRole userRole) { userRoleRepository.save(userRole); }
+
+    public UserRole saveUserRole(UserRole userRole) {
+        UserRole posted = userRoleRepository.save(userRole);
+        return posted;
+    }
+
     public void deleteUserRoles(List<UserRole> userRoles) { userRoleRepository.deleteAll(userRoles); }
+
     public void deleteUserRoleById(Long id) { userRoleRepository.deleteById(id); }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
 }

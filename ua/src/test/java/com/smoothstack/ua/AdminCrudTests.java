@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.event.annotation.BeforeTestMethod;
 
@@ -251,9 +252,9 @@ public class AdminCrudTests {
     @BeforeTestMethod("updateAirport")
     @Order(12)
     public void deleteAirport() {
-//        Assertions.assertTrue(adminService.getAllAirports().size() == 1);
-//        adminService.deleteAirport(adminService.getAllAirports().get(0));
-//        Assertions.assertTrue(adminService.getAllAirports().size() == 0);
+        Assertions.assertTrue(adminService.getAllAirports().size() == 1);
+        adminService.deleteAirport(adminService.getAllAirports().get(0));
+        Assertions.assertTrue(adminService.getAllAirports().size() == 0);
     }
 
     @Test
@@ -586,6 +587,7 @@ public class AdminCrudTests {
     public void readPassenger() {
         Assertions.assertTrue(adminService.getPassengers().size() == 1);
         Passenger new_passenger = adminService.getPassengers().get(0);
+        logger.info(new_passenger.toString());
         Assertions.assertTrue(new_passenger.getId() == 1);
     }
 
@@ -649,7 +651,11 @@ public class AdminCrudTests {
     @Order(49)
     public void deleteRoute() {
         Assertions.assertTrue(adminService.getRoutes().size() == 1);
-        adminService.deleteRouteById(adminService.getRoutes().get(0).getId());
+        Route route = adminService.getRoutes().get(0);
+        route.setDestinationAirport(null);
+        route.setOriginAirport(null);
+        adminService.saveRoute(route);
+        adminService.deleteRoute(route);
         Assertions.assertTrue(adminService.getRoutes().size() == 0);
     }
 
@@ -679,7 +685,7 @@ public class AdminCrudTests {
         new_user.setPassword("Kufh09ufjnf09u");
         adminService.saveUser(new_user);
         Assertions.assertTrue(adminService.getAllUsers().size() == 1);
-        Assertions.assertTrue(adminService.getAllUsers().get(0).getPassword().equals("Kufh09ufjnf09u"));
+        Assertions.assertTrue(!adminService.getAllUsers().get(0).getPassword().equals("Kufh09ufjnf09u"));
 
     }
 

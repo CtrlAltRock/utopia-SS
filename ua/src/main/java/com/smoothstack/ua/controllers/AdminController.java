@@ -1041,49 +1041,163 @@ public class AdminController {
         }
     }
 
-   /* @Timed("post.users")
+    @Timed("post.users")
     @RequestMapping(path = "utopia/airlines/users/", method = RequestMethod.POST, consumes = {"application/json", "application/xml"})
-    public void postUsers(@RequestBody User user) {
+    public ResponseEntity<?> postUsers(@RequestBody User user) {
         logger.info(user.toString(), "user body argument");
         if(user.getId() != 0) {
             logger.info("user has an id other than zero");
             return new ResponseEntity<>("user has an id other than zero", HttpStatus.BAD_REQUEST);
         }
         else {
+            UserRole userRoleCheck = adminService.getUserRoleById(user.getUserRole().getId());
+            logger.info(userRoleCheck.toString(), "db role to check against");
 
+            if(userRoleCheck == null) {
+                logger.info("trying to change UserRole from user post");
+                return new ResponseEntity<>("trying to change UserRole from user post", HttpStatus.BAD_REQUEST);
+            }
+            else if(!user.getUserRole().equals(userRoleCheck)){
+                logger.info("trying to create a new user role");
+                return new ResponseEntity<>("trying to create a new user role", HttpStatus.BAD_REQUEST);
+            }
+            else {
+                logger.info("user seems fine to post");
+                User posted = adminService.saveUser(user);
+                return new ResponseEntity<>(posted, HttpStatus.OK);
+            }
         }
-    }*/
+    }
 
     @Timed("put.users")
-    @RequestMapping(path = "utopia/airlines/user/{userId}", method = RequestMethod.PUT, consumes = {"application/json", "application/xml"})
-    public void putUsers(@RequestBody User user) { adminService.saveUser(user); }
+    @RequestMapping(path = "utopia/airlines/users/{userId}", method = RequestMethod.PUT, consumes = {"application/json", "application/xml"})
+    public ResponseEntity<?> putUsers(@RequestBody User user, @PathVariable Integer userId) {
+        logger.info(user.toString(), "user argument");
+        logger.info(userId.toString(), "user id argument");
+        User check = adminService.getUserById(userId);
+        if(check == null) {
+            logger.info("user does not exist");
+            return new ResponseEntity<>("user does not exist", HttpStatus.BAD_REQUEST);
+        }
+        else if(user.getId() != 0) {
+            logger.info("user has an id other than zero");
+            return new ResponseEntity<>("user has an id other than zero", HttpStatus.BAD_REQUEST);
+        }
+        else{
+            UserRole userRoleCheck = adminService.getUserRoleById(user.getUserRole().getId());
+            if(userRoleCheck == null) {
+                logger.info("user role does not exist");
+                return new ResponseEntity<>("user role does not exist", HttpStatus.BAD_REQUEST);
+            }
+            else if(!userRoleCheck.equals(user.getUserRole())) {
+                logger.info("not allowed to override an existing user role");
+                return new ResponseEntity<>("not allowed to override an existing user role", HttpStatus.BAD_REQUEST);
+            }
+            else {
+                logger.info("user seems fine to post");
+                user.setId(userId.longValue());
+                User posted = adminService.saveUser(user);
+                return new ResponseEntity<>(posted, HttpStatus.OK);
+            }
+        }
+    }
 
     @Timed("delete.users")
     @RequestMapping(path = "utopia/airlines/users/{userId}", method = RequestMethod.DELETE)
-    public void deleteUsersById(@PathVariable Integer id) { adminService.deleteUserById(Long.valueOf(id.toString())); }
+    public ResponseEntity<?> deleteUsersById(@PathVariable Integer userId) {
+        logger.info(userId.toString(), "user id argument");
+        User check = adminService.getUserById(userId);
+        if(check == null) {
+            logger.info("user does not exist");
+            return new ResponseEntity<>("user does not exist", HttpStatus.BAD_REQUEST);
+        }
+        else {
+            check.setUserRole(null);
+            adminService.deleteUser(check);
+            return new ResponseEntity<>("deleting " + check.toString(), HttpStatus.OK);
+        }
+    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     @Timed("get.userRoles.dump")
     @RequestMapping(path = "utopia/airlines/userRoles/", method = RequestMethod.GET, produces = {"application/json", "application/xml"})
-    public List<UserRole> getUserRoles() { return adminService.getAllUserRoles(); }
+    public ResponseEntity<?> getUserRoles() {
+        logger.info("getting all user roles");
+        List<UserRole> roles = adminService.getAllUserRoles();
+        return new ResponseEntity<>(roles, HttpStatus.OK);
+    }
+
+    @Timed("get.userRoles.id")
+    @RequestMapping(path = "utopia/airlines/userRoles/{userRoleId}", method = RequestMethod.GET, produces = {"application/json", "application/xml"})
+    public ResponseEntity<?> getUserRolesById(@PathVariable Integer userRoleId) {
+        logger.info(userRoleId.toString(), "user role id argument");
+        UserRole check = adminService.getUserRoleById(userRoleId.longValue());
+        if(check == null) {
+            logger.info("user role does not exist");
+            return new ResponseEntity<>("user role does not exist", HttpStatus.BAD_REQUEST);
+        }
+        else {
+            logger.info("user role does exist");
+            return new ResponseEntity<>(check, HttpStatus.OK);
+        }
+    }
 
     @Timed("post.userRoles")
     @RequestMapping(path = "utopia/airlines/userRoles/", method = RequestMethod.POST, consumes = {"application/json", "application/xml"})
-    public void postUserRoles(@RequestBody List<UserRole> userRoles) { adminService.saveUserRoles(userRoles); }
+    public ResponseEntity<?> postUserRoles(@RequestBody UserRole userRole) {
+        logger.info(userRole.toString(), "user role argument");
+        UserRole check = adminService.getUserRoleByName(userRole.getName());
+        if(check != null) {
+            logger.info("user role already exists");
+            return new ResponseEntity<>("user role already exists", HttpStatus.BAD_REQUEST);
+        }
+        else if(userRole.getId() != Integer.valueOf(0).longValue()) {
+            logger.info("user role id has been included or is not zero");
+            return new ResponseEntity<>("user role id has been included or is not zero", HttpStatus.BAD_REQUEST);
+        }
+        else {
+            logger.info("user role does not exist");
+            UserRole posted = adminService.saveUserRole(userRole);
+            return new ResponseEntity<>(posted, HttpStatus.OK);
+        }
+    }
 
-    @Timed("post.userRole")
-    @RequestMapping(path = "utopia/airlines/userRole/{id}", method = RequestMethod.PUT, consumes = {"application/json", "application/xml"})
-    public void postUserRole(@RequestBody UserRole userRole) { adminService.saveUserRole(userRole); }
+    @Timed("put.userRoles")
+    @RequestMapping(path = "utopia/airlines/userRoles/{userRoleId}", method = RequestMethod.PUT, consumes = {"application/json", "application/xml"})
+    public ResponseEntity<?> putUserRoles(@RequestBody UserRole userRole, @PathVariable Integer userRoleId) {
+        logger.info(userRole.toString(), "user role argument");
+        logger.info(userRoleId.toString(), "user role id argument");
+        UserRole check = adminService.getUserRoleById(userRoleId.longValue());
+        if(check == null) {
+            logger.info("user role does not exist");
+            return new ResponseEntity<>("user role does not exist", HttpStatus.BAD_REQUEST);
+        }
+        else if(userRole.getId().intValue() != 0) {
+            logger.info("user role has an id inluded");
+            return new ResponseEntity<>("user role has id included", HttpStatus.BAD_REQUEST);
+        }
+        else {
+            userRole.setId(userRoleId.longValue());
+            UserRole put = adminService.saveUserRole(userRole);
+            return new ResponseEntity<>(put, HttpStatus.OK);
+        }
+    }
+
 
     @Timed("delete.userRoles")
-    @RequestMapping(path = "utopia/airlines/userRoles/", method = RequestMethod.DELETE, consumes = {"application/json", "application/xml"})
-    public void deleteUserRoles(@RequestBody List<UserRole> userRoles) { adminService.deleteUserRoles(userRoles); }
-
-    @Timed("delete.userRole")
-    @RequestMapping(path = "utopia/airlines/userRoles/{id}", method = RequestMethod.DELETE)
-    public void deleteUserRole(@PathVariable Integer id) { adminService.deleteUserRoleById(Long.valueOf(id.toString())); }
-
+    @RequestMapping(path = "utopia/airlines/userRoles/{userRoleId}", method = RequestMethod.DELETE)
+    public ResponseEntity<?> deleteUserRole(@PathVariable Integer userRoleId) {
+        logger.info(userRoleId.toString(), "user role id argument");
+        UserRole check = adminService.getUserRoleById(userRoleId.longValue());
+        if(check == null) {
+            logger.info("user role does not exist");
+            return new ResponseEntity<>("user role does not exist", HttpStatus.BAD_REQUEST);
+        }
+        else {
+            adminService.deleteUserRoleById(userRoleId.longValue());
+            return new ResponseEntity<>("deleting " + check.toString(), HttpStatus.OK);
+        }
+    }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 }

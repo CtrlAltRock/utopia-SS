@@ -7,7 +7,8 @@ import javax.persistence.*;
 public class UserRole {
 
     @Id
-    Long id = Long.valueOf(1);
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Long id = Long.valueOf(0);
 
     @Column(name = "name")
     String name = "user";
