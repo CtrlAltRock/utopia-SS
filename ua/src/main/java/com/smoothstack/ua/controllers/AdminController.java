@@ -966,9 +966,17 @@ public class AdminController {
         logger.info(route.toString(), "route argument");
         Route check = adminService.getRouteByOriginDestination(route.getOriginAirport().getIata_id(), route.getDestinationAirport().getIata_id());
         if(check == null) {
-            logger.info("route does not exist");
-            Route posted = adminService.saveRoute(route);
-            return new ResponseEntity<>(posted, HttpStatus.OK);
+            Airport originCheck = adminService.getAirportById(route.getOriginAirport().getIata_id());
+            Airport destinationCheck = adminService.getAirportById(route.getDestinationAirport().getIata_id());
+            if(originCheck == null || destinationCheck == null) {
+                logger.info("either origin and/or destination airport does not exist");
+                return new ResponseEntity<>("either origin and/or destination airport does not exist", HttpStatus.BAD_REQUEST);
+            }
+            else{
+                logger.info("route does not exist");
+                Route posted = adminService.saveRoute(route);
+                return new ResponseEntity<>(posted, HttpStatus.OK);
+            }
         }
         else {
             logger.info("route already exists");
@@ -978,22 +986,30 @@ public class AdminController {
 
     @Timed("put.routes")
     @RequestMapping(path = "utopia/airlines/routes/{routeId}", method = RequestMethod.PUT, consumes = {"application/json", "application/xml"})
-    public ResponseEntity<?> saveRoute(@RequestBody Route route) {
-        logger.info(route.toString(),"route argument");
+    public ResponseEntity<?> saveRoute(@RequestBody Route route, @PathVariable Integer routeId) {
         if(route.getOriginAirport() == null || route.getDestinationAirport() == null) {
             logger.info("either origin airport is null and/or destination airport is null");
             return new ResponseEntity<>("either origin airport is null and/or destination airport is null", HttpStatus.BAD_REQUEST);
         }
         else{
-            Route check = adminService.getRouteByOriginDestination(route.getOriginAirport().getIata_id(), route.getDestinationAirport().getIata_id());
+            Route check = adminService.getRouteById(routeId);
             if(check == null) {
                 logger.info("route does not exist");
-                Route posted = adminService.saveRoute(route);
-                return new ResponseEntity<>(posted, HttpStatus.OK);
+                return new ResponseEntity<>("does not exist", HttpStatus.BAD_REQUEST);
             }
             else {
-                logger.info("route already exists");
-                return new ResponseEntity<>("route already exists", HttpStatus.BAD_REQUEST);
+                Airport originCheck = adminService.getAirportById(route.getOriginAirport().getIata_id());
+                Airport destinationCheck = adminService.getAirportById(route.getDestinationAirport().getIata_id());
+                if(originCheck == null || destinationCheck == null) {
+                    logger.info("either origin and/or destination airport does not exist");
+                    return new ResponseEntity<>("either origin and/or destination airport does not exist", HttpStatus.BAD_REQUEST);
+                }
+                else{
+                    logger.info("route exists");
+                    route.setId(routeId);
+                    Route posted = adminService.saveRoute(route);
+                    return new ResponseEntity<>(posted, HttpStatus.OK);
+                }
             }
         }
     }
@@ -1012,7 +1028,7 @@ public class AdminController {
             check.setOriginAirport(null);
             check.setDestinationAirport(null);
             adminService.deleteRoute(check);
-            return new ResponseEntity<>("deleting route " + routeId.toString(), HttpStatus.OK);
+            return new ResponseEntity<>("deleting route " + check.toString(), HttpStatus.OK);
         }
     }
 

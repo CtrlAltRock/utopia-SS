@@ -321,7 +321,11 @@ public class AdminService {
         return (List<Passenger>) passengerRepository.findAll();
     }
 
-    public Passenger getPassengerById(Integer passengerId) { return passengerRepository.findById(passengerId).get(); }
+    public Passenger getPassengerById(Integer passengerId) {
+        Optional<Passenger> passenger = passengerRepository.findById(passengerId);
+        if(passenger.isPresent()) return passenger.get();
+        else return null;
+    }
 
     public List<Passenger> getPassengersByBookingId(Integer bookingId) { return passengerRepository.findByBookingId(bookingId); }
 
