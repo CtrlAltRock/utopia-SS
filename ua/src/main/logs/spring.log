@@ -1,0 +1,65 @@
+2022-04-01 10:34:52.110  INFO 2364 --- [main] com.smoothstack.ua.UaApplication         : Starting UaApplication using Java 16.0.1 on DESKTOP-6HFQH8D with PID 2364 (C:\Users\Sam\Documents\GitHub\utopia-SS\ua\target\classes started by Sam in C:\Users\Sam\Documents\GitHub\utopia-SS\ua)
+2022-04-01 10:34:52.114  INFO 2364 --- [main] com.smoothstack.ua.UaApplication         : No active profile set, falling back to 1 default profile: "default"
+2022-04-01 10:34:53.706  INFO 2364 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-04-01 10:34:53.840  INFO 2364 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 123 ms. Found 15 JPA repository interfaces.
+2022-04-01 10:34:55.034  INFO 2364 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2022-04-01 10:34:55.052  INFO 2364 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-04-01 10:34:55.053  INFO 2364 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.58]
+2022-04-01 10:34:55.263  INFO 2364 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-04-01 10:34:55.264  INFO 2364 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 3077 ms
+2022-04-01 10:34:55.839  INFO 2364 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2022-04-01 10:34:56.390  INFO 2364 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2022-04-01 10:34:56.469  INFO 2364 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-04-01 10:34:56.560  INFO 2364 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.6.5.Final
+2022-04-01 10:34:56.818  INFO 2364 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2022-04-01 10:34:57.005  INFO 2364 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+2022-04-01 10:34:57.950  INFO 2364 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-04-01 10:34:57.964  INFO 2364 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-04-01 10:34:58.604  WARN 2364 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-04-01 10:34:59.527  INFO 2364 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Will not secure any request
+2022-04-01 10:35:01.435  INFO 2364 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 14 endpoint(s) beneath base path '/actuator'
+2022-04-01 10:35:01.518  INFO 2364 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2022-04-01 10:35:01.537  INFO 2364 --- [main] com.smoothstack.ua.UaApplication         : Started UaApplication in 10.064 seconds (JVM running for 10.79)
+2022-04-01 10:35:22.980  INFO 2364 --- [http-nio-8080-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-04-01 10:35:22.980  INFO 2364 --- [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2022-04-01 10:35:22.982  INFO 2364 --- [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2022-04-01 10:35:22.997  WARN 2364 --- [http-nio-8080-exec-2] c.s.ua.security.jwt.JwtRequestFilter     : JWT Token does not begin with Bearer String
+2022-04-01 10:35:23.029  INFO 2364 --- [http-nio-8080-exec-2] com.smoothstack.ua.extras.LoggingAspect  : Enter: com.smoothstack.ua.controllers.AdminController.getAirplaneTypes() with arguments[s] = []
+2022-04-01 10:35:23.047  INFO 2364 --- [http-nio-8080-exec-2] com.smoothstack.ua.extras.LoggingAspect  : Enter: com.smoothstack.ua.services.AdminService.getALLAirplaneTypes() with arguments[s] = []
+2022-04-01 10:35:26.989  INFO 2364 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-04-01 10:35:26.991  INFO 2364 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2022-04-01 10:35:27.000  INFO 2364 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2022-04-01 10:58:03.331  INFO 7932 --- [main] com.smoothstack.ua.UaApplication         : Starting UaApplication using Java 16.0.1 on DESKTOP-6HFQH8D with PID 7932 (C:\Users\Sam\Documents\GitHub\utopia-SS\ua\target\classes started by Sam in C:\Users\Sam\Documents\GitHub\utopia-SS\ua)
+2022-04-01 10:58:03.335  INFO 7932 --- [main] com.smoothstack.ua.UaApplication         : No active profile set, falling back to 1 default profile: "default"
+2022-04-01 10:58:04.854  INFO 7932 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-04-01 10:58:05.004  INFO 7932 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 137 ms. Found 15 JPA repository interfaces.
+2022-04-01 10:58:06.079  INFO 7932 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2022-04-01 10:58:06.092  INFO 7932 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-04-01 10:58:06.093  INFO 7932 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.58]
+2022-04-01 10:58:06.295  INFO 7932 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-04-01 10:58:06.295  INFO 7932 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2882 ms
+2022-04-01 10:58:06.854  INFO 7932 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2022-04-01 10:58:07.249  INFO 7932 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2022-04-01 10:58:07.316  INFO 7932 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-04-01 10:58:07.387  INFO 7932 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.6.5.Final
+2022-04-01 10:58:07.665  INFO 7932 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2022-04-01 10:58:07.847  INFO 7932 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+2022-04-01 10:58:08.684  INFO 7932 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-04-01 10:58:08.694  INFO 7932 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-04-01 10:58:09.266  WARN 7932 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-04-01 10:58:10.047  INFO 7932 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Will not secure any request
+2022-04-01 10:58:11.790  INFO 7932 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 14 endpoint(s) beneath base path '/actuator'
+2022-04-01 10:58:11.864  INFO 7932 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2022-04-01 10:58:11.882  INFO 7932 --- [main] com.smoothstack.ua.UaApplication         : Started UaApplication in 9.153 seconds (JVM running for 9.852)
+2022-04-01 10:58:21.204  INFO 7932 --- [http-nio-8080-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-04-01 10:58:21.204  INFO 7932 --- [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2022-04-01 10:58:21.206  INFO 7932 --- [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2022-04-01 10:58:21.220  WARN 7932 --- [http-nio-8080-exec-2] c.s.ua.security.jwt.JwtRequestFilter     : JWT Token does not begin with Bearer String
+2022-04-01 10:58:21.249  INFO 7932 --- [http-nio-8080-exec-2] com.smoothstack.ua.extras.LoggingAspect  : Enter: com.smoothstack.ua.controllers.AdminController.getAirplaneTypes() with arguments[s] = []
+2022-04-01 10:58:21.263  INFO 7932 --- [http-nio-8080-exec-2] com.smoothstack.ua.extras.LoggingAspect  : Enter: com.smoothstack.ua.services.AdminService.getALLAirplaneTypes() with arguments[s] = []
+2022-04-01 10:58:22.483  WARN 7932 --- [http-nio-8080-exec-3] c.s.ua.security.jwt.JwtRequestFilter     : JWT Token does not begin with Bearer String
+2022-04-01 10:58:22.485  INFO 7932 --- [http-nio-8080-exec-3] com.smoothstack.ua.extras.LoggingAspect  : Enter: com.smoothstack.ua.controllers.AdminController.getAirplaneTypes() with arguments[s] = []
+2022-04-01 10:58:22.486  INFO 7932 --- [http-nio-8080-exec-3] com.smoothstack.ua.extras.LoggingAspect  : Enter: com.smoothstack.ua.services.AdminService.getALLAirplaneTypes() with arguments[s] = []
+2022-04-01 10:59:33.588  INFO 7932 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-04-01 10:59:33.591  INFO 7932 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2022-04-01 10:59:33.598  INFO 7932 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.

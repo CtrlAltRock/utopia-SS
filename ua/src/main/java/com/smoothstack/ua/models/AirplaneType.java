@@ -8,10 +8,10 @@ public class AirplaneType {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer id = 0;
+    Integer id;
 
     @Column(name = "max_capacity")
-    Integer max_capacity = 0;
+    Integer max_capacity;
 
     public AirplaneType() {
     }

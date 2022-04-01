@@ -81,10 +81,10 @@ public class AdminController {
     }
 
     @Timed("get.airplanes.id")
-    @RequestMapping(path = "utopia/airlines/airplanes/{id}/", method = RequestMethod.GET, produces = {"application/json", "application/xml"})
-    public ResponseEntity<?> getAirplaneById(@Valid @PathVariable Integer id) {
+    @RequestMapping(path = "utopia/airlines/airplanes/{airplaneId}/", method = RequestMethod.GET, produces = {"application/json", "application/xml"})
+    public ResponseEntity<?> getAirplaneById(@Valid @PathVariable Integer airplaneId) {
         ResponseEntity<?> out;
-        Airplane airplane = adminService.getAirplaneById(id);
+        Airplane airplane = adminService.getAirplaneById(airplaneId);
 
         if (airplane == null){
             out = new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
@@ -97,43 +97,37 @@ public class AdminController {
     @Timed("post.airplanes")
     @RequestMapping(path = "utopia/airlines/airplanes/", method = RequestMethod.POST, consumes = {"application/json", "application/xml"})
     public ResponseEntity<?> saveAirplane(@RequestBody Airplane airplane) {
-        ResponseEntity<?> out = null;
+        if(airplane.getAirplaneType().getId() == null) {
+            logger.info("airplane type id not provided");
+            return new ResponseEntity<>("airplane type id not provided", HttpStatus.BAD_REQUEST);
+        }
+
         AirplaneType airplaneType = airplane.getAirplaneType();
         AirplaneType sameType = adminService.getAirplaneTypeById(airplaneType.getId());
-        logger.info(airplane.toString(), "airplane received");
-        logger.info(sameType.toString(), "airplaneType in DB");
-
         //airplane type does not exist don't add
         if(sameType == null) {
             logger.info(sameType.toString());
-            out = new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("airplane type does not exist", HttpStatus.BAD_REQUEST);
         }
         else{
 
             //but does airplanetype received actually match the one in the DB
             if(!airplaneType.getMax_capacity().equals(sameType.getMax_capacity())){
-                out = new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>("airplane type does not match", HttpStatus.BAD_REQUEST);
             }
             else {
                 //it does match , get the saved airplane w/new id
-                try{
-                    airplane = adminService.saveAirplane(airplane);
-                    out = new ResponseEntity<>(airplane, HttpStatus.OK);
-                } catch (Exception e) {
-                    logger.info(e.toString(), "saveAirplane");
-                }
+                airplane = adminService.saveAirplane(airplane);
+                return new ResponseEntity<>(airplane, HttpStatus.OK);
             }
         }
-        return out;
     }
 
     @Timed("put.airplanes")
-    @RequestMapping(path = "utopia/airlines/airplanes/{id}", method = RequestMethod.PUT, consumes = {"application/json", "application/xml"})
-    public ResponseEntity<?> putAirplane(@RequestBody Airplane airplane, @PathVariable Integer id) {
+    @RequestMapping(path = "utopia/airlines/airplanes/{airplaneId}", method = RequestMethod.PUT, consumes = {"application/json", "application/xml"})
+    public ResponseEntity<?> putAirplane(@RequestBody Airplane airplane, @PathVariable Integer airplaneId) {
         ResponseEntity<?> out = null;
-        logger.info(airplane.toString(), "airplane recieved" );
-        logger.info(id.toString(), "id received to modify");
-        Airplane check = adminService.getAirplaneById(id);
+        Airplane check = adminService.getAirplaneById(airplaneId);
         if(check == null) {
             logger.info("airplane id does not exist");
             return new ResponseEntity<>("airplane id does not exist", HttpStatus.BAD_REQUEST);
@@ -150,8 +144,8 @@ public class AdminController {
                     return new ResponseEntity<>("airplane type to change to does not have the right max_capacity", HttpStatus.BAD_REQUEST);
                 }
                 else{
-                    airplane.setId(id);
-                    logger.info(airplane.toString(),id.toString(), "put airplane request, airplane, id");
+                    airplane.setId(airplaneId);
+                    logger.info(airplane.toString(), airplaneId.toString(), "put airplane request, airplane, id");
                     Airplane updated = adminService.updateAirplane(airplane);
                     return new ResponseEntity<>(updated, HttpStatus.OK);
                 }
@@ -161,9 +155,9 @@ public class AdminController {
 
 
     @Timed("delete.airplane")
-    @RequestMapping(path = "utopia/airlines/airplanes/{id}/", method = RequestMethod.DELETE)
-    public ResponseEntity<?> deleteAirplaneById(@PathVariable Integer id) {
-        Airplane toDelete = adminService.getAirplaneById(id);
+    @RequestMapping(path = "utopia/airlines/airplanes/{airplaneId}/", method = RequestMethod.DELETE)
+    public ResponseEntity<?> deleteAirplaneById(@PathVariable Integer airplaneId) {
+        Airplane toDelete = adminService.getAirplaneById(airplaneId);
         toDelete.setAirplaneType(null);
         if(toDelete == null) {
             logger.info("airplane id to delete does not exist");
@@ -171,7 +165,7 @@ public class AdminController {
         }
         else{
             logger.info(toDelete.toString(), "airplane to delete");
-            adminService.deleteAirplaneById(id);
+            adminService.deleteAirplaneById(airplaneId);
             return new ResponseEntity<>("deleting " + toDelete.toString(), HttpStatus.OK);
         }
     }
@@ -181,16 +175,14 @@ public class AdminController {
     @Timed("get.airplaneTypes.dump")
     @RequestMapping(path = "utopia/airlines/airplaneTypes/", method = RequestMethod.GET, produces = {"application/json", "application/xml"})
     public ResponseEntity<?> getAirplaneTypes() {
-        logger.info("getting all airplane types");
         List<AirplaneType> airplaneTypes = adminService.getALLAirplaneTypes();
         return new ResponseEntity<>(airplaneTypes, HttpStatus.OK);
     }
 
     @Timed("get.airplaneTypes")
-    @RequestMapping(path = "utopia/airlines/airplaneTypes/{id}", method = RequestMethod.GET, produces = {"application/json", "application/xml"})
-    public ResponseEntity<?> getAirplaneTypeById(@Valid @PathVariable Integer id) {
-        AirplaneType airplaneType = adminService.getAirplaneTypeById(id);
-        logger.info(id.toString(), "id of airplane type to get");
+    @RequestMapping(path = "utopia/airlines/airplaneTypes/{airplaneTypeId}", method = RequestMethod.GET, produces = {"application/json", "application/xml"})
+    public ResponseEntity<?> getAirplaneTypeById(@Valid @PathVariable Integer airplaneTypeId) {
+        AirplaneType airplaneType = adminService.getAirplaneTypeById(airplaneTypeId);
         if(airplaneType == null) {
             logger.info("airplane type id does not exist");
             return new ResponseEntity<>("airplane type id does not exist", HttpStatus.BAD_REQUEST);
@@ -202,23 +194,20 @@ public class AdminController {
     @Timed("post.airplaneTypes")
     @RequestMapping(path = "utopia/airlines/airplaneTypes/", method = RequestMethod.POST, consumes = {"application/json", "application/xml"})
     public ResponseEntity<?> saveAirplaneTypes(@RequestBody AirplaneType airplaneType) {
-        logger.info(airplaneType.toString(), "airplane type to be posted");
         AirplaneType posted = adminService.saveAirplaneType(airplaneType);
         return new ResponseEntity<>(posted, HttpStatus.OK);
     }
 
 
     @Timed("put.airplaneType")
-    @RequestMapping(path = "utopia/airlines/airplaneTypes/{id}", method = RequestMethod.PUT, consumes = {"application/json", "application/xml"})
-    public ResponseEntity<?> putAirplaneType(@RequestBody AirplaneType airplaneType, @PathVariable Integer id) {
-        logger.info(id.toString(), "id of airplane type to be changed");
-        logger.info(airplaneType.toString(), "airplane type to change to");
-        AirplaneType sameType = adminService.getAirplaneTypeById(id);
+    @RequestMapping(path = "utopia/airlines/airplaneTypes/{airplaneTypeId}", method = RequestMethod.PUT, consumes = {"application/json", "application/xml"})
+    public ResponseEntity<?> putAirplaneType(@RequestBody AirplaneType airplaneType, @PathVariable Integer airplaneTypeId) {
+        AirplaneType sameType = adminService.getAirplaneTypeById(airplaneTypeId);
         if(sameType == null) {
             return new ResponseEntity<>("airplane type id does not exist", HttpStatus.BAD_REQUEST);
         }
         else{
-            airplaneType.setId(id);
+            airplaneType.setId(airplaneTypeId);
             AirplaneType put = adminService.saveAirplaneType(airplaneType);
             return new ResponseEntity<>(put, HttpStatus.OK);
         }
@@ -226,17 +215,16 @@ public class AdminController {
 
 
     @Timed("delete.airplaneType")
-    @RequestMapping(path = "utopia/airlines/airplaneTypes/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<?> deleteAirplaneTypeId(@PathVariable Integer id) {
-        logger.info(id.toString(), "id of airplane type to delete");
-        AirplaneType toDelete = adminService.getAirplaneTypeById(id);
+    @RequestMapping(path = "utopia/airlines/airplaneTypes/{airplaneTypeId}", method = RequestMethod.DELETE)
+    public ResponseEntity<?> deleteAirplaneTypeId(@PathVariable Integer airplaneTypeId) {
+        AirplaneType toDelete = adminService.getAirplaneTypeById(airplaneTypeId);
         if(toDelete == null) {
             logger.info("id for airplane type does not exist");
             return new ResponseEntity<>("id for airplane type does not exist", HttpStatus.BAD_REQUEST);
         }
         else{
             logger.info(toDelete.toString(), "airplane type to delete");
-            adminService.deleteAirplaneTypeById(id);
+            adminService.deleteAirplaneTypeById(airplaneTypeId);
             return new ResponseEntity<>("deleting airplane type " + toDelete.toString(), HttpStatus.BAD_REQUEST);
         }
 
@@ -256,7 +244,6 @@ public class AdminController {
     @Timed("get.airports.id")
     @RequestMapping(path = "utopia/airlines/airports/{id}", method = RequestMethod.GET, produces = {"application/json", "application/xml"})
     public ResponseEntity<?> getAirportById(@PathVariable String id) {
-        logger.info(id, "Id of airport to get");
         Airport check = adminService.getAirportById(id);
         if(check == null) {
             logger.info("id of airport does not exist");
@@ -271,7 +258,6 @@ public class AdminController {
     @Timed("post.airports")
     @RequestMapping(path = "utopia/airlines/airports/", method = RequestMethod.POST, consumes = {"application/json", "application/xml"})
     public ResponseEntity<?> postAirport(@RequestBody Airport airport) {
-        logger.info(airport.toString(), "airport to post");
         Airport check = adminService.getAirportById(airport.getIata_id());
         if(check == null) {
             logger.info(airport.toString(), "airport does not exist and can be posted");
@@ -287,8 +273,6 @@ public class AdminController {
     @Timed("post.airport")
     @RequestMapping(path = "utopia/airlines/airports/{id}", method = RequestMethod.PUT, consumes = {"application/json", "application/xml"})
     public ResponseEntity<?> putAirport(@RequestBody Airport airport, @PathVariable String id) {
-        logger.info(id, "airport that is being updated");
-        logger.info(airport.toString(), "airport to change to ");
         Airport put = adminService.getAirportById(id);
         if(put == null) {
             logger.info("airport id to update does not exist");
@@ -306,7 +290,6 @@ public class AdminController {
     @Timed("delete.airport")
     @RequestMapping(path = "utopia/airlines/airport/{id}", method = RequestMethod.DELETE )
     public ResponseEntity<?> deleteAirport(@PathVariable String id) {
-        logger.info(id, "airport to delete");
         Airport check = adminService.getAirportById(id);
         if(check == null) {
             logger.info(id, "id does not exist");
@@ -329,9 +312,7 @@ public class AdminController {
     @Timed("get.bookings.id")
     @RequestMapping(path = "utopia/airlines/bookings/{id}", method = RequestMethod.GET, consumes = {"application/json", "application/xml"})
     public ResponseEntity<?> saveBookings(@PathVariable Integer id) {
-        logger.info(id.toString(), "booking id to find");
         Booking check = adminService.getBookingsById(id);
-
         if(check == null) {
             logger.info("booking does not exist");
             return new ResponseEntity<>("booking does not exist", HttpStatus.BAD_REQUEST);
@@ -345,7 +326,6 @@ public class AdminController {
     @Timed("post.bookings")
     @RequestMapping(path = "utopia/airlines/bookings/", method = RequestMethod.POST, consumes = {"application/json", "application/xml"})
     public ResponseEntity<?> saveBookings(@RequestBody Booking booking) {
-        logger.info(booking.toString(), "booking to post");
         Booking posted = adminService.saveBooking(booking);
         return new ResponseEntity<>(posted, HttpStatus.OK);
     }
@@ -353,9 +333,6 @@ public class AdminController {
     @Timed("post.booking")
     @RequestMapping(path = "utopia/airlines/bookings/{id}", method = RequestMethod.PUT, consumes = {"application/json", "application/xml"})
     public ResponseEntity<?> saveBooking(@RequestBody Booking booking, @PathVariable Integer id) {
-        logger.info(id.toString(), "id of booking to update");
-        logger.info(booking.toString(), "booking update");
-
         Booking check = adminService.getBookingsById(id);
         if(check == null) {
             logger.info("id of booking does not exist");
@@ -374,7 +351,6 @@ public class AdminController {
     @Timed("delete.booking")
     @RequestMapping(path = "utopia/airlines/bookings/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<?> deleteBookingById(@PathVariable Integer id) {
-        logger.info(id.toString(), "id of booking to delete");
         Booking check = adminService.getBookingsById(id);
 
         if(check == null) {
@@ -401,8 +377,6 @@ public class AdminController {
     @Timed("get.bookingAgents.id")
     @RequestMapping(path = "utopia/airlines/bookingAgents/{bookingId}/{userId}", method = RequestMethod.GET, produces = {"application/json", "application/xml"})
     public ResponseEntity<?> getBookingAgentById(@PathVariable Integer bookingId, @PathVariable Integer userId) {
-        logger.info(bookingId.toString(), "booking id argument");
-        logger.info(userId.toString(), "user id argument");
         BookingAgentId bookingAgentId = new BookingAgentId(bookingId, userId);
         BookingAgent bookingAgent = adminService.getBookingAgentById(bookingAgentId);
         if(bookingAgent == null) {
@@ -419,7 +393,6 @@ public class AdminController {
     @Timed("post.bookingAgents")
     @RequestMapping(path = "utopia/airlines/bookingAgents/", method = RequestMethod.POST, consumes = {"application/json", "application/xml"})
     public ResponseEntity<?> saveBookingAgents(@RequestBody BookingAgent bookingAgent) {
-        logger.info(bookingAgent.toString(), "booking agent to post");
         BookingAgent check = adminService.getBookingAgentById(bookingAgent.getBookingAgentId());
 
         if(check == null) {
@@ -496,7 +469,6 @@ public class AdminController {
     @Timed("get.bookingPayments.id")
     @RequestMapping(path = "utopia/airlines/bookingPayments/{bookingId}", method = RequestMethod.GET, produces = {"application/json", "application/xml"})
     public ResponseEntity<?> getBookingPaymentsById(@PathVariable Integer bookingId) {
-        logger.info(bookingId.toString(), "bookingI id argument");
         BookingPaymentId bookingPaymentId = new BookingPaymentId(bookingId);
         BookingPayment bookingPayment  = adminService.getBookingPaymentById(bookingId);
         if(bookingPayment == null) {
@@ -511,7 +483,6 @@ public class AdminController {
     @Timed("post.bookingPayments")
     @RequestMapping(path = "utopia/airlines/bookingPayments/", method = RequestMethod.POST, consumes = {"application/json", "application/xml"})
     public ResponseEntity<?> postBookingPayments(@RequestBody BookingPayment bookingPayment) {
-        logger.info(bookingPayment.toString(), "booking payment argument");
         BookingPayment check = adminService.getBookingPaymentById(bookingPayment.getBookingPaymentId().getBooking_id());
         if(check == null) {
             logger.info("booking payment id doesn't exist");
@@ -528,9 +499,6 @@ public class AdminController {
     @Timed("put.bookingPayments")
     @RequestMapping(path = "utopia/airlines/bookingPayments/{bookingPaymentId}", method = RequestMethod.PUT, consumes = {"application/json", "application/xml"})
     public ResponseEntity<?> putBookingPayments(@RequestBody BookingPayment bookingPayment, @PathVariable Integer bookingPaymentId) {
-        logger.info(bookingPayment.toString(), "booking payment argument");
-        logger.info(bookingPaymentId.toString(), "bookingPaymentId argument to change");
-
         BookingPayment check = adminService.getBookingPaymentById(bookingPaymentId);
 
         if(check == null) {
@@ -550,7 +518,6 @@ public class AdminController {
     @Timed("delete.bookingPayments")
     @RequestMapping(path = "utopia/airlines/bookingPayments/{bookingPaymentId}", method = RequestMethod.DELETE, consumes = {"application/json", "application/xml"})
     public ResponseEntity<?> deleteBookingPayments(@PathVariable Integer bookingPaymentId) {
-        logger.info(bookingPaymentId.toString(), "booking payment id argument");
         BookingPayment check = adminService.getBookingPaymentById(bookingPaymentId);
 
         if(check == null) {
@@ -578,8 +545,6 @@ public class AdminController {
     @Timed("get.bookingUsers.id")
     @RequestMapping(path = "utopia/airlines/bookingUsers/{bookingId}/{userId}", method = RequestMethod.GET, produces = {"application/json", "application/xml"})
     public ResponseEntity<?> getBookingUserById(@PathVariable Integer bookingId, @PathVariable Integer userId) {
-        logger.info(bookingId.toString(), "bookingId argument");
-        logger.info(userId.toString(), "userId argument");
         BookingUser check = adminService.getBookingUserById(new BookingUserId(bookingId, userId));
         if(check == null) {
             logger.info("booking user does not exist");
@@ -594,7 +559,6 @@ public class AdminController {
     @Timed("post.bookingUsers")
     @RequestMapping(path = "utopia/airlines/bookingUsers/", method = RequestMethod.POST, consumes = {"application/json", "application/xml"})
     public ResponseEntity<?> postBookingUsers(@RequestBody BookingUser bookingUser) {
-        logger.info(bookingUser.toString(), "booking user argument");
         BookingUser check = adminService.getBookingUserById(bookingUser.getBookingUserId());
         if(check == null) {
             logger.info("booking user does not exist");
@@ -610,12 +574,7 @@ public class AdminController {
     @Timed("put.bookingUsers")
     @RequestMapping(path = "utopia/airlines/bookingUser/{bookingId}/{userId}", method = RequestMethod.PUT, consumes = {"application/json", "application/xml"})
     public ResponseEntity<?> putBookingUser(@RequestBody BookingUser bookingUser, @PathVariable Integer bookingId, @PathVariable Integer userId) {
-        logger.info(bookingUser.toString(), "booking user argument");
-        logger.info(bookingId.toString(), "booking id argument");
-        logger.info(userId.toString(), "user id argument");
-
         BookingUser check = adminService.getBookingUserById(new BookingUserId(bookingId, userId));
-
         if(check == null) {
             logger.info("booking user does not exist");
             return new ResponseEntity<>("booking user does not exist", HttpStatus.BAD_REQUEST);
@@ -659,7 +618,6 @@ public class AdminController {
     @Timed("get.flights.id")
     @RequestMapping(path = "utopia/airlines/flights/{flightId}", method = RequestMethod.GET, produces = {"application/json", "application/xml"})
     public ResponseEntity<?> getFlightById(@PathVariable Integer flightId) {
-        logger.info(flightId.toString(), "flight id argument");
         Flight check = adminService.getFlightById(flightId);
         if(check == null) {
             logger.info("flight does not exist");
@@ -675,7 +633,6 @@ public class AdminController {
     @Timed("post.flights")
     @RequestMapping(path = "utopia/airlines/flight/", method = RequestMethod.POST, consumes = {"application/json", "application/xml"})
     public ResponseEntity<?> postFlight(@RequestBody Flight flight) {
-        logger.info(flight.toString(), "flight argument");
         if(flight.getAirplane() == null || flight.getRoute() == null || flight.getId() != null) {
             logger.info("not accepting body argument");
             return new ResponseEntity<>("either airplane is null or route is null or an id has been supplied to the RequestBody", HttpStatus.BAD_REQUEST);
@@ -699,8 +656,6 @@ public class AdminController {
     @Timed("put.flights")
     @RequestMapping(path = "utopia/airlines/flight/{flightId}", method = RequestMethod.PUT, consumes = {"application/json", "application/xml"})
     public ResponseEntity<?> putFlight(@RequestBody Flight flight, @PathVariable Integer flightId) {
-        logger.info(flight.toString(), "flight argument");
-        logger.info(flightId.toString(), "flight id argument");
         Flight check = adminService.getFlightById(flightId);
         if(check == null) {
             logger.info("flight id does not exist");
@@ -731,7 +686,6 @@ public class AdminController {
     @Timed("delete.flights")
     @RequestMapping(path = "utopia/airlines/flight/{flightId}", method = RequestMethod.DELETE)
     public ResponseEntity<?> deleteFlightById(@PathVariable Integer flightId) {
-        logger.info(flightId.toString(), "flight id argument");
         Flight check = adminService.getFlightById(flightId);
         if(check == null) {
             logger.info("flight id does not exist");
@@ -756,8 +710,6 @@ public class AdminController {
     @Timed("get.flightBookings.ids")
     @RequestMapping(path = "utopia/airlines/flightBookings/{flightId}/{bookingId}", method = RequestMethod.GET, produces = {"application/json", "application/xml"})
     public ResponseEntity<?> getFlightBookingsById(@PathVariable Integer flightId, @PathVariable Integer bookingId) {
-        logger.info(flightId.toString(), "flight id argument");
-        logger.info(bookingId.toString(), "booking id argument");
         FlightBookings check = adminService.getFlightBookingsById(new FlightBookingsId(flightId, bookingId));
         if(check == null) {
             logger.info("flight booking does not exist");
@@ -772,7 +724,6 @@ public class AdminController {
     @Timed("post.flightBookings")
     @RequestMapping(path = "utopia/airlines/flightBookings/", method = RequestMethod.POST, consumes = {"application/json", "application/xml"})
     public ResponseEntity<?> postFlightBookings(@RequestBody FlightBookings flightBooking) {
-        logger.info(flightBooking.toString(), "flight booking body argument");
         FlightBookings check = adminService.getFlightBookingsById(flightBooking.getFlightBookingsId());
         if(check == null) {
             logger.info("flight Booking does not exist");
@@ -797,10 +748,6 @@ public class AdminController {
     @Timed("put.flightBookings")
     @RequestMapping(path = "utopia/airlines/flightBookings/{flightId}/{bookingId}", method = RequestMethod.PUT, consumes = {"application/json", "application/xml"})
     public ResponseEntity<?> putFlightBooking(@RequestBody FlightBookings flightBooking, @PathVariable Integer flightId, @PathVariable Integer bookingId) {
-        logger.info(flightBooking.toString(), "flight booking argument");
-        logger.info(flightId.toString(), "flight id argument");
-        logger.info(bookingId.toString(), "booking id argument");
-
         FlightBookings check = adminService.getFlightBookingsById(new FlightBookingsId(flightId, bookingId));
         if(check == null) {
             logger.info("flight bookings does not exist");
@@ -827,8 +774,6 @@ public class AdminController {
     @Timed("delete.flightBookings")
     @RequestMapping(path = "utopia/airlines/flightBooking/{flightId}/{bookingId}", method = RequestMethod.DELETE, consumes = {"application/json", "application/xml"})
     public ResponseEntity<?> deleteFlightBookingsById(@PathVariable Integer flightId, @PathVariable Integer bookingId) {
-        logger.info(flightId.toString(), "flight id argument");
-        logger.info(bookingId.toString(), "booking id argument");
         FlightBookings check = adminService.getFlightBookingsById(new FlightBookingsId(flightId, bookingId));
         if(check == null) {
             logger.info("flight booking does not exist");
@@ -854,7 +799,6 @@ public class AdminController {
     @Timed("get.passengers.id")
     @RequestMapping(path = "utopia/airline/passengers/{passengerId}", method = RequestMethod.GET, produces = {"application/json", "application/xml"})
     public ResponseEntity<?> getPassengerById(@PathVariable Integer passengerId) {
-        logger.info(passengerId.toString(), "passenger id argument");
         Passenger check = adminService.getPassengerById(passengerId);
         if(check == null) {
             logger.info("passenger does not exist");
@@ -870,7 +814,6 @@ public class AdminController {
     @Timed("post.passenger")
     @RequestMapping(path = "utopia/airlines/passengers/", method = RequestMethod.POST, consumes = {"application/json", "application/xml"})
     public ResponseEntity<?> postPassengers(@RequestBody Passenger passenger) {
-        logger.info(passenger.toString(), "passenger argument");
         if(passenger.getBooking_id() == null || passenger.getId() != null) {
             logger.info("either booking is not provided and/or id has been provided");
             return new ResponseEntity<>("either booking is not provided and/or id has been provided", HttpStatus.BAD_REQUEST);
@@ -892,8 +835,6 @@ public class AdminController {
     @Timed("put.passenger")
     @RequestMapping(path = "utopia/airlines/passengers/{passengerId}", method = RequestMethod.POST, consumes = {"application/json", "application/xml"})
     public ResponseEntity<?> putPassengers(@RequestBody Passenger passenger, @PathVariable Integer passengerId) {
-        logger.info(passenger.toString(), "passenger argument");
-        logger.info(passengerId.toString(), "passenger id argument");
         Passenger check = adminService.getPassengerById(passengerId);
         if(check == null) {
             logger.info("passenger does not exist");
@@ -920,7 +861,6 @@ public class AdminController {
     @Timed("delete.passenger")
     @RequestMapping(path = "utopia/airlines/passengers/{passengerId}", method = RequestMethod.DELETE)
     public ResponseEntity<?> deletePassengerById(@PathVariable Integer passengerId) {
-        logger.info(passengerId.toString(), "passenger id argument");
         Passenger check = adminService.getPassengerById(passengerId);
         if(check == null) {
             logger.info("passenger doe not exist");
@@ -940,7 +880,6 @@ public class AdminController {
     @Timed("get.routes.dump")
     @RequestMapping(path = "utopia/airlines/routes/", method = RequestMethod.GET, produces = {"application/json", "application/xml"})
     public ResponseEntity<?> getRoutes() {
-        logger.info("getting all routes");
         List<Route> routes = adminService.getRoutes();
         return new ResponseEntity<>(routes, HttpStatus.OK);
     }
@@ -948,7 +887,6 @@ public class AdminController {
     @Timed("get.routes.id")
     @RequestMapping(path = "utopia/airlines/routes/{routeId}", method = RequestMethod.GET, produces = {"application/json", "application/xml"})
     public ResponseEntity<?> getRoutesById(@PathVariable Integer routeId) {
-        logger.info(routeId.toString(), "route id argument");
         Route check = adminService.getRouteById(routeId);
         if(check == null) {
             logger.info("route does not exist");
@@ -963,7 +901,6 @@ public class AdminController {
     @Timed("post.routes")
     @RequestMapping(path = "utopia/airlines/routes/", method = RequestMethod.POST, consumes = {"application/json", "application/xml"})
     public ResponseEntity<?> saveRoutes(@RequestBody Route route) {
-        logger.info(route.toString(), "route argument");
         Route check = adminService.getRouteByOriginDestination(route.getOriginAirport().getIata_id(), route.getDestinationAirport().getIata_id());
         if(check == null) {
             Airport originCheck = adminService.getAirportById(route.getOriginAirport().getIata_id());

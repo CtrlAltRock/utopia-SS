@@ -353,6 +353,9 @@ public class AdminService {
     }
 
     public void deletePassengers(List<Passenger> passengers) { passengerRepository.deleteAll(passengers); }
+    public void deletePassenger(Passenger passenger) {
+        passengerRepository.delete(passenger);
+    }
 
     public void deletePassengerById(Integer id) {
         Flight flight = flightRepository.findFlightByPassenger(id);
@@ -461,6 +464,8 @@ public class AdminService {
     public void deleteUserRoles(List<UserRole> userRoles) { userRoleRepository.deleteAll(userRoles); }
 
     public void deleteUserRoleById(Long id) { userRoleRepository.deleteById(id); }
+
+
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }

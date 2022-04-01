@@ -17,7 +17,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
-//@DirtiesContext
+@DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @SpringBootTest(classes = {UaApplication.class})
 public class AdminCrudTests {
@@ -576,6 +576,7 @@ public class AdminCrudTests {
     public void createPassenger() {
         Assertions.assertTrue(adminService.getPassengers().size() == 0);
         adminService.saveFlightBooking(flightBookings);
+        adminService.getFlightBookingsById(flightBookingsId);
         adminService.saveFlight(flight);
         adminService.savePassenger(passenger);
         Assertions.assertTrue(adminService.getPassengers().size() == 1);
@@ -599,6 +600,8 @@ public class AdminCrudTests {
         Passenger new_passenger = adminService.getPassengers().get(0);
         logger.info(new_passenger.toString());
         new_passenger.setGender("female");
+        new_passenger.setBooking_id(booking);
+        System.out.println(new_passenger.toString());
         adminService.savePassenger(new_passenger);
         Assertions.assertTrue(adminService.getPassengers().size() == 1);
         Assertions.assertTrue(adminService.getPassengers().get(0).getGender().equals("female"));
@@ -610,7 +613,8 @@ public class AdminCrudTests {
     @Order(44)
     public void deletePassenger() {
         Assertions.assertTrue(adminService.getPassengers().size() == 1);
-        adminService.deletePassengerById(adminService.getPassengers().get(0).getId());
+        adminService.deletePassenger(adminService.getPassengers().get(0));
+        //adminService.deletePassengerById(adminService.getPassengers().get(0).getId());
         Assertions.assertTrue(adminService.getPassengers().size() == 0);
 
     }
@@ -618,9 +622,10 @@ public class AdminCrudTests {
     @Test
     @Order(45)
     public void createRoute() {
-        Assertions.assertTrue(adminService.getRoutes().size() == 0);
-        adminService.saveRoute(route);
+        System.out.println(adminService.getRoutes());
         Assertions.assertTrue(adminService.getRoutes().size() == 1);
+        adminService.saveRoute(route);
+        Assertions.assertTrue(adminService.getRoutes().size() == 2);
 
     }
 
@@ -628,7 +633,7 @@ public class AdminCrudTests {
     @BeforeTestMethod("createRoute")
     @Order(47)
     public void readRoute() {
-        Assertions.assertTrue(adminService.getRoutes().size() == 1);
+        Assertions.assertTrue(adminService.getRoutes().size() == 2);
         Route new_route = adminService.getRoutes().get(0);
         logger.info(new_route.toString());
         Assertions.assertTrue(new_route.getOriginAirport().getIata_id().equals("GNV"));
@@ -638,11 +643,11 @@ public class AdminCrudTests {
     @BeforeTestMethod("createRoute")
     @Order(48)
     public void updateRoute() {
-        Assertions.assertTrue(adminService.getRoutes().size() == 1);
+        Assertions.assertTrue(adminService.getRoutes().size() == 2);
         Route new_route = adminService.getRoutes().get(0);
         new_route.getOriginAirport().setIata_id("SAD");
         adminService.saveRoute(new_route);
-        Assertions.assertTrue(adminService.getRoutes().size() == 1);
+        Assertions.assertTrue(adminService.getRoutes().size() == 2);
         Assertions.assertTrue(adminService.getRoutes().get(0).getOriginAirport().getIata_id().equals("SAD"));
     }
 
@@ -650,13 +655,15 @@ public class AdminCrudTests {
     @BeforeTestMethod("createRoute")
     @Order(49)
     public void deleteRoute() {
-        Assertions.assertTrue(adminService.getRoutes().size() == 1);
+        Assertions.assertTrue(adminService.getRoutes().size() == 2);
         Route route = adminService.getRoutes().get(0);
         route.setDestinationAirport(null);
         route.setOriginAirport(null);
+        flight.setRoute(null);
+        adminService.saveFlight(flight);
         adminService.saveRoute(route);
         adminService.deleteRoute(route);
-        Assertions.assertTrue(adminService.getRoutes().size() == 0);
+        Assertions.assertTrue(adminService.getRoutes().size() == 1);
     }
 
     @Test
@@ -732,9 +739,9 @@ public class AdminCrudTests {
     @BeforeTestMethod("createUserRole")
     @Order(57)
     public void deleteUserRole() {
-//        Assertions.assertTrue(adminService.getAllUserRoles().size() == 1);
-//        adminService.deleteUserRole(adminService.getAllUserRoles().get(0));
-//        Assertions.assertTrue(adminService.getAllUserRoles().size() == 0);
+        Assertions.assertTrue(adminService.getAllUserRoles().size() == 1);
+        adminService.deleteUserRoleById(adminService.getAllUserRoles().get(0).getId());
+        Assertions.assertTrue(adminService.getAllUserRoles().size() == 0);
     }
 
 

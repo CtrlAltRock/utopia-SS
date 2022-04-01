@@ -12,12 +12,12 @@ public class Route implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id = 0;
 
-    @ManyToOne(cascade = {CascadeType.REFRESH, CascadeType.MERGE, CascadeType.PERSIST})
-    @JoinColumn(name = "origin_id", insertable = true, updatable = true)
+    @ManyToOne(cascade = {CascadeType.REFRESH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH})
+    @JoinColumn(name = "origin_id")
     Airport originAirport = new Airport();
 
-    @ManyToOne(cascade = {CascadeType.REFRESH, CascadeType.MERGE, CascadeType.PERSIST})
-    @JoinColumn(name = "destination_id", insertable = true, updatable = true)
+    @ManyToOne(cascade = {CascadeType.REFRESH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH})
+    @JoinColumn(name = "destination_id")
     Airport destinationAirport = new Airport();
 
     public Route() {

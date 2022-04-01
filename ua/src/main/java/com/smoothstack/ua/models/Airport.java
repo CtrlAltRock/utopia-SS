@@ -9,10 +9,10 @@ public class Airport {
 
     @Id
     @Column(name = "iata_id")
-    String iata_id = "ZZZ";
+    String iata_id;
 
     @Column(name = "city")
-    String city = "Zazzoo";
+    String city;
 
     public Airport() {
     }
