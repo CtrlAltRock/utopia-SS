@@ -5,10 +5,7 @@ import com.smoothstack.uaagent.models.Booking;
 import com.smoothstack.uaagent.models.Flight;
 import com.smoothstack.uaagent.models.Passenger;
 import com.smoothstack.uaagent.repos.BookingRepository;
-import com.smoothstack.uaagent.security.jwt.JwtRequest;
-import com.smoothstack.uaagent.security.jwt.JwtTokenUtil;
 import com.smoothstack.uaagent.security.jwt.JwtUserDetailsService;
-import com.smoothstack.uaagent.security.repositories.UserDao;
 import com.smoothstack.uaagent.services.AgentService;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.*;
@@ -17,11 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener;
 import org.springframework.http.MediaType;
-import org.springframework.mock.web.MockMultipartHttpServletRequest;
-import org.springframework.security.access.method.P;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
@@ -33,7 +26,6 @@ import java.util.stream.IntStream;
 import static org.mockito.ArgumentMatchers.any;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-//@WebMvcTest//(controllers = AgentController.class)
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @AutoConfigureMockMvc(addFilters = false)
@@ -70,7 +62,6 @@ class UaagentApplicationTests {
 			throw new RuntimeException(e);
 		}
 	}
-
 
 	@Test
 	@Order(1)
@@ -112,7 +103,6 @@ class UaagentApplicationTests {
 						.characterEncoding("utf-8").accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
 				.andExpect(content().contentType(MediaType.APPLICATION_JSON));
-				//.andExpect(jsonPath("$.getId()", Matchers.is(1)));
 	}
 
 	@Test
@@ -136,7 +126,6 @@ class UaagentApplicationTests {
 		mockMvc.perform(MockMvcRequestBuilders.get("/utopia/airlines/passengers/1"))
 				.andExpect(status().is(200))
 				.andExpect(content().contentType(MediaType.APPLICATION_JSON));
-//				.andExpect(jsonPath("$.getId()", Matchers.is(1)));
 	}
 
 
@@ -145,29 +134,29 @@ class UaagentApplicationTests {
 	@Order(6)
 	public void putPassenger() throws Exception {
 		Passenger passenger = passengers.get(2);
+		passenger.setId(null);
+		Mockito.when(agentService.getPassengerById(any(Integer.class))).thenReturn(passenger);
+		Mockito.when(agentService.getBookingById(passenger.getBooking_id().getId())).thenReturn(passenger.getBooking_id());
 		Mockito.when(agentService.postPassenger(any(Passenger.class)))
 				.thenReturn(passenger);
 
 		mockMvc.perform(MockMvcRequestBuilders.put("/utopia/airlines/passengers/1")
 						.contentType(MediaType.APPLICATION_JSON)
-						.content(asJsonString(passenger)))
+						.content(asJsonString(passenger))
+						.characterEncoding("utf-8").accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().is(200))
 				.andExpect(content().contentType(MediaType.APPLICATION_JSON));
 	}
 
 
-/*	@Test
-	@Order(1)
+	@Test
+	@Order(7)
 	public void deletePassenger() throws Exception {
-		Mockito.when(agentService.deletePassenger(passenger.getId()))
-				.thenReturn(passenger);
+		Mockito.when(agentService.getPassengerById(any(Integer.class))).thenReturn(passengers.get(1));
+		Mockito.when(agentService.deletePassenger(any(Passenger.class)))
+				.thenReturn(passengers.get(1));
 
 		mockMvc.perform(MockMvcRequestBuilders.delete("/utopia/airlines/passengers/1"))
 				.andExpect(status().is(200));
-	}*/
-
-
-
-
-
+	}
 }
