@@ -7,11 +7,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class BookingAgentService {
 
     Logger logger = LoggerFactory.getLogger(BookingAgentService.class);
@@ -19,7 +21,7 @@ public class BookingAgentService {
     @Autowired
     BookingAgentRepository bookingAgentRepository;
 
-    public List<BookingAgent> getALlBookingAgents() { return (List<BookingAgent>) bookingAgentRepository.findAll(); }
+    public List<BookingAgent> getAllBookingAgents() { return (List<BookingAgent>) bookingAgentRepository.findAll(); }
 
     public BookingAgent getBookingAgentById(BookingAgentId bookingAgentId) {
         Optional<BookingAgent> bookingAgent = bookingAgentRepository.findById(bookingAgentId);

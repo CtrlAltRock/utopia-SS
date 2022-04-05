@@ -62,10 +62,6 @@ public class Generators {
         return new Flight();
     }
 
-    public String makeYoda() {
-        return faker.yoda().quote();
-    }
-
 
 
 

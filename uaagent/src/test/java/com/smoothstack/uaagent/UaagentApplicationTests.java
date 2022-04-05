@@ -144,22 +144,19 @@ class UaagentApplicationTests {
 	@Test
 	@Order(6)
 	public void putPassenger() throws Exception {
-		Mockito.when(agentService.postPassenger(new Passenger()))
-				.thenReturn(new Passenger());
+		Passenger passenger = passengers.get(2);
+		Mockito.when(agentService.postPassenger(any(Passenger.class)))
+				.thenReturn(passenger);
 
-		mockMvc.perform(MockMvcRequestBuilders.put("/utopia/airlines/passengers/1"))
+		mockMvc.perform(MockMvcRequestBuilders.put("/utopia/airlines/passengers/1")
+						.contentType(MediaType.APPLICATION_JSON)
+						.content(asJsonString(passenger)))
 				.andExpect(status().is(200))
-				.andExpect(content().contentType(MediaType.APPLICATION_XML));
+				.andExpect(content().contentType(MediaType.APPLICATION_JSON));
 	}
 
-	@Test
-	public void yoda () {
-		for(int i = 0; i < 10; i++) {
-			System.out.println(generator.makeYoda());
-		}
-	}
 
-	/*@Test
+/*	@Test
 	@Order(1)
 	public void deletePassenger() throws Exception {
 		Mockito.when(agentService.deletePassenger(passenger.getId()))

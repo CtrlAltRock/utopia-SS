@@ -112,3 +112,6 @@
 2022-04-05 14:31:20.564  WARN 14532 --- [http-nio-8080-exec-2] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'GET' not supported]
 2022-04-05 14:31:31.669  WARN 14532 --- [http-nio-8080-exec-3] c.s.ua.security.jwt.JwtRequestFilter     : JWT Token does not begin with Bearer String
 2022-04-05 14:31:31.671  WARN 14532 --- [http-nio-8080-exec-3] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.HttpMediaTypeNotSupportedException: Content type '' not supported]
+2022-04-05 15:05:28.528  INFO 14532 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-04-05 15:05:28.530  INFO 14532 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2022-04-05 15:05:28.536  INFO 14532 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.

@@ -25,7 +25,7 @@ public class BookingAgentController {
     @Timed("get.bookingAgents.dump")
     @RequestMapping(path = "utopia/airlines/bookingAgents/", method = RequestMethod.GET, produces = {"application/json", "application/xml"})
     public ResponseEntity<?> getBookingAgents() {
-        return new ResponseEntity<>(bookingAgentService.getALlBookingAgents(), HttpStatus.OK);
+        return new ResponseEntity<>(bookingAgentService.getAllBookingAgents(), HttpStatus.OK);
     }
 
     @Timed("get.bookingAgents.id")
@@ -60,8 +60,8 @@ public class BookingAgentController {
         }
     }
 
-/*
-    @Timed("post.bookingAgent")
+    //Not sure If i actuallu need this class considering it is never used
+/*    @Timed("post.bookingAgent")
     @RequestMapping(path = "utopia/airlines/bookingAgent/{bookingId}/{userId}", method = RequestMethod.PUT, consumes = {"application/json", "application/xml"})
     public ResponseEntity<?> putBookingAgent(@RequestBody BookingAgent bookingAgent, @PathVariable Integer bookingId, @PathVariable Integer userId) {
         logger.info(bookingAgent.toString(), "booking agent to update");
@@ -79,8 +79,7 @@ public class BookingAgentController {
             BookingAgent updated = bookingAgentService.saveBookingAgent(bookingAgent);
 
         }
-    }
-*/
+    }*/
 
     @Timed("delete.bookingAgents")
     @RequestMapping(path = "utopia/airlines/bookingAgents/", method = RequestMethod.DELETE, consumes = {"application/json", "application/xml"})
