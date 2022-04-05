@@ -1,140 +1,114 @@
-2022-04-01 13:02:35.712  INFO 21824 --- [main] com.smoothstack.ua.UaApplication         : Starting UaApplication using Java 16.0.1 on DESKTOP-6HFQH8D with PID 21824 (C:\Users\Sam\Documents\GitHub\utopia-SS\ua\target\classes started by Sam in C:\Users\Sam\Documents\GitHub\utopia-SS\ua)
-2022-04-01 13:02:35.716  INFO 21824 --- [main] com.smoothstack.ua.UaApplication         : No active profile set, falling back to 1 default profile: "default"
-2022-04-01 13:02:37.252  INFO 21824 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2022-04-01 13:02:37.417  INFO 21824 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 150 ms. Found 15 JPA repository interfaces.
-2022-04-01 13:02:38.659  INFO 21824 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
-2022-04-01 13:02:38.673  INFO 21824 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2022-04-01 13:02:38.674  INFO 21824 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.58]
-2022-04-01 13:02:38.866  INFO 21824 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2022-04-01 13:02:38.867  INFO 21824 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 3063 ms
-2022-04-01 13:02:39.476  INFO 21824 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2022-04-01 13:02:40.045  INFO 21824 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2022-04-01 13:02:40.137  INFO 21824 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2022-04-01 13:02:40.246  INFO 21824 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.6.5.Final
-2022-04-01 13:02:40.650  INFO 21824 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
-2022-04-01 13:02:40.871  INFO 21824 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
-2022-04-01 13:02:41.779  INFO 21824 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
-2022-04-01 13:02:41.789  INFO 21824 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2022-04-01 13:02:42.382  WARN 21824 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2022-04-01 13:02:43.202  INFO 21824 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Will not secure any request
-2022-04-01 13:02:45.048  INFO 21824 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 14 endpoint(s) beneath base path '/actuator'
-2022-04-01 13:02:45.124  INFO 21824 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
-2022-04-01 13:02:45.140  INFO 21824 --- [main] com.smoothstack.ua.UaApplication         : Started UaApplication in 10.075 seconds (JVM running for 10.846)
-2022-04-01 13:02:46.220  INFO 21824 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
-2022-04-01 13:02:46.220  INFO 21824 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
-2022-04-01 13:02:46.221  INFO 21824 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
-2022-04-01 13:02:46.236  WARN 21824 --- [http-nio-8080-exec-1] c.s.ua.security.jwt.JwtRequestFilter     : JWT Token does not begin with Bearer String
-2022-04-01 13:02:46.263  INFO 21824 --- [http-nio-8080-exec-1] com.smoothstack.ua.extras.LoggingAspect  : Enter: com.smoothstack.ua.controllers.AdminController.getAirplaneTypes() with arguments[s] = []
-2022-04-01 13:02:46.279  INFO 21824 --- [http-nio-8080-exec-1] com.smoothstack.ua.extras.LoggingAspect  : Enter: com.smoothstack.ua.services.AdminService.getALLAirplaneTypes() with arguments[s] = []
-2022-04-01 13:02:53.191  INFO 21824 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
-2022-04-01 13:02:53.193  INFO 21824 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
-2022-04-01 13:02:53.200  INFO 21824 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
-2022-04-01 13:42:40.130  INFO 24808 --- [main] com.smoothstack.ua.UaApplication         : Starting UaApplication using Java 16.0.1 on DESKTOP-6HFQH8D with PID 24808 (C:\Users\Sam\Documents\GitHub\utopia-SS\ua\target\classes started by Sam in C:\Users\Sam\Documents\GitHub\utopia-SS\ua)
-2022-04-01 13:42:40.135  INFO 24808 --- [main] com.smoothstack.ua.UaApplication         : No active profile set, falling back to 1 default profile: "default"
-2022-04-01 13:42:41.977  INFO 24808 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2022-04-01 13:42:42.167  INFO 24808 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 171 ms. Found 15 JPA repository interfaces.
-2022-04-01 13:42:43.450  INFO 24808 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
-2022-04-01 13:42:43.465  INFO 24808 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2022-04-01 13:42:43.465  INFO 24808 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.58]
-2022-04-01 13:42:43.651  INFO 24808 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2022-04-01 13:42:43.652  INFO 24808 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 3431 ms
-2022-04-01 13:42:44.235  INFO 24808 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2022-04-01 13:42:44.788  INFO 24808 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2022-04-01 13:42:44.869  INFO 24808 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2022-04-01 13:42:44.997  INFO 24808 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.6.5.Final
-2022-04-01 13:42:45.331  INFO 24808 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
-2022-04-01 13:42:45.567  INFO 24808 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
-2022-04-01 13:42:46.761  INFO 24808 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
-2022-04-01 13:42:46.772  INFO 24808 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2022-04-01 13:42:47.601  WARN 24808 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2022-04-01 13:42:48.819  INFO 24808 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Will not secure any request
-2022-04-01 13:42:51.101  INFO 24808 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 14 endpoint(s) beneath base path '/actuator'
-2022-04-01 13:42:51.200  INFO 24808 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
-2022-04-01 13:42:51.218  INFO 24808 --- [main] com.smoothstack.ua.UaApplication         : Started UaApplication in 11.808 seconds (JVM running for 12.615)
-2022-04-01 13:54:19.773  INFO 24808 --- [http-nio-8080-exec-3] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
-2022-04-01 13:54:19.773  INFO 24808 --- [http-nio-8080-exec-3] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
-2022-04-01 13:54:19.775  INFO 24808 --- [http-nio-8080-exec-3] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
-2022-04-01 13:54:19.792  WARN 24808 --- [http-nio-8080-exec-3] c.s.ua.security.jwt.JwtRequestFilter     : JWT Token does not begin with Bearer String
-2022-04-01 13:54:19.823  INFO 24808 --- [http-nio-8080-exec-3] com.smoothstack.ua.extras.LoggingAspect  : Enter: com.smoothstack.ua.controllers.AdminController.getAirplaneTypes() with arguments[s] = []
-2022-04-01 13:54:19.841  INFO 24808 --- [http-nio-8080-exec-3] com.smoothstack.ua.extras.LoggingAspect  : Enter: com.smoothstack.ua.services.AdminService.getALLAirplaneTypes() with arguments[s] = []
-2022-04-01 14:20:07.276  WARN 24808 --- [http-nio-8080-exec-5] c.s.ua.security.jwt.JwtRequestFilter     : JWT Token does not begin with Bearer String
-2022-04-01 14:20:07.278  INFO 24808 --- [http-nio-8080-exec-5] com.smoothstack.ua.extras.LoggingAspect  : Enter: com.smoothstack.ua.controllers.AdminController.getAirplaneTypes() with arguments[s] = []
-2022-04-01 14:20:07.278  INFO 24808 --- [http-nio-8080-exec-5] com.smoothstack.ua.extras.LoggingAspect  : Enter: com.smoothstack.ua.services.AdminService.getALLAirplaneTypes() with arguments[s] = []
-2022-04-01 14:23:21.247  WARN 24808 --- [http-nio-8080-exec-9] c.s.ua.security.jwt.JwtRequestFilter     : JWT Token does not begin with Bearer String
-2022-04-01 14:23:21.249  INFO 24808 --- [http-nio-8080-exec-9] com.smoothstack.ua.extras.LoggingAspect  : Enter: com.smoothstack.ua.controllers.AdminController.getAirplaneTypes() with arguments[s] = []
-2022-04-01 14:23:21.249  INFO 24808 --- [http-nio-8080-exec-9] com.smoothstack.ua.extras.LoggingAspect  : Enter: com.smoothstack.ua.services.AdminService.getALLAirplaneTypes() with arguments[s] = []
-2022-04-01 14:23:21.612  WARN 24808 --- [http-nio-8080-exec-10] c.s.ua.security.jwt.JwtRequestFilter     : JWT Token does not begin with Bearer String
-2022-04-01 14:23:21.613  INFO 24808 --- [http-nio-8080-exec-10] com.smoothstack.ua.extras.LoggingAspect  : Enter: com.smoothstack.ua.controllers.AdminController.getAirplaneTypes() with arguments[s] = []
-2022-04-01 14:23:21.614  INFO 24808 --- [http-nio-8080-exec-10] com.smoothstack.ua.extras.LoggingAspect  : Enter: com.smoothstack.ua.services.AdminService.getALLAirplaneTypes() with arguments[s] = []
-2022-04-01 14:23:22.079  WARN 24808 --- [http-nio-8080-exec-1] c.s.ua.security.jwt.JwtRequestFilter     : JWT Token does not begin with Bearer String
-2022-04-01 14:23:22.081  INFO 24808 --- [http-nio-8080-exec-1] com.smoothstack.ua.extras.LoggingAspect  : Enter: com.smoothstack.ua.controllers.AdminController.getAirplaneTypes() with arguments[s] = []
-2022-04-01 14:23:22.081  INFO 24808 --- [http-nio-8080-exec-1] com.smoothstack.ua.extras.LoggingAspect  : Enter: com.smoothstack.ua.services.AdminService.getALLAirplaneTypes() with arguments[s] = []
-2022-04-01 14:23:22.451  WARN 24808 --- [http-nio-8080-exec-2] c.s.ua.security.jwt.JwtRequestFilter     : JWT Token does not begin with Bearer String
-2022-04-01 14:23:22.453  INFO 24808 --- [http-nio-8080-exec-2] com.smoothstack.ua.extras.LoggingAspect  : Enter: com.smoothstack.ua.controllers.AdminController.getAirplaneTypes() with arguments[s] = []
-2022-04-01 14:23:22.453  INFO 24808 --- [http-nio-8080-exec-2] com.smoothstack.ua.extras.LoggingAspect  : Enter: com.smoothstack.ua.services.AdminService.getALLAirplaneTypes() with arguments[s] = []
-2022-04-01 14:23:22.773  WARN 24808 --- [http-nio-8080-exec-3] c.s.ua.security.jwt.JwtRequestFilter     : JWT Token does not begin with Bearer String
-2022-04-01 14:23:22.775  INFO 24808 --- [http-nio-8080-exec-3] com.smoothstack.ua.extras.LoggingAspect  : Enter: com.smoothstack.ua.controllers.AdminController.getAirplaneTypes() with arguments[s] = []
-2022-04-01 14:23:22.776  INFO 24808 --- [http-nio-8080-exec-3] com.smoothstack.ua.extras.LoggingAspect  : Enter: com.smoothstack.ua.services.AdminService.getALLAirplaneTypes() with arguments[s] = []
-2022-04-01 14:23:23.187  WARN 24808 --- [http-nio-8080-exec-4] c.s.ua.security.jwt.JwtRequestFilter     : JWT Token does not begin with Bearer String
-2022-04-01 14:23:23.188  INFO 24808 --- [http-nio-8080-exec-4] com.smoothstack.ua.extras.LoggingAspect  : Enter: com.smoothstack.ua.controllers.AdminController.getAirplaneTypes() with arguments[s] = []
-2022-04-01 14:23:23.189  INFO 24808 --- [http-nio-8080-exec-4] com.smoothstack.ua.extras.LoggingAspect  : Enter: com.smoothstack.ua.services.AdminService.getALLAirplaneTypes() with arguments[s] = []
-2022-04-01 14:23:23.550  WARN 24808 --- [http-nio-8080-exec-6] c.s.ua.security.jwt.JwtRequestFilter     : JWT Token does not begin with Bearer String
-2022-04-01 14:23:23.552  INFO 24808 --- [http-nio-8080-exec-6] com.smoothstack.ua.extras.LoggingAspect  : Enter: com.smoothstack.ua.controllers.AdminController.getAirplaneTypes() with arguments[s] = []
-2022-04-01 14:23:23.552  INFO 24808 --- [http-nio-8080-exec-6] com.smoothstack.ua.extras.LoggingAspect  : Enter: com.smoothstack.ua.services.AdminService.getALLAirplaneTypes() with arguments[s] = []
-2022-04-01 14:23:23.855  WARN 24808 --- [http-nio-8080-exec-5] c.s.ua.security.jwt.JwtRequestFilter     : JWT Token does not begin with Bearer String
-2022-04-01 14:23:23.857  INFO 24808 --- [http-nio-8080-exec-5] com.smoothstack.ua.extras.LoggingAspect  : Enter: com.smoothstack.ua.controllers.AdminController.getAirplaneTypes() with arguments[s] = []
-2022-04-01 14:23:23.857  INFO 24808 --- [http-nio-8080-exec-5] com.smoothstack.ua.extras.LoggingAspect  : Enter: com.smoothstack.ua.services.AdminService.getALLAirplaneTypes() with arguments[s] = []
-2022-04-01 14:23:25.901  WARN 24808 --- [http-nio-8080-exec-7] c.s.ua.security.jwt.JwtRequestFilter     : JWT Token does not begin with Bearer String
-2022-04-01 14:23:25.903  INFO 24808 --- [http-nio-8080-exec-7] com.smoothstack.ua.extras.LoggingAspect  : Enter: com.smoothstack.ua.controllers.AdminController.getAirplaneTypes() with arguments[s] = []
-2022-04-01 14:23:25.903  INFO 24808 --- [http-nio-8080-exec-7] com.smoothstack.ua.extras.LoggingAspect  : Enter: com.smoothstack.ua.services.AdminService.getALLAirplaneTypes() with arguments[s] = []
-2022-04-01 14:23:26.257  WARN 24808 --- [http-nio-8080-exec-8] c.s.ua.security.jwt.JwtRequestFilter     : JWT Token does not begin with Bearer String
-2022-04-01 14:23:26.258  INFO 24808 --- [http-nio-8080-exec-8] com.smoothstack.ua.extras.LoggingAspect  : Enter: com.smoothstack.ua.controllers.AdminController.getAirplaneTypes() with arguments[s] = []
-2022-04-01 14:23:26.258  INFO 24808 --- [http-nio-8080-exec-8] com.smoothstack.ua.extras.LoggingAspect  : Enter: com.smoothstack.ua.services.AdminService.getALLAirplaneTypes() with arguments[s] = []
-2022-04-01 14:23:26.796  WARN 24808 --- [http-nio-8080-exec-9] c.s.ua.security.jwt.JwtRequestFilter     : JWT Token does not begin with Bearer String
-2022-04-01 14:23:26.797  INFO 24808 --- [http-nio-8080-exec-9] com.smoothstack.ua.extras.LoggingAspect  : Enter: com.smoothstack.ua.controllers.AdminController.getAirplaneTypes() with arguments[s] = []
-2022-04-01 14:23:26.798  INFO 24808 --- [http-nio-8080-exec-9] com.smoothstack.ua.extras.LoggingAspect  : Enter: com.smoothstack.ua.services.AdminService.getALLAirplaneTypes() with arguments[s] = []
-2022-04-01 14:23:27.264  WARN 24808 --- [http-nio-8080-exec-10] c.s.ua.security.jwt.JwtRequestFilter     : JWT Token does not begin with Bearer String
-2022-04-01 14:23:27.265  INFO 24808 --- [http-nio-8080-exec-10] com.smoothstack.ua.extras.LoggingAspect  : Enter: com.smoothstack.ua.controllers.AdminController.getAirplaneTypes() with arguments[s] = []
-2022-04-01 14:23:27.265  INFO 24808 --- [http-nio-8080-exec-10] com.smoothstack.ua.extras.LoggingAspect  : Enter: com.smoothstack.ua.services.AdminService.getALLAirplaneTypes() with arguments[s] = []
-2022-04-01 14:25:42.470  WARN 24808 --- [http-nio-8080-exec-3] c.s.ua.security.jwt.JwtRequestFilter     : JWT Token does not begin with Bearer String
-2022-04-01 14:25:42.471  INFO 24808 --- [http-nio-8080-exec-3] com.smoothstack.ua.extras.LoggingAspect  : Enter: com.smoothstack.ua.controllers.AdminController.getAirplaneTypes() with arguments[s] = []
-2022-04-01 14:25:42.472  INFO 24808 --- [http-nio-8080-exec-3] com.smoothstack.ua.extras.LoggingAspect  : Enter: com.smoothstack.ua.services.AdminService.getALLAirplaneTypes() with arguments[s] = []
-2022-04-01 14:25:43.081  WARN 24808 --- [http-nio-8080-exec-4] c.s.ua.security.jwt.JwtRequestFilter     : JWT Token does not begin with Bearer String
-2022-04-01 14:25:43.083  INFO 24808 --- [http-nio-8080-exec-4] com.smoothstack.ua.extras.LoggingAspect  : Enter: com.smoothstack.ua.controllers.AdminController.getAirplaneTypes() with arguments[s] = []
-2022-04-01 14:25:43.084  INFO 24808 --- [http-nio-8080-exec-4] com.smoothstack.ua.extras.LoggingAspect  : Enter: com.smoothstack.ua.services.AdminService.getALLAirplaneTypes() with arguments[s] = []
-2022-04-01 15:07:20.648  WARN 24808 --- [http-nio-8080-exec-10] c.s.ua.security.jwt.JwtRequestFilter     : JWT Token does not begin with Bearer String
-2022-04-01 15:07:20.659  INFO 24808 --- [http-nio-8080-exec-10] com.smoothstack.ua.extras.LoggingAspect  : Enter: com.smoothstack.ua.controllers.AdminController.getAirplaneTypes() with arguments[s] = []
-2022-04-01 15:07:20.659  INFO 24808 --- [http-nio-8080-exec-10] com.smoothstack.ua.extras.LoggingAspect  : Enter: com.smoothstack.ua.services.AdminService.getALLAirplaneTypes() with arguments[s] = []
-2022-04-01 15:07:21.001  WARN 24808 --- [http-nio-8080-exec-1] c.s.ua.security.jwt.JwtRequestFilter     : JWT Token does not begin with Bearer String
-2022-04-01 15:07:21.002  INFO 24808 --- [http-nio-8080-exec-1] com.smoothstack.ua.extras.LoggingAspect  : Enter: com.smoothstack.ua.controllers.AdminController.getAirplaneTypes() with arguments[s] = []
-2022-04-01 15:07:21.003  INFO 24808 --- [http-nio-8080-exec-1] com.smoothstack.ua.extras.LoggingAspect  : Enter: com.smoothstack.ua.services.AdminService.getALLAirplaneTypes() with arguments[s] = []
-2022-04-01 15:07:21.248  WARN 24808 --- [http-nio-8080-exec-2] c.s.ua.security.jwt.JwtRequestFilter     : JWT Token does not begin with Bearer String
-2022-04-01 15:07:21.249  INFO 24808 --- [http-nio-8080-exec-2] com.smoothstack.ua.extras.LoggingAspect  : Enter: com.smoothstack.ua.controllers.AdminController.getAirplaneTypes() with arguments[s] = []
-2022-04-01 15:07:21.250  INFO 24808 --- [http-nio-8080-exec-2] com.smoothstack.ua.extras.LoggingAspect  : Enter: com.smoothstack.ua.services.AdminService.getALLAirplaneTypes() with arguments[s] = []
-2022-04-01 15:07:21.605  WARN 24808 --- [http-nio-8080-exec-3] c.s.ua.security.jwt.JwtRequestFilter     : JWT Token does not begin with Bearer String
-2022-04-01 15:07:21.607  INFO 24808 --- [http-nio-8080-exec-3] com.smoothstack.ua.extras.LoggingAspect  : Enter: com.smoothstack.ua.controllers.AdminController.getAirplaneTypes() with arguments[s] = []
-2022-04-01 15:07:21.607  INFO 24808 --- [http-nio-8080-exec-3] com.smoothstack.ua.extras.LoggingAspect  : Enter: com.smoothstack.ua.services.AdminService.getALLAirplaneTypes() with arguments[s] = []
-2022-04-01 15:07:22.210  WARN 24808 --- [http-nio-8080-exec-4] c.s.ua.security.jwt.JwtRequestFilter     : JWT Token does not begin with Bearer String
-2022-04-01 15:07:22.211  INFO 24808 --- [http-nio-8080-exec-4] com.smoothstack.ua.extras.LoggingAspect  : Enter: com.smoothstack.ua.controllers.AdminController.getAirplaneTypes() with arguments[s] = []
-2022-04-01 15:07:22.211  INFO 24808 --- [http-nio-8080-exec-4] com.smoothstack.ua.extras.LoggingAspect  : Enter: com.smoothstack.ua.services.AdminService.getALLAirplaneTypes() with arguments[s] = []
-2022-04-01 15:07:22.544  WARN 24808 --- [http-nio-8080-exec-6] c.s.ua.security.jwt.JwtRequestFilter     : JWT Token does not begin with Bearer String
-2022-04-01 15:07:22.545  INFO 24808 --- [http-nio-8080-exec-6] com.smoothstack.ua.extras.LoggingAspect  : Enter: com.smoothstack.ua.controllers.AdminController.getAirplaneTypes() with arguments[s] = []
-2022-04-01 15:07:22.545  INFO 24808 --- [http-nio-8080-exec-6] com.smoothstack.ua.extras.LoggingAspect  : Enter: com.smoothstack.ua.services.AdminService.getALLAirplaneTypes() with arguments[s] = []
-2022-04-01 15:07:23.002  WARN 24808 --- [http-nio-8080-exec-5] c.s.ua.security.jwt.JwtRequestFilter     : JWT Token does not begin with Bearer String
-2022-04-01 15:07:23.004  INFO 24808 --- [http-nio-8080-exec-5] com.smoothstack.ua.extras.LoggingAspect  : Enter: com.smoothstack.ua.controllers.AdminController.getAirplaneTypes() with arguments[s] = []
-2022-04-01 15:07:23.004  INFO 24808 --- [http-nio-8080-exec-5] com.smoothstack.ua.extras.LoggingAspect  : Enter: com.smoothstack.ua.services.AdminService.getALLAirplaneTypes() with arguments[s] = []
-2022-04-01 15:07:23.387  WARN 24808 --- [http-nio-8080-exec-7] c.s.ua.security.jwt.JwtRequestFilter     : JWT Token does not begin with Bearer String
-2022-04-01 15:07:23.388  INFO 24808 --- [http-nio-8080-exec-7] com.smoothstack.ua.extras.LoggingAspect  : Enter: com.smoothstack.ua.controllers.AdminController.getAirplaneTypes() with arguments[s] = []
-2022-04-01 15:07:23.389  INFO 24808 --- [http-nio-8080-exec-7] com.smoothstack.ua.extras.LoggingAspect  : Enter: com.smoothstack.ua.services.AdminService.getALLAirplaneTypes() with arguments[s] = []
-2022-04-01 15:07:23.772  WARN 24808 --- [http-nio-8080-exec-8] c.s.ua.security.jwt.JwtRequestFilter     : JWT Token does not begin with Bearer String
-2022-04-01 15:07:23.773  INFO 24808 --- [http-nio-8080-exec-8] com.smoothstack.ua.extras.LoggingAspect  : Enter: com.smoothstack.ua.controllers.AdminController.getAirplaneTypes() with arguments[s] = []
-2022-04-01 15:07:23.774  INFO 24808 --- [http-nio-8080-exec-8] com.smoothstack.ua.extras.LoggingAspect  : Enter: com.smoothstack.ua.services.AdminService.getALLAirplaneTypes() with arguments[s] = []
-2022-04-01 15:07:24.208  WARN 24808 --- [http-nio-8080-exec-9] c.s.ua.security.jwt.JwtRequestFilter     : JWT Token does not begin with Bearer String
-2022-04-01 15:07:24.209  INFO 24808 --- [http-nio-8080-exec-9] com.smoothstack.ua.extras.LoggingAspect  : Enter: com.smoothstack.ua.controllers.AdminController.getAirplaneTypes() with arguments[s] = []
-2022-04-01 15:07:24.209  INFO 24808 --- [http-nio-8080-exec-9] com.smoothstack.ua.extras.LoggingAspect  : Enter: com.smoothstack.ua.services.AdminService.getALLAirplaneTypes() with arguments[s] = []
-2022-04-01 15:07:24.549  WARN 24808 --- [http-nio-8080-exec-10] c.s.ua.security.jwt.JwtRequestFilter     : JWT Token does not begin with Bearer String
-2022-04-01 15:07:24.550  INFO 24808 --- [http-nio-8080-exec-10] com.smoothstack.ua.extras.LoggingAspect  : Enter: com.smoothstack.ua.controllers.AdminController.getAirplaneTypes() with arguments[s] = []
-2022-04-01 15:07:24.550  INFO 24808 --- [http-nio-8080-exec-10] com.smoothstack.ua.extras.LoggingAspect  : Enter: com.smoothstack.ua.services.AdminService.getALLAirplaneTypes() with arguments[s] = []
-2022-04-01 15:10:56.244  INFO 24808 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
-2022-04-01 15:10:56.257  INFO 24808 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
-2022-04-01 15:10:56.265  INFO 24808 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2022-04-05 11:11:52.715  INFO 12952 --- [main] com.smoothstack.ua.UaApplication         : Starting UaApplication using Java 16.0.1 on DESKTOP-6HFQH8D with PID 12952 (C:\Users\Sam\Documents\GitHub\utopia-SS\ua\target\classes started by Sam in C:\Users\Sam\Documents\GitHub\utopia-SS\ua)
+2022-04-05 11:11:52.732  INFO 12952 --- [main] com.smoothstack.ua.UaApplication         : No active profile set, falling back to 1 default profile: "default"
+2022-04-05 11:11:54.264  INFO 12952 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-04-05 11:11:54.422  INFO 12952 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 148 ms. Found 15 JPA repository interfaces.
+2022-04-05 11:11:55.572  INFO 12952 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2022-04-05 11:11:55.583  INFO 12952 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-04-05 11:11:55.584  INFO 12952 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.58]
+2022-04-05 11:11:55.736  INFO 12952 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-04-05 11:11:55.736  INFO 12952 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2901 ms
+2022-04-05 11:11:56.320  INFO 12952 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2022-04-05 11:11:56.842  INFO 12952 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2022-04-05 11:11:56.905  INFO 12952 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-04-05 11:11:56.980  INFO 12952 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.6.5.Final
+2022-04-05 11:11:57.237  INFO 12952 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2022-04-05 11:11:57.399  INFO 12952 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+2022-04-05 11:11:58.139  INFO 12952 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-04-05 11:11:58.150  INFO 12952 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-04-05 11:11:58.767  WARN 12952 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-04-05 11:11:59.585  INFO 12952 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Will not secure any request
+2022-04-05 11:12:01.563  INFO 12952 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 14 endpoint(s) beneath base path '/actuator'
+2022-04-05 11:12:01.628  INFO 12952 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2022-04-05 11:12:01.646  INFO 12952 --- [main] com.smoothstack.ua.UaApplication         : Started UaApplication in 9.909 seconds (JVM running for 10.852)
+2022-04-05 12:04:01.474  INFO 12952 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-04-05 12:04:01.478  INFO 12952 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2022-04-05 12:04:01.484  INFO 12952 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2022-04-05 12:04:07.252  INFO 6324 --- [main] com.smoothstack.ua.UaApplication         : Starting UaApplication using Java 16.0.1 on DESKTOP-6HFQH8D with PID 6324 (C:\Users\Sam\Documents\GitHub\utopia-SS\ua\target\classes started by Sam in C:\Users\Sam\Documents\GitHub\utopia-SS\ua)
+2022-04-05 12:04:07.257  INFO 6324 --- [main] com.smoothstack.ua.UaApplication         : No active profile set, falling back to 1 default profile: "default"
+2022-04-05 12:04:08.694  INFO 6324 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-04-05 12:04:08.835  INFO 6324 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 129 ms. Found 15 JPA repository interfaces.
+2022-04-05 12:04:09.932  INFO 6324 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2022-04-05 12:04:09.947  INFO 6324 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-04-05 12:04:09.947  INFO 6324 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.58]
+2022-04-05 12:04:10.103  INFO 6324 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-04-05 12:04:10.104  INFO 6324 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2776 ms
+2022-04-05 12:04:10.648  INFO 6324 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2022-04-05 12:04:11.040  INFO 6324 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2022-04-05 12:04:11.110  INFO 6324 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-04-05 12:04:11.182  INFO 6324 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.6.5.Final
+2022-04-05 12:04:11.416  INFO 6324 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2022-04-05 12:04:11.589  INFO 6324 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+2022-04-05 12:04:12.381  INFO 6324 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-04-05 12:04:12.392  INFO 6324 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-04-05 12:04:12.998  WARN 6324 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-04-05 12:04:13.861  INFO 6324 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Will not secure any request
+2022-04-05 12:04:15.525  INFO 6324 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 14 endpoint(s) beneath base path '/actuator'
+2022-04-05 12:04:15.599  INFO 6324 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2022-04-05 12:04:15.616  INFO 6324 --- [main] com.smoothstack.ua.UaApplication         : Started UaApplication in 8.919 seconds (JVM running for 9.49)
+2022-04-05 12:05:01.872  INFO 6324 --- [http-nio-8080-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-04-05 12:05:01.872  INFO 6324 --- [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2022-04-05 12:05:01.874  INFO 6324 --- [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2022-04-05 12:05:01.975  INFO 6324 --- [http-nio-8080-exec-2] com.smoothstack.ua.extras.LoggingAspect  : Enter: com.smoothstack.ua.controllers.AirplaneController.getAirplanes() with arguments[s] = []
+2022-04-05 12:05:01.986  INFO 6324 --- [http-nio-8080-exec-2] com.smoothstack.ua.extras.LoggingAspect  : Enter: com.smoothstack.ua.services.AdminService.getAllAirplanes() with arguments[s] = []
+2022-04-05 12:05:02.003  INFO 6324 --- [http-nio-8080-exec-2] c.smoothstack.ua.services.AdminService   : getting all airplanes
+2022-04-05 12:08:33.311  INFO 6324 --- [http-nio-8080-exec-5] com.smoothstack.ua.extras.LoggingAspect  : Enter: com.smoothstack.ua.controllers.AirplaneController.getAirplaneById() with arguments[s] = [4]
+2022-04-05 12:08:33.312  INFO 6324 --- [http-nio-8080-exec-5] com.smoothstack.ua.extras.LoggingAspect  : Enter: com.smoothstack.ua.services.AdminService.getAirplaneById() with arguments[s] = [4]
+2022-04-05 12:08:37.821  INFO 6324 --- [http-nio-8080-exec-7] com.smoothstack.ua.extras.LoggingAspect  : Enter: com.smoothstack.ua.controllers.AirplaneController.saveAirplane() with arguments[s] = [Airplane{id=0, airplaneType=AirplaneType{id=4, max_capacity=25}}]
+2022-04-05 12:08:37.822  INFO 6324 --- [http-nio-8080-exec-7] com.smoothstack.ua.extras.LoggingAspect  : Enter: com.smoothstack.ua.services.AdminService.getAirplaneTypeById() with arguments[s] = [4]
+2022-04-05 12:08:37.826  INFO 6324 --- [http-nio-8080-exec-7] com.smoothstack.ua.extras.LoggingAspect  : Enter: com.smoothstack.ua.services.AdminService.saveAirplane() with arguments[s] = [Airplane{id=0, airplaneType=AirplaneType{id=4, max_capacity=25}}]
+2022-04-05 12:08:40.841  INFO 6324 --- [http-nio-8080-exec-8] com.smoothstack.ua.extras.LoggingAspect  : Enter: com.smoothstack.ua.controllers.AirplaneController.saveAirplane() with arguments[s] = [Airplane{id=0, airplaneType=AirplaneType{id=4, max_capacity=25}}]
+2022-04-05 12:08:40.841  INFO 6324 --- [http-nio-8080-exec-8] com.smoothstack.ua.extras.LoggingAspect  : Enter: com.smoothstack.ua.services.AdminService.getAirplaneTypeById() with arguments[s] = [4]
+2022-04-05 12:08:40.846  INFO 6324 --- [http-nio-8080-exec-8] com.smoothstack.ua.extras.LoggingAspect  : Enter: com.smoothstack.ua.services.AdminService.saveAirplane() with arguments[s] = [Airplane{id=0, airplaneType=AirplaneType{id=4, max_capacity=25}}]
+2022-04-05 12:08:45.372  INFO 6324 --- [http-nio-8080-exec-9] com.smoothstack.ua.extras.LoggingAspect  : Enter: com.smoothstack.ua.controllers.AirplaneController.putAirplane() with arguments[s] = [Airplane{id=0, airplaneType=AirplaneType{id=3, max_capacity=20}}, 4]
+2022-04-05 12:08:45.373  INFO 6324 --- [http-nio-8080-exec-9] com.smoothstack.ua.extras.LoggingAspect  : Enter: com.smoothstack.ua.services.AdminService.getAirplaneById() with arguments[s] = [4]
+2022-04-05 12:08:45.379  INFO 6324 --- [http-nio-8080-exec-9] c.s.ua.controllers.AirplaneController    : airplane id does not exist
+2022-04-05 12:08:49.739  INFO 6324 --- [http-nio-8080-exec-10] com.smoothstack.ua.extras.LoggingAspect  : Enter: com.smoothstack.ua.controllers.AirplaneController.putAirplane() with arguments[s] = [Airplane{id=0, airplaneType=AirplaneType{id=3, max_capacity=20}}, 6]
+2022-04-05 12:08:49.740  INFO 6324 --- [http-nio-8080-exec-10] com.smoothstack.ua.extras.LoggingAspect  : Enter: com.smoothstack.ua.services.AdminService.getAirplaneById() with arguments[s] = [6]
+2022-04-05 12:08:49.745  INFO 6324 --- [http-nio-8080-exec-10] com.smoothstack.ua.extras.LoggingAspect  : Enter: com.smoothstack.ua.services.AdminService.getAirplaneTypeById() with arguments[s] = [3]
+2022-04-05 12:08:49.750  INFO 6324 --- [http-nio-8080-exec-10] c.s.ua.controllers.AirplaneController    : Airplane{id=6, airplaneType=AirplaneType{id=3, max_capacity=20}}
+2022-04-05 12:08:49.751  INFO 6324 --- [http-nio-8080-exec-10] com.smoothstack.ua.extras.LoggingAspect  : Enter: com.smoothstack.ua.services.AdminService.updateAirplane() with arguments[s] = [Airplane{id=6, airplaneType=AirplaneType{id=3, max_capacity=20}}]
+2022-04-05 14:27:07.991  INFO 6324 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-04-05 14:27:08.010  INFO 6324 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2022-04-05 14:27:08.017  INFO 6324 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2022-04-05 14:29:40.930  INFO 14532 --- [main] com.smoothstack.ua.UaApplication         : Starting UaApplication using Java 16.0.1 on DESKTOP-6HFQH8D with PID 14532 (C:\Users\Sam\Documents\GitHub\utopia-SS\ua\target\classes started by Sam in C:\Users\Sam\Documents\GitHub\utopia-SS\ua)
+2022-04-05 14:29:40.935  INFO 14532 --- [main] com.smoothstack.ua.UaApplication         : No active profile set, falling back to 1 default profile: "default"
+2022-04-05 14:29:42.858  INFO 14532 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-04-05 14:29:43.019  INFO 14532 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 151 ms. Found 15 JPA repository interfaces.
+2022-04-05 14:29:44.197  INFO 14532 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2022-04-05 14:29:44.212  INFO 14532 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-04-05 14:29:44.212  INFO 14532 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.58]
+2022-04-05 14:29:44.384  INFO 14532 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-04-05 14:29:44.384  INFO 14532 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 3373 ms
+2022-04-05 14:29:44.979  INFO 14532 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2022-04-05 14:29:45.422  INFO 14532 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2022-04-05 14:29:45.492  INFO 14532 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-04-05 14:29:45.558  INFO 14532 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.6.5.Final
+2022-04-05 14:29:45.810  INFO 14532 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2022-04-05 14:29:45.962  INFO 14532 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+2022-04-05 14:29:46.779  INFO 14532 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-04-05 14:29:46.788  INFO 14532 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-04-05 14:29:47.389  WARN 14532 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-04-05 14:29:48.413  INFO 14532 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Will not secure any request
+2022-04-05 14:29:50.132  INFO 14532 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 14 endpoint(s) beneath base path '/actuator'
+2022-04-05 14:29:50.220  INFO 14532 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2022-04-05 14:29:50.238  INFO 14532 --- [main] com.smoothstack.ua.UaApplication         : Started UaApplication in 9.909 seconds (JVM running for 10.525)
+2022-04-05 14:30:25.127  INFO 14532 --- [http-nio-8080-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-04-05 14:30:25.128  INFO 14532 --- [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2022-04-05 14:30:25.129  INFO 14532 --- [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2022-04-05 14:30:25.223  INFO 14532 --- [http-nio-8080-exec-2] com.smoothstack.ua.extras.LoggingAspect  : Enter: com.smoothstack.ua.controllers.AirplaneController.getAirplanes() with arguments[s] = []
+2022-04-05 14:30:25.232  INFO 14532 --- [http-nio-8080-exec-2] com.smoothstack.ua.extras.LoggingAspect  : Enter: com.smoothstack.ua.services.AirplaneService.getAllAirplanes() with arguments[s] = []
+2022-04-05 14:30:25.238  INFO 14532 --- [http-nio-8080-exec-2] c.s.ua.services.AirplaneService          : getting all airplanes
+2022-04-05 14:30:28.580  INFO 14532 --- [http-nio-8080-exec-3] com.smoothstack.ua.extras.LoggingAspect  : Enter: com.smoothstack.ua.controllers.AirplaneController.getAirplaneById() with arguments[s] = [4]
+2022-04-05 14:30:28.580  INFO 14532 --- [http-nio-8080-exec-3] com.smoothstack.ua.extras.LoggingAspect  : Enter: com.smoothstack.ua.services.AirplaneService.getAirplaneById() with arguments[s] = [4]
+2022-04-05 14:30:34.668  INFO 14532 --- [http-nio-8080-exec-5] com.smoothstack.ua.extras.LoggingAspect  : Enter: com.smoothstack.ua.controllers.AirplaneController.getAirplaneById() with arguments[s] = [4]
+2022-04-05 14:30:34.669  INFO 14532 --- [http-nio-8080-exec-5] com.smoothstack.ua.extras.LoggingAspect  : Enter: com.smoothstack.ua.services.AirplaneService.getAirplaneById() with arguments[s] = [4]
+2022-04-05 14:31:05.754  WARN 14532 --- [http-nio-8080-exec-6] c.s.ua.security.jwt.JwtRequestFilter     : JWT Token does not begin with Bearer String
+2022-04-05 14:31:09.408  WARN 14532 --- [http-nio-8080-exec-8] c.s.ua.security.jwt.JwtRequestFilter     : JWT Token does not begin with Bearer String
+2022-04-05 14:31:11.276  WARN 14532 --- [http-nio-8080-exec-9] c.s.ua.security.jwt.JwtRequestFilter     : JWT Token does not begin with Bearer String
+2022-04-05 14:31:14.415  WARN 14532 --- [http-nio-8080-exec-10] c.s.ua.security.jwt.JwtRequestFilter     : JWT Token does not begin with Bearer String
+2022-04-05 14:31:19.711  WARN 14532 --- [http-nio-8080-exec-1] c.s.ua.security.jwt.JwtRequestFilter     : JWT Token does not begin with Bearer String
+2022-04-05 14:31:19.714  WARN 14532 --- [http-nio-8080-exec-1] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'GET' not supported]
+2022-04-05 14:31:20.562  WARN 14532 --- [http-nio-8080-exec-2] c.s.ua.security.jwt.JwtRequestFilter     : JWT Token does not begin with Bearer String
+2022-04-05 14:31:20.564  WARN 14532 --- [http-nio-8080-exec-2] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'GET' not supported]
+2022-04-05 14:31:31.669  WARN 14532 --- [http-nio-8080-exec-3] c.s.ua.security.jwt.JwtRequestFilter     : JWT Token does not begin with Bearer String
+2022-04-05 14:31:31.671  WARN 14532 --- [http-nio-8080-exec-3] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.HttpMediaTypeNotSupportedException: Content type '' not supported]

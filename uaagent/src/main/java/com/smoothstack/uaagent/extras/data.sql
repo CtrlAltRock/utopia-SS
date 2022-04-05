@@ -3,7 +3,7 @@
 -- Dumping data for table `airplane`
 --
 
-INSERT INTO airplane VALUES (2,1);
+INSERT INTO `airplane` VALUES (2,1);
 INSERT INTO airplane VALUES (3,2);
 INSERT INTO airplane VALUES (10,2);
 INSERT INTO airplane VALUES (11,4);

@@ -15,6 +15,7 @@ import io.micrometer.core.annotation.Timed;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -80,110 +81,171 @@ public class AgentController {
         }
     }
 
-    @Timed("flights.get.all")
+    @Timed("flights.get.dump")
     @RequestMapping(path = "utopia/airlines/flights/all", method = RequestMethod.GET, produces = {"application/json", "application/xml", "plain/text"})
     @ResponseBody
-    public List<Flight> getFlights() { return agentService.getFlights(); }
+    public ResponseEntity<?> getFlights() {
+        List<Flight> flights = agentService.getFlights();
+        return new ResponseEntity<>(flights, HttpStatus.OK);
+    }
 
     @Timed("flights.get.available")
     @RequestMapping(path = "utopia/airlines/flights/", method = RequestMethod.GET, produces = {"application/json", "application/xml", "plain/text"})
     @ResponseBody
-    public List<Flight> getAvailableFlights() { return agentService.getAvailableFlights(); }
+    public ResponseEntity<?> getAvailableFlights() {
+        List<Flight> flights = agentService.getAvailableFlights();
+        return new ResponseEntity<>(flights, HttpStatus.OK);
+    }
 
     @Timed("flights.get.id")
     @RequestMapping(path = "utopia/airlines/flights/{flightId}", method = RequestMethod.GET, produces = {"application/json", "application/xml", "plain/text"})
     @ResponseBody
-    public Flight getFlightById(@PathVariable Integer flightId) { return agentService.getFlightsById(flightId); }
+    public ResponseEntity<?> getFlightById(@PathVariable Integer flightId) {
+        Flight flight = agentService.getFlightsById(flightId);
+        if (flight == null) {
+            return new ResponseEntity<>("flight id does not exist", HttpStatus.BAD_REQUEST);
+        } else {
+            return new ResponseEntity<>(flight, HttpStatus.OK);
+        }
+    }
 
     @Timed("flights.get.daterange")
     @RequestMapping(path = "utopia/airlines/flights/{time1}/{time2}", method = RequestMethod.GET, produces = {"application/json", "application/xml", "plain/text"})
     @ResponseBody
-    public List<Flight> getFlightsByDateRange(@PathVariable String time1, @PathVariable String time2) {
-        System.out.println(LocalDateTime.parse(time1));
-        return agentService.getFlightsBetweenDates(LocalDateTime.parse(time1), LocalDateTime.parse(time2));
+    public ResponseEntity<?> getFlightsByDateRange(@PathVariable String time1, @PathVariable String time2) {
+        try {
+            LocalDateTime.parse(time1);
+            LocalDateTime.parse(time2);
+        } catch (Exception e) {
+            return new ResponseEntity<>("beginning and/or end time can not be parsed", HttpStatus.BAD_REQUEST);
+        }
+        List<Flight> flights = agentService.getFlightsBetweenDates(LocalDateTime.parse(time1), LocalDateTime.parse(time2));
+        return new ResponseEntity<>(flights, HttpStatus.OK);
     }
 
     @Timed("bookings.get.all")
     @RequestMapping(path = "utopia/airlines/bookings/", method = RequestMethod.GET, produces = {"application/json", "application/xml", "plain/text"})
     @ResponseBody
-    public List<Booking> getBookings() { return agentService.getBookings(); }
+    public ResponseEntity<?> getBookings() {
+        List<Booking> bookings = agentService.getBookings();
+        return new ResponseEntity<>(bookings, HttpStatus.OK);
+    }
 
-
-    /*commented out code beneath this function maps to the same path
-    * So the function below is meant to find the right mapping and use the appropriate booking method
-    * */
-    @Timed("booking.get")
-    @RequestMapping(path = "utopia/airlines/bookings/{way}", method = RequestMethod.GET, produces = {"application/json", "application/xml", "plain/text"})
+    @Timed("bookings.get.id")
+    @RequestMapping(path = "/utopia/airlines/bookings/{bookingId}", method = RequestMethod.GET, produces = {"application/json", "application/xml", "plain/text"})
     @ResponseBody
-    public List<Booking> getBookingByWay(@PathVariable String way) {
-
-        if(way.equals("true") || way.equals("false")) {
-            return agentService.getBookingByIsActive(Boolean.parseBoolean(way));
-        } else {
-            try {
-                Integer.parseInt(way);
-                System.out.println("here");
-                Booking booking = agentService.getBookingById(Integer.parseInt(way));
-                if(booking != null) {
-                    List<Booking> bookings = new ArrayList<Booking>();
-                    bookings.add(booking);
-                    return bookings;
-                }
-                else return null;
-            } catch (Exception e) {
-                logger.info(e.toString());
-            }
-            System.out.println("Now Here");
-            List<Booking> bookings = agentService.getBookingByConfirmationCode(way);
-            if(bookings != null) {
-                return bookings;
-            }
-            else return null;
+    public ResponseEntity<?> getBookingsById(@PathVariable Integer bookingId) {
+        Booking check = agentService.getBookingById(bookingId);
+        if(check == null) {
+            return new ResponseEntity<>("booking id does not exist", HttpStatus.BAD_REQUEST);
+        }
+        else {
+            return new ResponseEntity<>(check, HttpStatus.OK);
         }
     }
 
-    @Timed("passengers.get")
+    @Timed("passengers.get.dump")
     @RequestMapping(path = "utopia/airlines/passengers/", method = RequestMethod.GET, produces = {"application/json", "application/xml", "plain/text"})
     @ResponseBody
-    public List<Passenger> getPassengers() {
-        return agentService.getPassengers();
+    public ResponseEntity<?> getPassengers() {
+        List<Passenger> passengers = agentService.getPassengers();
+        logger.info(passengers.toString(), "returned all passengers");
+        return new ResponseEntity<>(passengers, HttpStatus.OK);
     }
 
     @Timed("passengers.get.id")
-    @RequestMapping(path = "utopia/airlines/passengers/{id}", method = RequestMethod.GET, produces = {"application/json", "application/xml", "plain/text"})
+    @RequestMapping(path = "utopia/airlines/passengers/{passengerId}", method = RequestMethod.GET, produces = {"application/json", "application/xml", "plain/text"})
     @ResponseBody
-    public Passenger getPassengersById(@PathVariable Integer id) {
-        return agentService.getPassengerById(id);
+    public ResponseEntity<?> getPassengersById(@PathVariable Integer passengerId) {
+        Passenger passenger = agentService.getPassengerById(passengerId);
+        if(passenger == null) {
+            return new ResponseEntity<>("passenger id does not exist", HttpStatus.BAD_REQUEST);
+        }
+        else{
+            return new ResponseEntity<>(passenger, HttpStatus.OK);
+        }
     }
 
     @Timed("passengers.post")
-    @RequestMapping(path = "utopia/airlines/passengers/", method = RequestMethod.POST, consumes = {"application/json", "application/xml", "plain/text"}, produces = {"application/json", "application/xml", "plain/text"})
+    @RequestMapping(path = "utopia/airlines/passengers", method = RequestMethod.POST, consumes = {"application/json", "application/xml", "plain/text"}, produces = {"application/json", "application/xml", "plain/text"})
     @ResponseBody
-    public void postPassenger(@RequestBody Passenger passenger) {
-        agentService.postPassenger(passenger);
+    public ResponseEntity<?> postPassenger(@RequestBody Passenger passenger) {
+        if(passenger.getId() != null) {
+            return new ResponseEntity<>("passenger id included in body", HttpStatus.BAD_REQUEST);
+        }
+        else if(passenger.getBooking_id() == null) {
+            return new ResponseEntity<>("no booking included", HttpStatus.BAD_REQUEST);
+        }
+        else {
+            if(passenger.getBooking_id().getId() == null || passenger.getBooking_id().getIs_active() == null || passenger.getBooking_id().getConfirmation_code() == null) {
+                return new ResponseEntity<>("booking has null properties", HttpStatus.BAD_REQUEST);
+            }
+            else {
+                Booking bookingCheck = agentService.getBookingById(passenger.getBooking_id().getId());
+                if(bookingCheck == null) {
+                    return new ResponseEntity<>("booking id does not exist", HttpStatus.BAD_REQUEST);
+                }
+                else if(!passenger.getBooking_id().getConfirmation_code().equals(bookingCheck.getConfirmation_code()) || !passenger.getBooking_id().getIs_active().equals(bookingCheck.getIs_active()) || !passenger.getBooking_id().getId().equals(bookingCheck.getId())) {
+                    logger.info(String.valueOf(bookingCheck.hashCode()));
+                    logger.info(String.valueOf(passenger.getBooking_id().hashCode()));
+                    return new ResponseEntity<>("booking can not be modified here", HttpStatus.BAD_REQUEST);
+                }
+                else {
+                    passenger.setBooking_id(bookingCheck);
+                    Passenger posted = agentService.postPassenger(passenger);
+                    return new ResponseEntity<>(posted, HttpStatus.OK);
+                }
+            }
+        }
     }
 
-    @Timed("passengers.post")
-    @RequestMapping(path = "utopia/airlines/passengers/", method = RequestMethod.PATCH, consumes = {"application/json", "application/xml", "plain/text"}, produces = {"application/json", "application/xml", "plain/text"})
+    @Timed("passengers.put")
+    @RequestMapping(path = "utopia/airlines/passengers/{passengerId}", method = RequestMethod.PUT, consumes = {"application/json", "application/xml", "plain/text"}, produces = {"application/json", "application/xml", "plain/text"})
     @ResponseBody
-    public void patchPassenger(@RequestBody Passenger passenger) {
-        agentService.patchPassenger(passenger);
+    public ResponseEntity<?> putPassenger(@RequestBody Passenger passenger, @PathVariable Integer passengerId) {
+        Passenger check = agentService.getPassengerById(passengerId);
+        if(check == null) {
+            return new ResponseEntity<>("passenger id does not exist", HttpStatus.BAD_REQUEST);
+        }
+        else if(passenger.getId() != null) {
+            return new ResponseEntity<>("passenger id included in body", HttpStatus.BAD_REQUEST);
+        }
+        else if(passenger.getBooking_id() == null) {
+            return new ResponseEntity<>("no booking included", HttpStatus.BAD_REQUEST);
+        }
+        else {
+            if(passenger.getBooking_id().getId() == null || passenger.getBooking_id().getIs_active() == null || passenger.getBooking_id().getConfirmation_code() == null) {
+                return new ResponseEntity<>("booking has null properties", HttpStatus.BAD_REQUEST);
+            }
+            else {
+                Booking bookingCheck = agentService.getBookingById(passenger.getBooking_id().getId());
+                if(bookingCheck == null) {
+                    return new ResponseEntity<>("booking id does not exist", HttpStatus.BAD_REQUEST);
+                }
+                else {
+                    passenger.setId(check.getId());
+                    passenger.setBooking_id(bookingCheck);
+                    Passenger posted = agentService.postPassenger(passenger);
+                    return new ResponseEntity<>(posted, HttpStatus.OK);
+                }
+            }
+        }
     }
 
     @Timed("passengers.delete")
-    @RequestMapping(path = "utopia/airlines/passengers/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(path = "utopia/airlines/passengers/{passengerId}", method = RequestMethod.DELETE, produces = {"application/json", "application/xml"})
     @ResponseBody
-    public void deletePassengerById(@PathVariable Integer id) {
-        agentService.deletePassenger(id);
-    }
-
-    @Timed("thing")
-    @RequestMapping(path = "utopia/airlines/thing/", method = RequestMethod.PUT)
-    @ResponseBody
-    public void thing(@RequestBody HashMap<String, Object> thing) {
-        logger.info(thing.toString());
-        logger.info(thing.entrySet().toString());
-        userDetailsService.
+    public ResponseEntity<?> deletePassenger(@PathVariable Integer passengerId) {
+        Passenger passenger = agentService.getPassengerById(passengerId);
+        if(passenger == null) {
+            return new ResponseEntity<>("passenger id does not exist", HttpStatus.BAD_REQUEST);
+        }
+        else {
+            //passenger.setBooking_id(null);
+            //agentService.postPassenger(passenger);
+            agentService.deletePassenger(passenger);
+            return new ResponseEntity<>("passenger deleted", HttpStatus.OK);
+        }
     }
 
 }

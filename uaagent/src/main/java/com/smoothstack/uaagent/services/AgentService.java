@@ -7,13 +7,14 @@ import com.smoothstack.uaagent.models.User;
 import com.smoothstack.uaagent.repos.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class AgentService {
 
     @Autowired
@@ -122,17 +123,18 @@ public class AgentService {
         return null;
     }
 
-    public void postPassenger(Passenger passenger) {
-        passengerRepository.save(passenger);
+    public Passenger postPassenger(Passenger passenger) {
+        Passenger posted = passengerRepository.save(passenger);
+        return posted;
     }
 
     public void patchPassenger(Passenger passenger) {
         passengerRepository.save(passenger);
     }
 
-    public void deletePassenger(Integer id) {
-        passengerRepository.deleteById(id);
+    public Passenger deletePassenger(Passenger passenger) {
+        passenger.setBooking_id(null);
+        passengerRepository.delete(passenger);
+        return passenger;
     }
-
-
 }
