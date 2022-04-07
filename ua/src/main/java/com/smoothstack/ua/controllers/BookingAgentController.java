@@ -82,10 +82,17 @@ public class BookingAgentController {
     }*/
 
     @Timed("delete.bookingAgents")
-    @RequestMapping(path = "utopia/airlines/bookingAgents/", method = RequestMethod.DELETE, consumes = {"application/json", "application/xml"})
-    public void deleteBookingAgents(@RequestBody List<BookingAgent> bookingAgents) { bookingAgentService.deleteBookingAgents(bookingAgents); }
-
-    @Timed("delete.bookingAgents")
-    @RequestMapping(path = "utopia/airlines/bookingAgent/{id}", method = RequestMethod.DELETE, consumes = {"application/json", "application/xml"})
-    public void deleteBookingAgent(@RequestBody BookingAgent bookingAgent) { bookingAgentService.deleteBookingAgent(bookingAgent); }
+    @RequestMapping(path = "utopia/airlines/bookingAgents/{bookingId}/{flightId}", method = RequestMethod.DELETE, consumes = {"application/json", "application/xml"})
+    public ResponseEntity<?> deleteBookingAgent(@PathVariable Integer bookingId, @PathVariable Integer flightId) {
+        BookingAgent check = bookingAgentService.getBookingAgentById(new BookingAgentId(bookingId, flightId));
+        if(check != null) {
+            logger.info("booking agent exists");
+            bookingAgentService.deleteBookingAgent(check);
+            return new ResponseEntity<>("deleting " + check.toString(), HttpStatus.OK);
+        }
+        else {
+            logger.info("booking agent does not exist");
+            return new ResponseEntity<>("booking agent id does not exist", HttpStatus.BAD_REQUEST);
+        }
+    }
 }

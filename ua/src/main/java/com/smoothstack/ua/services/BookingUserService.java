@@ -33,16 +33,12 @@ public class BookingUserService {
         else return null;
     }
 
-    public void saveBookingUsers(List<BookingUser> bookingUsers) {
-        bookingUserRepository.saveAll(bookingUsers);
-    }
-
     public BookingUser saveBookingUser(BookingUser bookingUser) {
         BookingUser posted = bookingUserRepository.save(bookingUser);
         return posted;
     }
 
-    public void deleteBookingUsers(List<BookingUser> bookingUsers) { bookingUserRepository.deleteAll(bookingUsers); }
-
-    public void deleteBookingUser(BookingUser bookingUser) { bookingUserRepository.delete(bookingUser); }
+    public void deleteBookingUser(BookingUser bookingUser) {
+        bookingUserRepository.delete(bookingUser);
+    }
 }

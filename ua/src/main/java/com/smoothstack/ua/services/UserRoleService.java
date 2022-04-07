@@ -19,7 +19,9 @@ public class UserRoleService {
 
     @Autowired
     UserRoleRepository userRoleRepository;
-    public List<UserRole> getAllUserRoles() { return (List<UserRole>) userRoleRepository.findAll(); }
+    public List<UserRole> getAllUserRoles() {
+        return (List<UserRole>) userRoleRepository.findAll();
+    }
 
     public UserRole getUserRoleById(Long userRoleId) {
         Optional<UserRole> userRole = userRoleRepository.findById(userRoleId);
@@ -37,15 +39,13 @@ public class UserRoleService {
         else return null;
     }
 
-    public void saveUserRoles(List<UserRole> userRoles) { userRoleRepository.saveAll(userRoles); }
-
     public UserRole saveUserRole(UserRole userRole) {
         UserRole posted = userRoleRepository.save(userRole);
         return posted;
     }
 
-    public void deleteUserRoles(List<UserRole> userRoles) { userRoleRepository.deleteAll(userRoles); }
-
-    public void deleteUserRoleById(Long id) { userRoleRepository.deleteById(id); }
+    public void deleteUserRoleById(Long id) {
+        userRoleRepository.deleteById(id);
+    }
 
 }

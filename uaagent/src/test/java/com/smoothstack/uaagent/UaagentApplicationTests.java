@@ -38,9 +38,6 @@ class UaagentApplicationTests {
 	@MockBean
 	private JwtUserDetailsService jwtService;
 
-	@MockBean
-	private BookingRepository bookingRepository;
-
 	@Autowired
 	private MockMvc mockMvc;
 

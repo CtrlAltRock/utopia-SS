@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @CrossOrigin
@@ -33,7 +34,6 @@ public class UserRoleController {
     @Timed("get.userRoles.id")
     @RequestMapping(path = "utopia/airlines/userRoles/{userRoleId}", method = RequestMethod.GET, produces = {"application/json", "application/xml"})
     public ResponseEntity<?> getUserRolesById(@PathVariable Integer userRoleId) {
-        logger.info(userRoleId.toString(), "user role id argument");
         UserRole check = userRoleService.getUserRoleById(userRoleId.longValue());
         if(check == null) {
             logger.info("user role does not exist");
@@ -47,14 +47,13 @@ public class UserRoleController {
 
     @Timed("post.userRoles")
     @RequestMapping(path = "utopia/airlines/userRoles/", method = RequestMethod.POST, consumes = {"application/json", "application/xml"})
-    public ResponseEntity<?> postUserRoles(@RequestBody UserRole userRole) {
-        logger.info(userRole.toString(), "user role argument");
+    public ResponseEntity<?> postUserRoles(@Valid @RequestBody UserRole userRole) {
         UserRole check = userRoleService.getUserRoleByName(userRole.getName());
         if(check != null) {
             logger.info("user role already exists");
             return new ResponseEntity<>("user role already exists", HttpStatus.BAD_REQUEST);
         }
-        else if(userRole.getId() != Integer.valueOf(0).longValue()) {
+        else if(userRole.getId() != null) {
             logger.info("user role id has been included or is not zero");
             return new ResponseEntity<>("user role id has been included or is not zero", HttpStatus.BAD_REQUEST);
         }
@@ -67,15 +66,13 @@ public class UserRoleController {
 
     @Timed("put.userRoles")
     @RequestMapping(path = "utopia/airlines/userRoles/{userRoleId}", method = RequestMethod.PUT, consumes = {"application/json", "application/xml"})
-    public ResponseEntity<?> putUserRoles(@RequestBody UserRole userRole, @PathVariable Integer userRoleId) {
-        logger.info(userRole.toString(), "user role argument");
-        logger.info(userRoleId.toString(), "user role id argument");
+    public ResponseEntity<?> putUserRoles(@Valid @RequestBody UserRole userRole, @PathVariable Integer userRoleId) {
         UserRole check = userRoleService.getUserRoleById(userRoleId.longValue());
         if(check == null) {
             logger.info("user role does not exist");
             return new ResponseEntity<>("user role does not exist", HttpStatus.BAD_REQUEST);
         }
-        else if(userRole.getId().intValue() != 0) {
+        else if(userRole.getId() != null) {
             logger.info("user role has an id inluded");
             return new ResponseEntity<>("user role has id included", HttpStatus.BAD_REQUEST);
         }

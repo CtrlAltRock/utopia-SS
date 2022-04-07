@@ -32,17 +32,9 @@ public class BookingService {
         else return null;
     }
 
-    public void saveBookings(List<Booking> bookings) {
-        bookingRepository.saveAll(bookings);
-    }
-
     public Booking saveBooking(Booking booking) {
         Booking posted = bookingRepository.save(booking);
         return posted;
-    }
-
-    public void deleteBookings(List<Booking> bookings) {
-        bookingRepository.deleteAll(bookings);
     }
 
     public void deleteBookingById(Integer id) {

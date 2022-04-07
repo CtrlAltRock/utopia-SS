@@ -37,24 +37,17 @@ public class UserService {
         else return null;
     }
 
-    public void saveUsers(List<User> users) {
-        for (User user: users) {
-            user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
-        }
-        userRepository.saveAll(users);
-    }
-
     public User saveUser(User user) {
         user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
         User posted = userRepository.save(user);
         return posted;
     }
 
-    public void deleteUsers(List<User> users) { userRepository.deleteAll(users); }
-
     public void deleteUser(User user) {
         userRepository.delete(user);
     }
 
-    public void deleteUserById(Long id) { userRepository.deleteById(id); }
+    public void deleteUserById(Long id) {
+        userRepository.deleteById(id);
+    }
 }

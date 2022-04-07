@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @CrossOrigin
@@ -36,7 +37,7 @@ public class PassengerController {
     }
 
     @Timed("get.passengers.id")
-    @RequestMapping(path = "utopia/airline/passengers/{passengerId}", method = RequestMethod.GET, produces = {"application/json", "application/xml"})
+    @RequestMapping(path = "utopia/airlines/passengers/{passengerId}", method = RequestMethod.GET, produces = {"application/json", "application/xml"})
     public ResponseEntity<?> getPassengerById(@PathVariable Integer passengerId) {
         Passenger check = passengerService.getPassengerById(passengerId);
         if(check == null) {
@@ -72,8 +73,8 @@ public class PassengerController {
     }
 
     @Timed("put.passenger")
-    @RequestMapping(path = "utopia/airlines/passengers/{passengerId}", method = RequestMethod.POST, consumes = {"application/json", "application/xml"})
-    public ResponseEntity<?> putPassengers(@RequestBody Passenger passenger, @PathVariable Integer passengerId) {
+    @RequestMapping(path = "utopia/airlines/passengers/{passengerId}", method = RequestMethod.PUT, consumes = {"application/json", "application/xml"})
+    public ResponseEntity<?> putPassengers(@Valid @RequestBody Passenger passenger, @PathVariable Integer passengerId) {
         Passenger check = passengerService.getPassengerById(passengerId);
         if(check == null) {
             logger.info("passenger does not exist");
@@ -81,11 +82,11 @@ public class PassengerController {
         }
         else {
             logger.info("passenger does exist");
-            if(check.getBooking_id().getId() != passenger.getBooking_id().getId()) {
+            if(!check.getBooking_id().equals(passenger.getBooking_id())) {
                 logger.info("checking updated booking id if it exists");
                 Booking booking = bookingService.getBookingsById(passenger.getBooking_id().getId());
                 if(booking == null) {
-                    logger.info("updated booking  does not exist");
+                    logger.info("updated booking does not exist");
                     return new ResponseEntity<>("booking being updated does not exist", HttpStatus.BAD_REQUEST);
                 }
             }

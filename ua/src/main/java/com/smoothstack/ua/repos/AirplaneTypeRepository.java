@@ -1,8 +1,10 @@
 package com.smoothstack.ua.repos;
 
 import com.smoothstack.ua.models.AirplaneType;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface AirplaneTypeRepository extends CrudRepository<AirplaneType, Integer> {
+@Repository
+public interface AirplaneTypeRepository extends JpaRepository<AirplaneType, Integer> {
 
 }

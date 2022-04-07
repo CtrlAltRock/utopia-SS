@@ -1,5 +1,8 @@
 package com.smoothstack.ua.models;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
@@ -8,22 +11,12 @@ import java.util.Objects;
 @Table(name = "booking_agent")
 public class BookingAgent {
 
+    @Getter
+    @Setter
     @EmbeddedId
     BookingAgentId bookingAgentId = new BookingAgentId();
 
     public BookingAgent() {
-    }
-
-    public BookingAgent(BookingAgentId bookingAgentId) {
-        this.bookingAgentId = bookingAgentId;
-    }
-
-    public BookingAgentId getBookingAgentId() {
-        return bookingAgentId;
-    }
-
-    public void setBookingAgentId(BookingAgentId bookingAgentId) {
-        this.bookingAgentId = bookingAgentId;
     }
 
     @Override

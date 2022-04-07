@@ -44,7 +44,7 @@ public class AirplaneTypeController {
     /* Not checking if an airplane max_capacity already exists, admin should be aware */
     @Timed("post.airplaneTypes")
     @RequestMapping(path = "utopia/airlines/airplaneTypes/", method = RequestMethod.POST, consumes = {"application/json", "application/xml"})
-    public ResponseEntity<?> saveAirplaneTypes(@RequestBody AirplaneType airplaneType) {
+    public ResponseEntity<?> saveAirplaneTypes(@Valid @RequestBody AirplaneType airplaneType) {
         AirplaneType posted = airplaneTypeService.saveAirplaneType(airplaneType);
         return new ResponseEntity<>(posted, HttpStatus.OK);
     }
@@ -52,7 +52,7 @@ public class AirplaneTypeController {
 
     @Timed("put.airplaneType")
     @RequestMapping(path = "utopia/airlines/airplaneTypes/{airplaneTypeId}", method = RequestMethod.PUT, consumes = {"application/json", "application/xml"})
-    public ResponseEntity<?> putAirplaneType(@RequestBody AirplaneType airplaneType, @PathVariable Integer airplaneTypeId) {
+    public ResponseEntity<?> putAirplaneType(@Valid @RequestBody AirplaneType airplaneType, @PathVariable Integer airplaneTypeId) {
         AirplaneType sameType = airplaneTypeService.getAirplaneTypeById(airplaneTypeId);
         if(sameType == null) {
             return new ResponseEntity<>("airplane type id does not exist", HttpStatus.BAD_REQUEST);
@@ -76,7 +76,7 @@ public class AirplaneTypeController {
         else{
             logger.info(toDelete.toString(), "airplane type to delete");
             airplaneTypeService.deleteAirplaneTypeById(airplaneTypeId);
-            return new ResponseEntity<>("deleting airplane type " + toDelete.toString(), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("deleting airplane type " + toDelete.toString(), HttpStatus.OK);
         }
 
     }

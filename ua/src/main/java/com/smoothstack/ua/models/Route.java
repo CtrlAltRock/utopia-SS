@@ -1,21 +1,31 @@
 package com.smoothstack.ua.models;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Objects;
 
 @Entity
 @Table(name = "route")
 public class Route implements Serializable {
 
     @Id
+    @Getter
+    @Setter
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id = 0;
 
+    @Getter
+    @Setter
     @ManyToOne(cascade = {CascadeType.REFRESH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH})
     @JoinColumn(name = "origin_id")
     Airport originAirport = new Airport();
 
+    @Getter
+    @Setter
     @ManyToOne(cascade = {CascadeType.REFRESH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH})
     @JoinColumn(name = "destination_id")
     Airport destinationAirport = new Airport();
@@ -34,28 +44,17 @@ public class Route implements Serializable {
         this.destinationAirport = destinationAirport;
     }
 
-    public Integer getId() {
-        return id;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Route)) return false;
+        Route route = (Route) o;
+        return Objects.equals(id, route.id) && Objects.equals(originAirport, route.originAirport) && Objects.equals(destinationAirport, route.destinationAirport);
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Airport getOriginAirport() {
-        return originAirport;
-    }
-
-    public void setOriginAirport(Airport originAirport) {
-        this.originAirport = originAirport;
-    }
-
-    public Airport getDestinationAirport() {
-        return destinationAirport;
-    }
-
-    public void setDestinationAirport(Airport destinationAirport) {
-        this.destinationAirport = destinationAirport;
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, originAirport, destinationAirport);
     }
 
     @Override

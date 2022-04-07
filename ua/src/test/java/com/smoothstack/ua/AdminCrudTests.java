@@ -38,9 +38,6 @@ public class AdminCrudTests {
     BookingService bookingService;
 
     @Autowired
-    BookingGuestService bookingGuestService;
-
-    @Autowired
     BookingPaymentService bookingPaymentService;
 
     @Autowired
@@ -71,8 +68,6 @@ public class AdminCrudTests {
     Booking booking;
     BookingAgent bookingAgent;
     BookingAgentId bookingAgentId;
-    BookingGuest bookingGuest;
-    BookingGuestId bookingGuestId;
     BookingPayment bookingPayment;
     BookingPaymentId bookingPaymentId;
     BookingUser bookingUser;
@@ -113,13 +108,6 @@ public class AdminCrudTests {
         bookingAgentId.setBooking_id(1);
         bookingAgentId.setAgent_id(1);
         bookingAgent.setBookingAgentId(bookingAgentId);
-
-        bookingGuestId = new BookingGuestId();
-        bookingGuest = new BookingGuest();
-        bookingGuestId.setBooking_id(1);
-        bookingGuest.setBooking_id(bookingGuestId);
-        bookingGuest.setContact_email("samuel.sessums@smoothstack.com");
-        bookingGuest.setContact_phone("3522623301");
 
         bookingPaymentId = new BookingPaymentId();
         bookingPayment = new BookingPayment();
@@ -374,45 +362,6 @@ public class AdminCrudTests {
         Assertions.assertTrue(bookingAgentService.getAllBookingAgents().size() == 0);
 
 
-    }
-
-    @Test
-    @Order(21)
-    public void createBookingGuest() {
-        Assertions.assertTrue(bookingGuestService.getAllBookingGuests().size() == 0);
-        bookingGuestService.saveBookingGuest(bookingGuest);
-        Assertions.assertTrue(bookingGuestService.getAllBookingGuests().size() == 1);
-
-    }
-
-    @Test
-    @BeforeTestMethod("createBookingGuest")
-    @Order(22)
-    public void readBookingGuest() {
-        Assertions.assertTrue(bookingGuestService.getAllBookingGuests().size() == 1);
-        BookingGuest new_bookingGuest = bookingGuestService.getAllBookingGuests().get(0);
-        Assertions.assertTrue(new_bookingGuest.getContact_email() == "samuel.sessums@smoothstack.com");
-    }
-
-    @Test
-    @BeforeTestMethod("createBookingGuest")
-    @Order(23)
-    public void updateBookingGuest() {
-        Assertions.assertTrue(bookingGuestService.getAllBookingGuests().size() == 1);
-        BookingGuest new_bookingGuest = bookingGuestService.getAllBookingGuests().get(0);
-        new_bookingGuest.setContact_email("new.email@smoothstack.com");
-        bookingGuestService.saveBookingGuest(new_bookingGuest);
-        Assertions.assertTrue(bookingGuestService.getAllBookingGuests().size() == 1);
-        Assertions.assertTrue(bookingGuestService.getAllBookingGuests().get(0).getContact_email() == "new.email@smoothstack.com");
-    }
-
-    @Test
-    @BeforeTestMethod("createBookingGuest")
-    @Order(24)
-    public void deleteBookingGuest() {
-        Assertions.assertTrue(bookingGuestService.getAllBookingGuests().size() == 1);
-        bookingGuestService.deleteBookingGuest(bookingGuestService.getAllBookingGuests().get(0));
-        Assertions.assertTrue(bookingGuestService.getAllBookingGuests().size() == 0);
     }
 
     @Test

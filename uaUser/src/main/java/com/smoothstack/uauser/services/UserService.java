@@ -12,6 +12,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -71,19 +72,24 @@ public class UserService {
     }
     public void deleteUser(User user) { userRepository.delete(user);}
 
-    public User getUserByUsername(String username) { return userRepository.findUserByUsername(username).get(); }
+    public User getUserByUsername(String username) {
+        Optional<User> user = userRepository.findUserByUsername(username);
+        if(user.isPresent()) return user.get();
+        else return null;
+    }
 
     public List<Flight> getAllFlights() {
         return (List<Flight>) flightRepository.findAll();
     }
 
     public Flight getFlightsById(Integer flightId) {
-        return flightRepository.findById(flightId).get();
+
+        Optional<Flight> flight = flightRepository.findById(flightId);
+        if(flight.isPresent()) return flight.get();
+        else return null;
     }
 
     public void addUserToFlight(Flight flight) {
-        // I need flight Boooked
-
         List<Passenger> passengers = passengerRepository.findAll();
 
         FlightBookings flightBooking = flightBookingsRepository.findFlightBookingsByFlightId(flight.getId());
@@ -105,9 +111,8 @@ public class UserService {
             bookingUserId.setUser_id(Math.toIntExact(user.getId()));
             bookingUserId.setBooking_id(booking.getId());
             bookingUser.setBookingUserId(bookingUserId);
-//            System.out.println("Heresldkf;lksdf");
+
             if(flight.getReserved_seats() > 0) {
-//                System.out.println("Here");
                 flight.setReserved_seats(flight.getReserved_seats()-1);
                 bookingUserRepository.save(bookingUser);
                 flightRepository.save(flight);
@@ -118,15 +123,27 @@ public class UserService {
 
     }
 
+    public void deleteUserFromFlight(Flight flight) {
+        if(user != null) {
+            FlightBookings flightBooking = flightBookingsRepository.findFlightBookingsByFlightId(flight.getId());
+            if (flightBooking != null) {
+                Booking booking = bookingRepository.findById(flightBooking.getFlightBookingsId().getBooking_id()).get();
+                Passenger passenger = passengerRepository.findByNames(user.getFamily_name(), user.getGiven_name(), booking.getId());
+                if(passenger == null) {
+                    logger.info("here i guess");
+                }
+                else {
+                    passenger.setBooking_id(null);
+                    passengerRepository.delete(passenger);
+                    flight.setReserved_seats(flight.getReserved_seats() + 1);
+                    flightRepository.save(flight);
+                }
+            }
+        }
+    }
+
     public List<Flight> getUserFlights() {
-//        List<BookingUser> bookingUsers = bookingUserRepository.findAllByUserId(user.getId());
-
         List<Flight> flights = flightRepository.findAllByUserId(user.getId());
-
-//        for(BookingUser bu : bookingUsers) {
-//            List<> bu_flights = flightBookingsRepository.findFlightBookingsByBookingId(bu.getBookingUserId().getBooking_id());
-//        }
-
         return flights;
     }
 
@@ -134,9 +151,5 @@ public class UserService {
         List<Flight> flights = flightRepository.getAvailableFlights(LocalDateTime.now());
         return flights;
     }
-
-//    public List<Flight> usersBooked() {
-//
-//    }
 
 }

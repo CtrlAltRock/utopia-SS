@@ -46,7 +46,7 @@ public class BookingController {
         return new ResponseEntity<>(posted, HttpStatus.OK);
     }
 
-    @Timed("post.booking")
+    @Timed("put.booking")
     @RequestMapping(path = "utopia/airlines/bookings/{id}", method = RequestMethod.PUT, consumes = {"application/json", "application/xml"})
     public ResponseEntity<?> saveBooking(@RequestBody Booking booking, @PathVariable Integer id) {
         Booking check = bookingService.getBookingsById(id);

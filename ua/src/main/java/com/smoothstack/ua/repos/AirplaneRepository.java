@@ -3,11 +3,12 @@ package com.smoothstack.ua.repos;
 import com.smoothstack.ua.models.Airplane;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public interface AirplaneRepository extends JpaRepository<Airplane, Integer> {
 
     @Query(value = "select * from airplane where airplane.type_id = :airplane_type_id", nativeQuery = true)

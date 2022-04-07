@@ -1,34 +1,54 @@
 package com.smoothstack.ua.models;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "user")
 public class User {
 
     @Id
+    @Getter
+    @Setter
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id = 0L;
+    Long id;
 
+    @Getter
+    @Setter
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH })
     @JoinColumn(name = "role_id")
     UserRole userRole;
 
+    @Getter
+    @Setter
     @Column(name = "given_name")
     String given_name = "Joaquin";
 
+    @Getter
+    @Setter
     @Column(name = "family_name")
     String family_name = "Pheonix";
 
+    @Getter
+    @Setter
     @Column(name = "username")
     String username = "JPtheBoss";
 
+    @Getter
+    @Setter
     @Column(name = "email")
     String email = "JP@hollywoo.com";
 
+    @Getter
+    @Setter
     @Column(name = "password")
     String password = "badPass";
 
+    @Getter
+    @Setter
     @Column(name = "phone")
     String phone = "5555555555";
 
@@ -46,68 +66,17 @@ public class User {
         this.phone = phone;
     }
 
-    public Long getId() {
-        return id;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
+        User user = (User) o;
+        return Objects.equals(id, user.id) && Objects.equals(userRole, user.userRole) && Objects.equals(given_name, user.given_name) && Objects.equals(family_name, user.family_name) && Objects.equals(username, user.username) && Objects.equals(email, user.email) && Objects.equals(password, user.password) && Objects.equals(phone, user.phone);
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public UserRole getUserRole() {
-        return userRole;
-    }
-
-    public void setUserRole(UserRole userRole) {
-        this.userRole = userRole;
-    }
-
-    public String getGiven_name() {
-        return given_name;
-    }
-
-    public void setGiven_name(String given_name) {
-        this.given_name = given_name;
-    }
-
-    public String getFamily_name() {
-        return family_name;
-    }
-
-    public void setFamily_name(String family_name) {
-        this.family_name = family_name;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, userRole, given_name, family_name, username, email, password, phone);
     }
 
     @Override

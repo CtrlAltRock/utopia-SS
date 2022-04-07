@@ -60,7 +60,7 @@ public class BookingUserController {
     }
 
     @Timed("put.bookingUsers")
-    @RequestMapping(path = "utopia/airlines/bookingUser/{bookingId}/{userId}", method = RequestMethod.PUT, consumes = {"application/json", "application/xml"})
+    @RequestMapping(path = "utopia/airlines/bookingUsers/{bookingId}/{userId}", method = RequestMethod.PUT, consumes = {"application/json", "application/xml"})
     public ResponseEntity<?> putBookingUser(@RequestBody BookingUser bookingUser, @PathVariable Integer bookingId, @PathVariable Integer userId) {
         BookingUser check = bookingUserService.getBookingUserById(new BookingUserId(bookingId, userId));
         if(check == null) {
@@ -77,10 +77,8 @@ public class BookingUserController {
     }
 
     @Timed("delete.bookingUsers")
-    @RequestMapping(path = "utopia/airlines/bookingUser/{bookingId}/{userId}", method = RequestMethod.DELETE, consumes = {"application/json", "application/xml"})
+    @RequestMapping(path = "utopia/airlines/bookingUsers/{bookingId}/{userId}", method = RequestMethod.DELETE, consumes = {"application/json", "application/xml"})
     public ResponseEntity<?> deleteBookingUser(@PathVariable Integer bookingId, @PathVariable Integer userId) {
-        logger.info(bookingId.toString(), "booking id argument");
-        logger.info(userId.toString(), ("user id argument"));
         BookingUser check = bookingUserService.getBookingUserById(new BookingUserId(bookingId, userId));
         if(check == null) {
             logger.info("booking user does not exist");

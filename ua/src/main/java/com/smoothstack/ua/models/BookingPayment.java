@@ -1,5 +1,8 @@
 package com.smoothstack.ua.models;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
@@ -8,12 +11,18 @@ import java.util.Objects;
 @Table(name = "booking_payment")
 public class BookingPayment implements Serializable {
 
+    @Getter
+    @Setter
     @EmbeddedId
     BookingPaymentId bookingPaymentId;
 
+    @Getter
+    @Setter
     @Column(name = "stripe_id")
     String stripe_id;
 
+    @Getter
+    @Setter
     @Column(name = "refunded")
     Boolean refunded;
 
@@ -24,30 +33,6 @@ public class BookingPayment implements Serializable {
     public BookingPayment(BookingPaymentId bookingPaymentId, String stripe_id, Boolean refunded) {
         this.bookingPaymentId = bookingPaymentId;
         this.stripe_id = stripe_id;
-        this.refunded = refunded;
-    }
-
-    public BookingPaymentId getBookingPaymentId() {
-        return bookingPaymentId;
-    }
-
-    public void setBookingPaymentId(BookingPaymentId bookingPaymentId) {
-        this.bookingPaymentId = bookingPaymentId;
-    }
-
-    public String getStripe_id() {
-        return stripe_id;
-    }
-
-    public void setStripe_id(String stripe_id) {
-        this.stripe_id = stripe_id;
-    }
-
-    public Boolean getRefunded() {
-        return refunded;
-    }
-
-    public void setRefunded(Boolean refunded) {
         this.refunded = refunded;
     }
 

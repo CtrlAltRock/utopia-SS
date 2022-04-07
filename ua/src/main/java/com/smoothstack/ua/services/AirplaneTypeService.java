@@ -30,16 +30,9 @@ public class AirplaneTypeService {
         return null;
     }
 
-    public void saveAirplaneTypes(List<AirplaneType> airplaneTypes) {
-        airplaneTypeRepository.saveAll(airplaneTypes);
-    }
-
     public AirplaneType saveAirplaneType(AirplaneType airplaneType) { AirplaneType posted = airplaneTypeRepository.save(airplaneType);
         return posted;
     }
 
-    public void deleteAirplaneTypes(List<AirplaneType> airplaneTypes) { airplaneTypeRepository.deleteAll(airplaneTypes);}
-
     public void deleteAirplaneTypeById(Integer id) { airplaneTypeRepository.deleteById(id); }
-
 }

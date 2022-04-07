@@ -1,31 +1,49 @@
 package com.smoothstack.ua.models;
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.Objects;
 
 @Entity
 @Table(name = "passenger")
 public class Passenger {
 
     @Id
+    @Getter
+    @Setter
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
 
+    @Getter
+    @Setter
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH})
     @JoinColumn(name = "booking_id", referencedColumnName = "id")
     Booking booking_id;
 
+    @Getter
+    @Setter
     @Column(name = "given_name")
     String given_name;
 
+    @Getter
+    @Setter
     @Column(name = "family_name")
     String family_name;
 
+    @Getter
+    @Setter
     @Column(name = "dob")
     Date dob;
 
+    @Getter
+    @Setter
     @Column(name = "gender")
     String gender;
 
+    @Getter
+    @Setter
     @Column(name = "address")
     String address;
 
@@ -42,60 +60,17 @@ public class Passenger {
         this.address = address;
     }
 
-    public Integer getId() {
-        return id;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Passenger)) return false;
+        Passenger passenger = (Passenger) o;
+        return Objects.equals(id, passenger.id) && Objects.equals(booking_id, passenger.booking_id) && Objects.equals(given_name, passenger.given_name) && Objects.equals(family_name, passenger.family_name) && Objects.equals(dob, passenger.dob) && Objects.equals(gender, passenger.gender) && Objects.equals(address, passenger.address);
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Booking getBooking_id() {
-        return booking_id;
-    }
-
-    public void setBooking_id(Booking booking_id) {
-        this.booking_id = booking_id;
-    }
-
-    public String getGiven_name() {
-        return given_name;
-    }
-
-    public void setGiven_name(String given_name) {
-        this.given_name = given_name;
-    }
-
-    public String getFamily_name() {
-        return family_name;
-    }
-
-    public void setFamily_name(String family_name) {
-        this.family_name = family_name;
-    }
-
-    public Date getDob() {
-        return dob;
-    }
-
-    public void setDob(Date dob) {
-        this.dob = dob;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, booking_id, given_name, family_name, dob, gender, address);
     }
 
     @Override

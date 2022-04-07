@@ -54,7 +54,7 @@ public class FlightBookingController {
     }
 
     @Timed("post.flightBookings")
-    @RequestMapping(path = "utopia/airlines/flightBookings/", method = RequestMethod.POST, consumes = {"application/json", "application/xml"})
+    @RequestMapping(path = "utopia/airlines/flightBookings/", method = RequestMethod.POST, consumes = {"application/json", "application/xml"}, produces = {"application/json", "application/xml"})
     public ResponseEntity<?> postFlightBookings(@RequestBody FlightBookings flightBooking) {
         FlightBookings check = flightBookingService.getFlightBookingsById(flightBooking.getFlightBookingsId());
         if(check == null) {
@@ -78,7 +78,7 @@ public class FlightBookingController {
     }
 
     @Timed("put.flightBookings")
-    @RequestMapping(path = "utopia/airlines/flightBookings/{flightId}/{bookingId}", method = RequestMethod.PUT, consumes = {"application/json", "application/xml"})
+    @RequestMapping(path = "utopia/airlines/flightBookings/{flightId}/{bookingId}", method = RequestMethod.PUT, consumes = {"application/json", "application/xml"}, produces = {"application/json", "application/xml"})
     public ResponseEntity<?> putFlightBooking(@RequestBody FlightBookings flightBooking, @PathVariable Integer flightId, @PathVariable Integer bookingId) {
         FlightBookings check = flightBookingService.getFlightBookingsById(new FlightBookingsId(flightId, bookingId));
         if(check == null) {
@@ -104,7 +104,7 @@ public class FlightBookingController {
 
 
     @Timed("delete.flightBookings")
-    @RequestMapping(path = "utopia/airlines/flightBooking/{flightId}/{bookingId}", method = RequestMethod.DELETE, consumes = {"application/json", "application/xml"})
+    @RequestMapping(path = "utopia/airlines/flightBookings/{flightId}/{bookingId}", method = RequestMethod.DELETE, consumes = {"application/json", "application/xml"})
     public ResponseEntity<?> deleteFlightBookingsById(@PathVariable Integer flightId, @PathVariable Integer bookingId) {
         FlightBookings check = flightBookingService.getFlightBookingsById(new FlightBookingsId(flightId, bookingId));
         if(check == null) {

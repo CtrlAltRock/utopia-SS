@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @CrossOrigin
@@ -55,11 +56,11 @@ public class FlightController {
 
 
     @Timed("post.flights")
-    @RequestMapping(path = "utopia/airlines/flight/", method = RequestMethod.POST, consumes = {"application/json", "application/xml"})
-    public ResponseEntity<?> postFlight(@RequestBody Flight flight) {
+    @RequestMapping(path = "utopia/airlines/flights/", method = RequestMethod.POST, consumes = {"application/json", "application/xml"})
+    public ResponseEntity<?> postFlight(@Valid @RequestBody Flight flight) {
         if(flight.getAirplane() == null || flight.getRoute() == null || flight.getId() != null) {
             logger.info("not accepting body argument");
-            return new ResponseEntity<>("either airplane is null or route is null or an id has been supplied to the RequestBody", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("either airplane is null or route is null or an id has been supplied", HttpStatus.BAD_REQUEST);
         }
         else {
             logger.info("flight body seems alright");
@@ -78,8 +79,8 @@ public class FlightController {
     }
 
     @Timed("put.flights")
-    @RequestMapping(path = "utopia/airlines/flight/{flightId}", method = RequestMethod.PUT, consumes = {"application/json", "application/xml"})
-    public ResponseEntity<?> putFlight(@RequestBody Flight flight, @PathVariable Integer flightId) {
+    @RequestMapping(path = "utopia/airlines/flights/{flightId}", method = RequestMethod.PUT, consumes = {"application/json", "application/xml"})
+    public ResponseEntity<?> putFlight(@Valid @RequestBody Flight flight, @PathVariable Integer flightId) {
         Flight check = flightService.getFlightById(flightId);
         if(check == null) {
             logger.info("flight id does not exist");
@@ -108,7 +109,7 @@ public class FlightController {
     }
 
     @Timed("delete.flights")
-    @RequestMapping(path = "utopia/airlines/flight/{flightId}", method = RequestMethod.DELETE)
+    @RequestMapping(path = "utopia/airlines/flights/{flightId}", method = RequestMethod.DELETE)
     public ResponseEntity<?> deleteFlightById(@PathVariable Integer flightId) {
         Flight check = flightService.getFlightById(flightId);
         if(check == null) {

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -20,20 +21,22 @@ public class FlightService {
     FlightRepository flightRepository;
     public List<Flight> getFlights() { return (List<Flight>) flightRepository.findAll(); }
 
-    public Flight getFlightById(Integer flightId) { return flightRepository.findById(flightId).get(); }
+    public Flight getFlightById(Integer flightId) {
+        Optional<Flight> flight = flightRepository.findById(flightId);
+        if(flight.isPresent()) return flight.get();
+        else return null;
+    }
 
-    public List<Flight> getFlightsByRouteId(Integer routeId) { return flightRepository.findByRouteId(routeId); }
-
-    public List<Flight> getFlightsByAirplaneId(Integer airplaneId) { return flightRepository.findByAirplaneId(airplaneId); }
-
-    public void saveFlights(List<Flight> flights) { flightRepository.saveAll(flights); }
+    public List<Flight> getFlightsByRouteId(Integer routeId) {
+        return flightRepository.findByRouteId(routeId);
+    }
 
     public Flight saveFlight(Flight flight) {
         Flight posted = flightRepository.saveAndFlush(flight);
         return posted;
     }
 
-    public void deleteFlights(List<Flight> flights) { flightRepository.deleteAll(flights); }
-
-    public void deleteFlightById(Integer id) { flightRepository.deleteById(id);}
+    public void deleteFlightById(Integer id) {
+        flightRepository.deleteById(id);
+    }
 }

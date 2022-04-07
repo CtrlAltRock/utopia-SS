@@ -20,7 +20,9 @@ public class FlightBookingService {
 
     @Autowired
     FlightBookingsRepository flightBookingsRepository;
-    public List<FlightBookings> getFlightBookings() { return (List<FlightBookings>) flightBookingsRepository.findAll(); }
+    public List<FlightBookings> getFlightBookings() {
+        return (List<FlightBookings>) flightBookingsRepository.findAll();
+    }
 
     public FlightBookings getFlightBookingsById(FlightBookingsId flightBookingId) {
         Optional<FlightBookings> flightBooking = flightBookingsRepository.findById(flightBookingId);
@@ -30,15 +32,12 @@ public class FlightBookingService {
         else return null;
     }
 
-    public void saveFlightBookings(List<FlightBookings> flightBookings) { flightBookingsRepository.saveAll(flightBookings); }
-
     public FlightBookings saveFlightBooking(FlightBookings flightBooking) {
         FlightBookings posted = flightBookingsRepository.save(flightBooking);
         return posted;
     }
 
-    public void deleteFlightBookings(List<FlightBookings> flightBookings) { flightBookingsRepository.deleteAll(flightBookings); }
-
-    public void deleteFlightBooking(FlightBookings flightBookings) { flightBookingsRepository.delete(flightBookings); }
-
+    public void deleteFlightBooking(FlightBookings flightBookings) {
+        flightBookingsRepository.delete(flightBookings);
+    }
 }

@@ -1,15 +1,23 @@
 package com.smoothstack.ua.models;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "user_role")
 public class UserRole {
 
     @Id
+    @Getter
+    @Setter
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id = Long.valueOf(0);
+    Long id;
 
+    @Getter
+    @Setter
     @Column(name = "name")
     String name = "user";
 
@@ -21,20 +29,17 @@ public class UserRole {
         this.name = name;
     }
 
-    public Long getId() {
-        return id;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof UserRole)) return false;
+        UserRole userRole = (UserRole) o;
+        return Objects.equals(id, userRole.id) && Objects.equals(name, userRole.name);
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name);
     }
 
     @Override

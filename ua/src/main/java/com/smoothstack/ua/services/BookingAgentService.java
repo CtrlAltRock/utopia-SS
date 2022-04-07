@@ -31,15 +31,10 @@ public class BookingAgentService {
         else return null;
     }
 
-    public void saveBookingAgents(List<BookingAgent> bookingAgents) { bookingAgentRepository.saveAll(bookingAgents); }
-
     public BookingAgent saveBookingAgent(BookingAgent bookingAgent) {
         BookingAgent posted = bookingAgentRepository.save(bookingAgent);
         return posted;
     }
 
-    public void deleteBookingAgents(List<BookingAgent> bookingAgents) { bookingAgentRepository.deleteAll(bookingAgents); }
-
     public void deleteBookingAgent(BookingAgent bookingAgent) { bookingAgentRepository.delete(bookingAgent); }
-
 }

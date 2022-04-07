@@ -15,4 +15,6 @@ public interface PassengerRepository extends JpaRepository<Passenger, Integer> {
     @Query(value = "select * from passenger where family_name = :familyName", nativeQuery = true)
     List<Passenger> findByFamilyName(@Param("familyName") String familyName);
 
+    @Query(value = "select * from passenger where family_name = :familyName and given_name = :givenName and booking_id = :bookingId", nativeQuery = true)
+    Passenger findByNames(@Param("familyName") String familyName, @Param("givenName") String givenName, @Param("bookingId") Integer bookingId);
 }

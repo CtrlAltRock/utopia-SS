@@ -2,8 +2,10 @@ package com.smoothstack.ua.repos;
 
 import com.smoothstack.ua.models.BookingPayment;
 import com.smoothstack.ua.models.BookingPaymentId;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface BookingPaymentRepository extends CrudRepository<BookingPayment, BookingPaymentId> {
+@Repository
+public interface BookingPaymentRepository extends JpaRepository<BookingPayment, BookingPaymentId> {
 
 }

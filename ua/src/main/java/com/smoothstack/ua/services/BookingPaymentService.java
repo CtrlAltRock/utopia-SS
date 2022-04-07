@@ -21,7 +21,9 @@ public class BookingPaymentService {
     @Autowired
     private BookingPaymentRepository bookingPaymentRepository;
 
-    public List<BookingPayment> getAllBookingPayments() { return (List<BookingPayment>) bookingPaymentRepository.findAll(); }
+    public List<BookingPayment> getAllBookingPayments() {
+        return (List<BookingPayment>) bookingPaymentRepository.findAll();
+    }
 
     public BookingPayment getBookingPaymentById(Integer bookingId) {
         Optional<BookingPayment> bookingPayment = bookingPaymentRepository.findById(new BookingPaymentId(bookingId));
@@ -31,19 +33,16 @@ public class BookingPaymentService {
         else return null;
     }
 
-    public void saveBookingPayments(List<BookingPayment> bookingPayments) { bookingPaymentRepository.saveAll(bookingPayments); }
-
     public BookingPayment saveBookingPayment(BookingPayment bookingPayment) {
         BookingPayment posted = bookingPaymentRepository.save(bookingPayment);
         return posted;
     }
 
-    public void deleteBookingPayments(List<BookingPayment> bookingPayments) { bookingPaymentRepository.deleteAll(bookingPayments); }
-
-    public void deleteBookingPayment(BookingPayment bookingPayment) { bookingPaymentRepository.delete(bookingPayment); }
+    public void deleteBookingPayment(BookingPayment bookingPayment) {
+        bookingPaymentRepository.delete(bookingPayment);
+    }
 
     public void deleteBookingPaymentById(BookingPaymentId bookingPaymentId) {
         bookingPaymentRepository.deleteById(bookingPaymentId);
     }
-
 }

@@ -48,7 +48,7 @@ public class UserController {
 
     private User user;
 
-    @RequestMapping(value = "/authenticate", method = RequestMethod.POST, consumes = {"application/xml", "application/json"}, produces = {"application/xml", "application/json"})
+    @RequestMapping(value = "/authenticate", method = RequestMethod.POST, consumes = {"application/json", "application/xml"}, produces = {"application/json", "application/xml"})
     public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
 
         authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
@@ -63,7 +63,7 @@ public class UserController {
         return ResponseEntity.ok(new JwtResponse(token));
     }
 
-    @RequestMapping(value = "/register", method = RequestMethod.POST, consumes = {"application/xml", "application/json"}, produces = {"application/xml", "application/json"})
+    @RequestMapping(value = "/register", method = RequestMethod.POST, consumes = {"application/json", "application/xml"}, produces = {"application/json", "application/xml"})
     public ResponseEntity<?> saveUser(@RequestBody UserDTO user) throws Exception {
         return ResponseEntity.ok(userDetailsService.save(user));
     }
@@ -79,20 +79,20 @@ public class UserController {
     }
 
 
-    @RequestMapping(path = "/utopia/airlines/flights/", method = RequestMethod.GET, consumes = {"application/xml", "application/json"}, produces = {"application/xml", "application/json"} )
+    @RequestMapping(path = "/utopia/airlines/flights/", method = RequestMethod.GET, produces = {"application/json", "application/xml"} )
     public ResponseEntity<?> getAvailableFlights() {
         List<Flight> flights = userService.getAvailableFlights();
         return new ResponseEntity<>(flights, HttpStatus.OK);
     }
 
-    @RequestMapping(path = "/utopia/airlines/myflights/", method = RequestMethod.GET, consumes = {"application/xml", "application/json"}, produces = {"application/xml", "application/json"} )
+    @RequestMapping(path = "/utopia/airlines/myflights/", method = RequestMethod.GET, produces = {"application/json", "application/xml"} )
     public ResponseEntity<?> getUserFlights() {
         List<Flight> flights = userService.getUserFlights();
         return new ResponseEntity<>(flights, HttpStatus.OK);
     }
 
 
-    @RequestMapping(path = "/utopia/airlines/flights/{flightId}", method = RequestMethod.POST, consumes = {"application/xml", "application/json"}, produces = {"application/xml", "application/json"} )
+    @RequestMapping(path = "/utopia/airlines/flights/{flightId}", method = RequestMethod.POST, produces = {"application/json", "application/xml"} )
     public ResponseEntity<?> postUserTickets(@PathVariable Integer flightId) {
         Flight flight = userService.getFlightsById(flightId);
         if(flight != null) {
@@ -101,6 +101,30 @@ public class UserController {
             return new ResponseEntity<>(flight, HttpStatus.OK);
         }
         else return new ResponseEntity<>("Flight Not Found", HttpStatus.BAD_REQUEST);
+    }
+
+    @RequestMapping(path = "/utopia/airlines/myflights/{flightId}", method = RequestMethod.DELETE)
+    public ResponseEntity<?> deleteUserTicket(@PathVariable Integer flightId) {
+        Flight check = userService.getFlightsById(flightId);
+        if(check == null) {
+            return new ResponseEntity<>("flight id doesn't exist", HttpStatus.BAD_REQUEST);
+        }
+        else {
+            List<Flight> flights = userService.getUserFlights();
+
+            if (flights.isEmpty()) {
+                return new ResponseEntity<>("You haven't purchased any tickets", HttpStatus.BAD_REQUEST);
+            }
+
+            else if(!flights.contains(check)) {
+                return new ResponseEntity<>("You haven't purchased a ticket for this flight", HttpStatus.BAD_REQUEST);
+            }
+
+            else {
+                userService.deleteUserFromFlight(check);
+                return new ResponseEntity<>(HttpStatus.OK);
+            }
+        }
     }
 
 

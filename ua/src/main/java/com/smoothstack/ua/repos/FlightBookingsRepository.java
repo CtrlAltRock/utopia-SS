@@ -5,9 +5,9 @@ import com.smoothstack.ua.models.FlightBookingsId;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
+@Repository
 public interface FlightBookingsRepository extends JpaRepository<FlightBookings, FlightBookingsId> {
 
     @Query(value = "Select * from flight_bookings where booking_id = :bookingId", nativeQuery = true)

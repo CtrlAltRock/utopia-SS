@@ -1,6 +1,10 @@
 package com.smoothstack.ua.models;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -8,12 +12,18 @@ import java.util.Set;
 public class Booking {
 
     @Id
+    @Getter
+    @Setter
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
 
+    @Getter
+    @Setter
     @Column(name = "is_active")
     Boolean is_active;
 
+    @Getter
+    @Setter
     @Column(name = "confirmation_code")
     String confirmation_code;
 
@@ -26,28 +36,17 @@ public class Booking {
         this.confirmation_code = confirmation_code;
     }
 
-    public Integer getId() {
-        return id;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Booking)) return false;
+        Booking booking = (Booking) o;
+        return Objects.equals(id, booking.id) && Objects.equals(is_active, booking.is_active) && Objects.equals(confirmation_code, booking.confirmation_code);
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Boolean getIs_active() {
-        return is_active;
-    }
-
-    public void setIs_active(Boolean is_active) {
-        this.is_active = is_active;
-    }
-
-    public String getConfirmation_code() {
-        return confirmation_code;
-    }
-
-    public void setConfirmation_code(String confirmation_code) {
-        this.confirmation_code = confirmation_code;
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, is_active, confirmation_code);
     }
 
     @Override
@@ -58,100 +57,4 @@ public class Booking {
                 ", confirmation_code='" + confirmation_code + '\'' +
                 '}';
     }
-
-    //    @OneToOne
-//    BookingPayment bookingPayment;
-//
-//    @OneToOne
-//    BookingAgent bookingAgent;
-//
-//    @OneToOne
-//    BookingUser bookingUser;
-//
-//    @OneToOne
-//    BookingGuest bookingGuest;
-//
-//    @OneToMany
-//    Set<FlightBookings> flightBookings;
-//
-//    public Booking() {
-//    }
-//
-//    public Integer getId() {
-//        return id;
-//    }
-//
-//    public void setId(Integer id) {
-//        this.id = id;
-//    }
-//
-//    public Boolean getIs_active() {
-//        return is_active;
-//    }
-//
-//    public void setIs_active(Boolean is_active) {
-//        this.is_active = is_active;
-//    }
-//
-//    public String getConfirmation_code() {
-//        return confirmation_code;
-//    }
-//
-//    public void setConfirmation_code(String confirmation_code) {
-//        this.confirmation_code = confirmation_code;
-//    }
-//
-//    public BookingPayment getBookingPayment() {
-//        return bookingPayment;
-//    }
-//
-//    public void setBookingPayment(BookingPayment bookingPayment) {
-//        this.bookingPayment = bookingPayment;
-//    }
-//
-//    public BookingAgent getBookingAgent() {
-//        return bookingAgent;
-//    }
-//
-//    public void setBookingAgent(BookingAgent bookingAgent) {
-//        this.bookingAgent = bookingAgent;
-//    }
-//
-//    public BookingUser getBookingUser() {
-//        return bookingUser;
-//    }
-//
-//    public void setBookingUser(BookingUser bookingUser) {
-//        this.bookingUser = bookingUser;
-//    }
-//
-//    public BookingGuest getBookingGuest() {
-//        return bookingGuest;
-//    }
-//
-//    public void setBookingGuest(BookingGuest bookingGuest) {
-//        this.bookingGuest = bookingGuest;
-//    }
-//
-//    public Set<FlightBookings> getFlightBookings() {
-//        return flightBookings;
-//    }
-//
-//    public void setFlightBookings(Set<FlightBookings> flightBookings) {
-//        this.flightBookings = flightBookings;
-//    }
-//
-//    @Override
-//    public String toString() {
-//        return "Booking{" +
-//                "id=" + id +
-//                ", is_active=" + is_active +
-//                ", confirmation_code='" + confirmation_code + '\'' +
-//                ", bookingPayment=" + bookingPayment +
-//                ", bookingAgent=" + bookingAgent +
-//                ", bookingUser=" + bookingUser +
-//                ", bookingGuest=" + bookingGuest +
-//                ", flightBookings=" + flightBookings +
-//                '}';
-//    }
 }

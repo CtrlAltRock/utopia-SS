@@ -21,7 +21,9 @@ public class RouteService {
     private RouteRepository routeRepository;
 
 
-    public List<Route> getRoutes() { return (List<Route>) routeRepository.findAll(); }
+    public List<Route> getRoutes() {
+        return (List<Route>) routeRepository.findAll();
+    }
 
     public Route getRouteById(Integer id) {
         Optional<Route> route = routeRepository.findById(id);
@@ -38,8 +40,6 @@ public class RouteService {
         }
         else return null;
     }
-
-    public void saveRoutes(List<Route> routes) { routeRepository.saveAll(routes); }
 
     public Route saveRoute(Route route) {
         Route posted = routeRepository.save(route);

@@ -106,16 +106,15 @@ public class AirplaneController {
     @RequestMapping(path = "utopia/airlines/airplanes/{airplaneId}/", method = RequestMethod.DELETE)
     public ResponseEntity<?> deleteAirplaneById(@PathVariable Integer airplaneId) {
         Airplane toDelete = airplaneService.getAirplaneById(airplaneId);
-        toDelete.setAirplaneType(null);
         if(toDelete == null) {
             logger.info("airplane id to delete does not exist");
             return new ResponseEntity<>("airplane id to delete does not exist", HttpStatus.BAD_REQUEST);
         }
         else{
             logger.info(toDelete.toString(), "airplane to delete");
+            toDelete.setAirplaneType(null);
             airplaneService.deleteAirplaneById(airplaneId);
             return new ResponseEntity<>("deleting " + toDelete.toString(), HttpStatus.OK);
         }
     }
-
 }

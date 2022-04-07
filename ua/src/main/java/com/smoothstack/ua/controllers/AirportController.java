@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @CrossOrigin
@@ -44,7 +45,7 @@ public class AirportController {
 
     @Timed("post.airports")
     @RequestMapping(path = "utopia/airlines/airports/", method = RequestMethod.POST, consumes = {"application/json", "application/xml"})
-    public ResponseEntity<?> postAirport(@RequestBody Airport airport) {
+    public ResponseEntity<?> postAirport(@Valid @RequestBody Airport airport) {
         Airport check = airportService.getAirportById(airport.getIata_id());
         if(check == null) {
             logger.info(airport.toString(), "airport does not exist and can be posted");
@@ -57,7 +58,7 @@ public class AirportController {
         }
     }
 
-    @Timed("post.airport")
+    @Timed("put.airports")
     @RequestMapping(path = "utopia/airlines/airports/{id}", method = RequestMethod.PUT, consumes = {"application/json", "application/xml"})
     public ResponseEntity<?> putAirport(@RequestBody Airport airport, @PathVariable String id) {
         Airport put = airportService.getAirportById(id);
@@ -74,8 +75,8 @@ public class AirportController {
     }
 
 
-    @Timed("delete.airport")
-    @RequestMapping(path = "utopia/airlines/airport/{id}", method = RequestMethod.DELETE )
+    @Timed("delete.airports")
+    @RequestMapping(path = "utopia/airlines/airports/{id}", method = RequestMethod.DELETE, consumes = {"application/json", "application/xml"}, produces = {"application/json", "application/xml"})
     public ResponseEntity<?> deleteAirport(@PathVariable String id) {
         Airport check = airportService.getAirportById(id);
         if(check == null) {

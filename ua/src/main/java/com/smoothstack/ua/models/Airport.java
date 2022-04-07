@@ -1,36 +1,41 @@
 
 package com.smoothstack.ua.models;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "airport")
 public class Airport {
 
     @Id
+    @Getter
+    @Setter
     @Column(name = "iata_id")
     String iata_id;
 
+    @Getter
+    @Setter
     @Column(name = "city")
     String city;
 
     public Airport() {
     }
 
-    public String getIata_id() {
-        return iata_id;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Airport)) return false;
+        Airport airport = (Airport) o;
+        return Objects.equals(iata_id, airport.iata_id) && Objects.equals(city, airport.city);
     }
 
-    public void setIata_id(String iata_id) {
-        this.iata_id = iata_id;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
+    @Override
+    public int hashCode() {
+        return Objects.hash(iata_id, city);
     }
 
     @Override

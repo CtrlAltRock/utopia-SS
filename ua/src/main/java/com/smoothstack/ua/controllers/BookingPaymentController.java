@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @CrossOrigin
 @RestController
 public class BookingPaymentController {
@@ -42,7 +44,7 @@ public class BookingPaymentController {
     }
     @Timed("post.bookingPayments")
     @RequestMapping(path = "utopia/airlines/bookingPayments/", method = RequestMethod.POST, consumes = {"application/json", "application/xml"})
-    public ResponseEntity<?> postBookingPayments(@RequestBody BookingPayment bookingPayment) {
+    public ResponseEntity<?> postBookingPayments(@Valid @RequestBody BookingPayment bookingPayment) {
         BookingPayment check = bookingPaymentService.getBookingPaymentById(bookingPayment.getBookingPaymentId().getBooking_id());
         if(check == null) {
             logger.info("booking payment id doesn't exist");
@@ -58,7 +60,7 @@ public class BookingPaymentController {
 
     @Timed("put.bookingPayments")
     @RequestMapping(path = "utopia/airlines/bookingPayments/{bookingPaymentId}", method = RequestMethod.PUT, consumes = {"application/json", "application/xml"})
-    public ResponseEntity<?> putBookingPayments(@RequestBody BookingPayment bookingPayment, @PathVariable Integer bookingPaymentId) {
+    public ResponseEntity<?> putBookingPayments(@Valid @RequestBody BookingPayment bookingPayment, @PathVariable Integer bookingPaymentId) {
         BookingPayment check = bookingPaymentService.getBookingPaymentById(bookingPaymentId);
 
         if(check == null) {

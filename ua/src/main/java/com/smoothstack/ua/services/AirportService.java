@@ -33,20 +33,9 @@ public class AirportService {
         else return null;
     }
 
-    public void saveAirports(List<Airport> airports) {
-        airportRepository.saveAll(airports);
-    }
-
     public Airport saveAirport(Airport airport) {
         Airport posted = airportRepository.save(airport);
         return posted;
-    }
-    public void deleteAirports(List<Airport> airports) {
-        airportRepository.deleteAll(airports);
-    }
-
-    public void deleteAirportById(String id) {
-        airportRepository.deleteById(id);
     }
 
     public void deleteAirport(Airport airport) {

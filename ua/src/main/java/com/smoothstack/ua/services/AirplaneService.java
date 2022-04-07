@@ -45,9 +45,13 @@ public class AirplaneService {
         return airplaneRepository.save(airplane);
     }
 
-    public void deleteAirplane(Airplane airplane) { airplaneRepository.delete(airplane); }
+    public void deleteAirplane(Airplane airplane) {
+        airplaneRepository.delete(airplane);
+    }
 
-    public void deleteAirplaneById(Integer airplaneId) { airplaneRepository.deleteById(airplaneId); }
+    public void deleteAirplaneById(Integer airplaneId) {
+        airplaneRepository.deleteById(airplaneId);
+    }
 
     public AirplaneType getAirplaneTypeById(Integer id) {
         Optional<AirplaneType> airplaneType = airplaneTypeRepository.findById(id);

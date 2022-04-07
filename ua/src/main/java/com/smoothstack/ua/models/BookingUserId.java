@@ -1,5 +1,8 @@
 package com.smoothstack.ua.models;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.Embeddable;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -8,7 +11,13 @@ import java.util.Objects;
 
 @Embeddable
 public class BookingUserId implements Serializable {
+
+    @Getter
+    @Setter
     Integer booking_id;
+
+    @Getter
+    @Setter
     Integer user_id;
 
     public BookingUserId() {
@@ -16,22 +25,6 @@ public class BookingUserId implements Serializable {
 
     public BookingUserId(Integer booking_id, Integer user_id) {
         this.booking_id = booking_id;
-        this.user_id = user_id;
-    }
-
-    public Integer getBooking_id() {
-        return booking_id;
-    }
-
-    public void setBooking_id(Integer booking_id) {
-        this.booking_id = booking_id;
-    }
-
-    public Integer getUser_id() {
-        return user_id;
-    }
-
-    public void setUser_id(Integer user_id) {
         this.user_id = user_id;
     }
 

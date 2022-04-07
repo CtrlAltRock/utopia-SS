@@ -1,78 +1,71 @@
 package com.smoothstack.ua.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity
 @Table(name = "flight")
 public class Flight {
 
     @Id
-    Integer id = 0;
+    @Getter
+    @Setter
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    Integer id;
 
+    @Getter
+    @Setter
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "route_id", insertable = true, updatable = true)
     Route route = new Route();
 
+    @Getter
+    @Setter
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "airplane_id", insertable = true, updatable = true)
     Airplane airplane = new Airplane();
 
+    @Getter
+    @Setter
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(name = "departure_time")
     LocalDateTime departure_time;
 
+    @Getter
+    @Setter
     @Column(name = "reserved_seats")
     Integer reserved_seats;
 
+    @Getter
+    @Setter
     @Column(name = "seat_price")
     Float seat_price;
 
-    public Integer getId() {
-        return id;
+    public Flight() {
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Flight)) return false;
+        Flight flight = (Flight) o;
+        return Objects.equals(id, flight.id) && Objects.equals(route, flight.route) && Objects.equals(airplane, flight.airplane) && Objects.equals(departure_time, flight.departure_time) && Objects.equals(reserved_seats, flight.reserved_seats) && Objects.equals(seat_price, flight.seat_price);
     }
 
-    public Route getRoute() {
-        return route;
-    }
-
-    public void setRoute(Route route) {
-        this.route = route;
-    }
-
-    public Airplane getAirplane() {
-        return airplane;
-    }
-
-    public void setAirplane(Airplane airplane) {
-        this.airplane = airplane;
-    }
-
-    public LocalDateTime getDeparture_time() {
-        return departure_time;
-    }
-
-    public void setDeparture_time(LocalDateTime departure_time) {
-        this.departure_time = departure_time;
-    }
-
-    public Integer getReserved_seats() {
-        return reserved_seats;
-    }
-
-    public void setReserved_seats(Integer reserved_seats) {
-        this.reserved_seats = reserved_seats;
-    }
-
-    public Float getSeat_price() {
-        return seat_price;
-    }
-
-    public void setSeat_price(Float seat_price) {
-        this.seat_price = seat_price;
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, route, airplane, departure_time, reserved_seats, seat_price);
     }
 
     @Override

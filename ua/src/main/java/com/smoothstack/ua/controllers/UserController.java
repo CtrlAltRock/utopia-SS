@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @CrossOrigin
@@ -28,6 +29,7 @@ public class UserController {
 
     @Timed("get.users.dump")
     @RequestMapping(path = "utopia/airlines/users/", method = RequestMethod.GET, produces = {"application/json", "application/xml"})
+    @ResponseBody
     public ResponseEntity<?> getUsers() {
         logger.info("getting all users");
         List<User> users = userService.getAllUsers();
@@ -35,9 +37,9 @@ public class UserController {
     }
 
     @Timed("get.users.id")
-    @RequestMapping(path = "utopia/airlines/users/{userId}", method = RequestMethod.GET, consumes = {"application/json", "application/xml"})
+    @RequestMapping(path = "utopia/airlines/users/{userId}", method = RequestMethod.GET, consumes = {"*/*","application/json", "application/xml"}, produces = {"application/json", "application/xml"})
+    @ResponseBody
     public ResponseEntity<?> getUsersById(@PathVariable Integer userId) {
-        logger.info(userId.toString(), "user id argument");
         User check = userService.getUserById(userId);
         if(check == null) {
             logger.info("user does not exist");
@@ -51,21 +53,20 @@ public class UserController {
 
     @Timed("post.users")
     @RequestMapping(path = "utopia/airlines/users/", method = RequestMethod.POST, consumes = {"application/json", "application/xml"})
-    public ResponseEntity<?> postUsers(@RequestBody User user) {
-        logger.info(user.toString(), "user body argument");
-        if(user.getId() != 0) {
-            logger.info("user has an id other than zero");
-            return new ResponseEntity<>("user has an id other than zero", HttpStatus.BAD_REQUEST);
+    @ResponseBody
+    public ResponseEntity<?> postUsers(@Valid @RequestBody User user) {
+        if(user.getId() != null) {
+            logger.info("user has an id");
+            return new ResponseEntity<>("user has an id", HttpStatus.BAD_REQUEST);
         }
         else {
             UserRole userRoleCheck = userRoleService.getUserRoleById(user.getUserRole().getId());
-            logger.info(userRoleCheck.toString(), "db role to check against");
 
             if(userRoleCheck == null) {
                 logger.info("trying to change UserRole from user post");
                 return new ResponseEntity<>("trying to change UserRole from user post", HttpStatus.BAD_REQUEST);
             }
-            else if(!user.getUserRole().equals(userRoleCheck)){
+            else if(!user.getUserRole().getName().equals(userRoleCheck.getName()) || !user.getUserRole().getId().equals(userRoleCheck.getId())){
                 logger.info("trying to create a new user role");
                 return new ResponseEntity<>("trying to create a new user role", HttpStatus.BAD_REQUEST);
             }
@@ -79,17 +80,16 @@ public class UserController {
 
     @Timed("put.users")
     @RequestMapping(path = "utopia/airlines/users/{userId}", method = RequestMethod.PUT, consumes = {"application/json", "application/xml"})
-    public ResponseEntity<?> putUsers(@RequestBody User user, @PathVariable Integer userId) {
-        logger.info(user.toString(), "user argument");
-        logger.info(userId.toString(), "user id argument");
+    @ResponseBody
+    public ResponseEntity<?> putUsers(@Valid @RequestBody User user, @PathVariable Integer userId) {
         User check = userService.getUserById(userId);
         if(check == null) {
             logger.info("user does not exist");
             return new ResponseEntity<>("user does not exist", HttpStatus.BAD_REQUEST);
         }
-        else if(user.getId() != 0) {
-            logger.info("user has an id other than zero");
-            return new ResponseEntity<>("user has an id other than zero", HttpStatus.BAD_REQUEST);
+        else if(user.getId() != null) {
+            logger.info("user has an id");
+            return new ResponseEntity<>("user has an id", HttpStatus.BAD_REQUEST);
         }
         else{
             UserRole userRoleCheck = userRoleService.getUserRoleById(user.getUserRole().getId());
@@ -97,7 +97,7 @@ public class UserController {
                 logger.info("user role does not exist");
                 return new ResponseEntity<>("user role does not exist", HttpStatus.BAD_REQUEST);
             }
-            else if(!userRoleCheck.equals(user.getUserRole())) {
+            else if(!user.getUserRole().getName().equals(userRoleCheck.getName()) || !user.getUserRole().getId().equals(userRoleCheck.getId())){
                 logger.info("not allowed to override an existing user role");
                 return new ResponseEntity<>("not allowed to override an existing user role", HttpStatus.BAD_REQUEST);
             }
@@ -112,8 +112,8 @@ public class UserController {
 
     @Timed("delete.users")
     @RequestMapping(path = "utopia/airlines/users/{userId}", method = RequestMethod.DELETE)
+    @ResponseBody
     public ResponseEntity<?> deleteUsersById(@PathVariable Integer userId) {
-        logger.info(userId.toString(), "user id argument");
         User check = userService.getUserById(userId);
         if(check == null) {
             logger.info("user does not exist");

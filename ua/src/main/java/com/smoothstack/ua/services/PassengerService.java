@@ -40,16 +40,6 @@ public class PassengerService {
         else return null;
     }
 
-    public List<Passenger> getPassengersByBookingId(Integer bookingId) { return passengerRepository.findByBookingId(bookingId); }
-
-    public List<Passenger> getPassengersByFamilyName(String familyName) { return passengerRepository.findByFamilyName(familyName); }
-
-    public void savePassengers(List<Passenger> passengers) {
-        for(Passenger passenger: passengers) {
-            savePassenger(passenger);
-        }
-    }
-
     public Passenger savePassenger(Passenger passenger) {
         FlightBookings flightBookings = flightBookingsRepository.findFlightBookingsByBookingId(passenger.getBooking_id().getId());
         Flight flight = flightRepository.findById(flightBookings.getFlightBookingsId().getFlight_id()).get();
@@ -65,7 +55,6 @@ public class PassengerService {
         return passenger;
     }
 
-    public void deletePassengers(List<Passenger> passengers) { passengerRepository.deleteAll(passengers); }
     public void deletePassenger(Passenger passenger) {
         passengerRepository.delete(passenger);
     }
