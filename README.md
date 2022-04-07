@@ -13,9 +13,29 @@ Each ***Persona Microservice*** will be its own repository. Each microservice st
 ---
 ***Admin Service***
 Provides all functionality of the original Utopia Airlines CLI project description for admin services i.e. CRUD on database Entities.
+Entity Access:
+  * airport
+  * airplane
+  * airplane_type
+  * route
+  * flight
+  * flight_bookings
+  * booking
+  * passenger
+  * booking payment
+  * booking agent
+  * booking user
+  * user
+  * user_role
 
 ***Agent/Employee Service***
-
+Provides minimal support for services and restricted access to entities.
+Entity Access:
+  * flight
+  * booking
+  * passenger
+  
 ***User Service***
-
-***Guest Service***
+Provides the least support and little to no access to entities
+Entity Access:
+  * flight
