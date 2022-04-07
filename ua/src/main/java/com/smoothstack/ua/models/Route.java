@@ -16,19 +16,19 @@ public class Route implements Serializable {
     @Setter
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer id = 0;
+    Integer id;
 
     @Getter
     @Setter
-    @ManyToOne(cascade = {CascadeType.REFRESH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH})
+    @ManyToOne(cascade = {CascadeType.MERGE})
     @JoinColumn(name = "origin_id")
-    Airport originAirport = new Airport();
+    Airport originAirport;
 
     @Getter
     @Setter
-    @ManyToOne(cascade = {CascadeType.REFRESH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH})
+    @ManyToOne(cascade = {CascadeType.MERGE})
     @JoinColumn(name = "destination_id")
-    Airport destinationAirport = new Airport();
+    Airport destinationAirport;
 
     public Route() {
     }

@@ -33,9 +33,6 @@ public class AgentService {
     BookingAgentRepository bookingAgentRepository;
 
     @Autowired
-    BookingGuestRepository bookingGuestRepository;
-
-    @Autowired
     BookingPaymentRepository bookingPaymentRepository;
 
     @Autowired

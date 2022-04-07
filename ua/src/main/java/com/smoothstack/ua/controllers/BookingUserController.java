@@ -77,7 +77,7 @@ public class BookingUserController {
     }
 
     @Timed("delete.bookingUsers")
-    @RequestMapping(path = "utopia/airlines/bookingUsers/{bookingId}/{userId}", method = RequestMethod.DELETE, consumes = {"application/json", "application/xml"})
+    @RequestMapping(path = "utopia/airlines/bookingUsers/{bookingId}/{userId}", method = RequestMethod.DELETE, consumes = {"*/*" ,"application/json", "application/xml"})
     public ResponseEntity<?> deleteBookingUser(@PathVariable Integer bookingId, @PathVariable Integer userId) {
         BookingUser check = bookingUserService.getBookingUserById(new BookingUserId(bookingId, userId));
         if(check == null) {

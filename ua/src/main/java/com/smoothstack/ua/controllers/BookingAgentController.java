@@ -50,39 +50,18 @@ public class BookingAgentController {
         BookingAgent check = bookingAgentService.getBookingAgentById(bookingAgent.getBookingAgentId());
 
         if(check == null) {
-            logger.info("booking agent already exists");
-            return new ResponseEntity<>("booking agent already exists", HttpStatus.BAD_REQUEST);
-        }
-        else {
             logger.info("booking agent does not exist");
             BookingAgent posted = bookingAgentService.saveBookingAgent(bookingAgent);
             return new ResponseEntity<>(posted, HttpStatus.OK);
         }
+        else {
+            logger.info("booking agent already exists");
+            return new ResponseEntity<>("booking agent already exists", HttpStatus.BAD_REQUEST);
+        }
     }
 
-    //Not sure If i actuallu need this class considering it is never used
-/*    @Timed("post.bookingAgent")
-    @RequestMapping(path = "utopia/airlines/bookingAgent/{bookingId}/{userId}", method = RequestMethod.PUT, consumes = {"application/json", "application/xml"})
-    public ResponseEntity<?> putBookingAgent(@RequestBody BookingAgent bookingAgent, @PathVariable Integer bookingId, @PathVariable Integer userId) {
-        logger.info(bookingAgent.toString(), "booking agent to update");
-        logger.info(bookingId.toString(), "booking id to update");
-        logger.info(userId.toString(), "user id to update");
-        BookingAgentId bookingAgentId = new BookingAgentId(bookingId, userId);
-        BookingAgent toUpdate = bookingAgentService.getBookingAgentById(bookingAgentId);
-
-        if(toUpdate == null) {
-            logger.info("booking agent does not exist");
-            return new ResponseEntity<>("booking agent does not exist", HttpStatus.BAD_REQUEST);
-        }
-        else {
-            logger.info("booking agent to change from does exist");
-            BookingAgent updated = bookingAgentService.saveBookingAgent(bookingAgent);
-
-        }
-    }*/
-
     @Timed("delete.bookingAgents")
-    @RequestMapping(path = "utopia/airlines/bookingAgents/{bookingId}/{flightId}", method = RequestMethod.DELETE, consumes = {"application/json", "application/xml"})
+    @RequestMapping(path = "utopia/airlines/bookingAgents/{bookingId}/{flightId}", method = RequestMethod.DELETE, consumes = {"*/*","application/json", "application/xml"})
     public ResponseEntity<?> deleteBookingAgent(@PathVariable Integer bookingId, @PathVariable Integer flightId) {
         BookingAgent check = bookingAgentService.getBookingAgentById(new BookingAgentId(bookingId, flightId));
         if(check != null) {

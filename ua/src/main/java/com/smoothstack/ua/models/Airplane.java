@@ -14,11 +14,11 @@ public class Airplane {
     @Getter
     @Setter
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer id = 0;
+    Integer id;
 
     @Getter
     @Setter
-    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.REMOVE})
+    @ManyToOne(cascade = {CascadeType.MERGE})
     @JoinColumn(name = "type_id", insertable = true, updatable = true)
     AirplaneType airplaneType = new AirplaneType();
 

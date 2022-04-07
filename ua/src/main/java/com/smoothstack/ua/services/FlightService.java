@@ -32,7 +32,7 @@ public class FlightService {
     }
 
     public Flight saveFlight(Flight flight) {
-        Flight posted = flightRepository.saveAndFlush(flight);
+        Flight posted = flightRepository.save(flight);
         return posted;
     }
 

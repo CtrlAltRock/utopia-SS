@@ -90,11 +90,18 @@ public class RouteController {
                     logger.info("either origin and/or destination airport does not exist");
                     return new ResponseEntity<>("either origin and/or destination airport does not exist", HttpStatus.BAD_REQUEST);
                 }
-                else{
-                    logger.info("route exists");
-                    route.setId(routeId);
-                    Route posted = routeService.saveRoute(route);
-                    return new ResponseEntity<>(posted, HttpStatus.OK);
+                else {
+                    Route sameThough = routeService.getRouteByOriginDestination(route.getOriginAirport().getIata_id(), route.getDestinationAirport().getIata_id());
+                    if(sameThough == null) {
+                        logger.info("route exists");
+                        route.setId(routeId);
+                        Route posted = routeService.saveRoute(route);
+                        return new ResponseEntity<>(posted, HttpStatus.OK);
+                    }
+                    else {
+                        logger.info("route to change to already exists");
+                        return new ResponseEntity<>("route to change to already exists", HttpStatus.BAD_REQUEST);
+                    }
                 }
             }
         }

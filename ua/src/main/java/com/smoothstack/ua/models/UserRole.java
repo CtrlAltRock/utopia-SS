@@ -19,7 +19,7 @@ public class UserRole {
     @Getter
     @Setter
     @Column(name = "name")
-    String name = "user";
+    String name;
 
     public UserRole() {
     }

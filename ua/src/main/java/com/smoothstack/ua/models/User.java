@@ -18,39 +18,39 @@ public class User {
 
     @Getter
     @Setter
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH })
+    @ManyToOne(cascade = {CascadeType.MERGE})
     @JoinColumn(name = "role_id")
     UserRole userRole;
 
     @Getter
     @Setter
     @Column(name = "given_name")
-    String given_name = "Joaquin";
+    String given_name;
 
     @Getter
     @Setter
     @Column(name = "family_name")
-    String family_name = "Pheonix";
+    String family_name;
 
     @Getter
     @Setter
     @Column(name = "username")
-    String username = "JPtheBoss";
+    String username;
 
     @Getter
     @Setter
     @Column(name = "email")
-    String email = "JP@hollywoo.com";
+    String email;
 
     @Getter
     @Setter
     @Column(name = "password")
-    String password = "badPass";
+    String password;
 
     @Getter
     @Setter
     @Column(name = "phone")
-    String phone = "5555555555";
+    String phone;
 
     public User() {
     }

@@ -19,20 +19,19 @@ public class Flight {
     @Id
     @Getter
     @Setter
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
     Integer id;
 
     @Getter
     @Setter
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = {CascadeType.MERGE})
     @JoinColumn(name = "route_id", insertable = true, updatable = true)
-    Route route = new Route();
+    Route route;
 
     @Getter
     @Setter
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = {CascadeType.MERGE})
     @JoinColumn(name = "airplane_id", insertable = true, updatable = true)
-    Airplane airplane = new Airplane();
+    Airplane airplane;
 
     @Getter
     @Setter

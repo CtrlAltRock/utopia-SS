@@ -38,8 +38,8 @@ public class LoggingAspect {
                         joinPoint.getSignature().getName(), result);
             }
             return result;
-        } catch (IllegalArgumentException e) {
-            log.error("Illegal argument: {} in {}.{}()", Arrays.toString(joinPoint.getArgs()),
+        } catch (Exception e) {
+            log.error("Exception: {} in {}.{}()", Arrays.toString(joinPoint.getArgs()),
                     joinPoint.getSignature().getDeclaringTypeName(), joinPoint.getSignature().getName());
             throw e;
         }
@@ -57,8 +57,8 @@ public class LoggingAspect {
                         joinPoint.getSignature().getName(), result);
             }
             return result;
-        } catch (IllegalArgumentException e) {
-            log.error("Illegal argument: {} in {}.{}()", Arrays.toString(joinPoint.getArgs()),
+        } catch (Exception e) {
+            log.error("Exception: {} in {}.{}()", Arrays.toString(joinPoint.getArgs()),
                     joinPoint.getSignature().getDeclaringTypeName(), joinPoint.getSignature().getName());
             throw e;
         }

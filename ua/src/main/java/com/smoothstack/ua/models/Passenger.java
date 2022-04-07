@@ -18,7 +18,7 @@ public class Passenger {
 
     @Getter
     @Setter
-    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH})
+    @ManyToOne(cascade = {CascadeType.MERGE})
     @JoinColumn(name = "booking_id", referencedColumnName = "id")
     Booking booking_id;
 

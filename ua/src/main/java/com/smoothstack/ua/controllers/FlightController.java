@@ -58,9 +58,9 @@ public class FlightController {
     @Timed("post.flights")
     @RequestMapping(path = "utopia/airlines/flights/", method = RequestMethod.POST, consumes = {"application/json", "application/xml"})
     public ResponseEntity<?> postFlight(@Valid @RequestBody Flight flight) {
-        if(flight.getAirplane() == null || flight.getRoute() == null || flight.getId() != null) {
+        if(flight.getAirplane() == null || flight.getRoute() == null) {
             logger.info("not accepting body argument");
-            return new ResponseEntity<>("either airplane is null or route is null or an id has been supplied", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("either airplane is null or route is null", HttpStatus.BAD_REQUEST);
         }
         else {
             logger.info("flight body seems alright");
@@ -87,9 +87,9 @@ public class FlightController {
             return new ResponseEntity<>("flight id does not exist", HttpStatus.BAD_REQUEST);
         }
         else{
-            if(flight.getAirplane() == null || flight.getRoute() == null || flight.getId() != null) {
+            if(flight.getAirplane() == null || flight.getRoute() == null) {
                 logger.info("not accepting body argument");
-                return new ResponseEntity<>("either airplane is null or route is null or an id has been supplied to the RequestBody", HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>("either airplane is null or route is null", HttpStatus.BAD_REQUEST);
             }
             else {
                 logger.info("flight body seems alright");
